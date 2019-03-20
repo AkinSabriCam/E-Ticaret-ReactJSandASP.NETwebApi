@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3db0709e51ff411f99637db5f768a0d6" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="Model.AltKategori" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Duyuru" Width="1.5" PointX="12.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Favoriler" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Il" Width="1.5" PointX="9.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Ilce" Width="1.5" PointX="12" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Iletisim" Width="1.5" PointX="14.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Kategori" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Kullanici" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KullaniciBilgileri" Width="1.5" PointX="16.5" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.logKullanici" Width="1.5" PointX="9.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.logSatinAlinan" Width="1.5" PointX="7.5" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.logSepet" Width="1.5" PointX="7.5" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.logZiyaret" Width="1.5" PointX="11.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Marka" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Mesaj" Width="1.5" PointX="7.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Rol" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Sepet" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SepettekiUrunler" Width="1.5" PointX="10.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Siparis" Width="1.5" PointX="10.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SiparisDetay" Width="1.5" PointX="12.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Stok" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="13.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Urun" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ZiyaretciMesaj" Width="1.5" PointX="14.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_AltKategori_Kategori" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Urun_AltKategori" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Favoriler_Kullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Favoriler_Urun" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Ilce_Il" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Iletisim_Il" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Iletisim_Ilce" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_KullaniciBilgileri_Iletisim" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Kullanici_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_KullaniciBilgileri_Kullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Mesaj_Kullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_logSatinAlinan_Urun" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_logSepet_Urun" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Urun_Marka" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_SepettekiUrunler_Sepet" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Siparis_Sepet" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_SepettekiUrunler_Urun" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_SiparisDetay_Siparis" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Urun_Stok" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
