@@ -12,15 +12,18 @@ export class NavbarPage extends Component {
     this.state={
       isOpen:false,
       Category:[],
-      show: false
+      show: false,
+      UrunCount:0
     }
   }
   componentDidMount(){
     fetch("http://localhost:50040/api/Kategoriler/GetAllCategory").then(data=>data.json())
       .then(result=>{this.setState({Category:result},function(err){if(!err){console.log(this.state.Category)}});})
       .catch(error=>console.log("error"));
-  }
-
+      
+    
+      console.log(sessionStorage.getItem("SepettekiUrun"));    
+    }
   toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
   } 
@@ -37,10 +40,12 @@ render(){
           {
                  kat.AltKategori.map((altkat,ind)=>{
                     return(
-                      <MDBDropdownItem>{altkat.altKategori1}</MDBDropdownItem>
+                      <Link to={{pathname:"/ProductsByCategory", state:{subCatId:altkat.altKategoriID}}}>
+                          <MDBDropdownItem>{altkat.altKategori1}</MDBDropdownItem>
+                      </Link>
                     )
                 })
-            }
+           }
           </MDBDropdownMenu>   
         </MDBDropdown>
       </MDBNavItem>
@@ -75,10 +80,12 @@ render(){
            </MDBNavbar>
            <MDBNavbar>
            <MDBNavbarNav right>
+
            <button type="button" class="btn btn-warning">
-            Sepetim <span class="badge badge-light">7</span>
+            Sepetim <span class="badge badge-light">{this.state.UrunCount}</span>
             <span class="sr-only">unread messages</span>
-          </button>
+            </button>
+         
            </MDBNavbarNav>
            </MDBNavbar>
       <MDBNavbar color="indigo" dark expand="md">

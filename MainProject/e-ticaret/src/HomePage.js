@@ -46,7 +46,7 @@ export class HomePage extends React.Component{
       
       .catch(error=>console.log("error"));
     
-    
+      console.log("SepetuRUN SAYİSİ::"+sessionStorage.getItem("SepettekiUrun")); 
   }
   Detay(id){
     this.setState({Detay:true,ProductDetail:id});
@@ -67,7 +67,7 @@ export class HomePage extends React.Component{
                 <h4 class="card-title">
                   <a href="#">{urun.ad}</a>
                 </h4>
-                <h5>{urun.fiyat}</h5>
+                <h5>{urun.fiyat} ₺</h5>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
 
               </div>

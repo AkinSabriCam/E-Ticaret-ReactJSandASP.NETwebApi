@@ -5,7 +5,7 @@ $(function($){
  
    setInterval(function(){
     var date = new Date();
-     if(date.getHours()===22)
+     if(date.getHours()===0)
         {
              $.ajax({
                 type:"PUT",

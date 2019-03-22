@@ -7,10 +7,10 @@ using System.Web.Http;
 using DAL;
 
 namespace WebApi_E_ticaret_.Controllers
-{   
+{
     public class UrunlerController : ApiController
     {
-        DAL.UrunDAL  urunDal = new DAL.UrunDAL();
+        DAL.UrunDAL urunDal = new DAL.UrunDAL();
 
         [HttpGet]
         public IHttpActionResult GetAllProducts()
@@ -24,7 +24,7 @@ namespace WebApi_E_ticaret_.Controllers
             {
                 return NotFound();
             }
-            
+
         }
 
         [HttpGet]
@@ -35,7 +35,7 @@ namespace WebApi_E_ticaret_.Controllers
                 var model = urunDal.GetProductById(id);
                 if (model != null)
                 {
-                    return Ok(model); 
+                    return Ok(model);
 
                 }
                 else
@@ -48,6 +48,27 @@ namespace WebApi_E_ticaret_.Controllers
                 return BadRequest();
             }
 
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByCategory(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetProductsByCategory(id);
+                if (model.Count > 0)
+                {
+                    return Ok(model);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -98,7 +119,7 @@ namespace WebApi_E_ticaret_.Controllers
                 {
                     return NotFound();
                 }
-                    
+
             }
             else
             {
