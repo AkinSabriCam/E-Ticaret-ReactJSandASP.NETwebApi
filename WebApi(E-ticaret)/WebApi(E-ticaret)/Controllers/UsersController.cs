@@ -11,6 +11,7 @@ namespace WebApi_E_ticaret_.Controllers
     public class UsersController : ApiController
     {
         DAL.kullaniciDAL kullaniciDal = new kullaniciDAL();
+        DAL.kullaniciLogDAL kullaniciLog = new kullaniciLogDAL();
 
         public IHttpActionResult GetAllUsers()
         {
@@ -49,7 +50,8 @@ namespace WebApi_E_ticaret_.Controllers
             if (ModelState.IsValid)
             {
                 kullaniciDal.PostUser(model);
-             return Ok();
+                kullaniciLog.PutUserLog();
+                return Ok();
                
             }
             else

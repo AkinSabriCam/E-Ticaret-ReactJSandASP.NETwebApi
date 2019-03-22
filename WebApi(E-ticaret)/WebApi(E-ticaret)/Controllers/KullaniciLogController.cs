@@ -37,6 +37,5 @@ namespace WebApi_E_ticaret_.Controllers
             kullaniciLog.PutUserLog();
             return Ok();
         }
-
     }
 }
