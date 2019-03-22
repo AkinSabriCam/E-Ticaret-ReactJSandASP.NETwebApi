@@ -24,20 +24,36 @@ namespace DAL
 
         public Models.Urun GetProductById(int id)
         {
-               var model = db.Urun.FirstOrDefault(m => m.urunID == id);
-                if (model != null)
-                {
-                    return model;
-                }
-                else
-                {
-                    return null;
-                }
-                
+            var model = db.Urun.FirstOrDefault(m => m.urunID == id);
+            if (model != null)
+            {
+                return model;
+            }
+            else
+            {
+                return null;
+            }
+
         }
+
+        public List<Models.Urun> GetProductsByCategory(int id)
+        {
+            var model = db.Urun.Where(m => m.altKategoriID == id).ToList();
+            if (model != null)
+            {
+                return model;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+
         public bool PostProductAlreadyExist(ViewModels.ProductStokViewModel model)
         {
-             var stok = db.Stok.FirstOrDefault(x => x.stokID == model.stokID);
+            var stok = db.Stok.FirstOrDefault(x => x.stokID == model.stokID);
             if (stok != null)
             {
                 stok.adet += model.adet;
@@ -48,13 +64,13 @@ namespace DAL
             {
                 return false;
             }
-            
+
         }
 
-         public bool PostProduct(ViewModels.ProductStokViewModel model)
-         {
+        public bool PostProduct(ViewModels.ProductStokViewModel model)
+        {
             var stok = new Models.Stok();
-            stok.adet =  model.adet;
+            stok.adet = model.adet;
             db.Stok.Add(stok);
             db.SaveChanges();
 
@@ -73,7 +89,7 @@ namespace DAL
             db.SaveChanges();
 
             return true;
-         }
+        }
 
         public bool PutProduct(ViewModels.ProductStokViewModel model)
         {
@@ -106,7 +122,7 @@ namespace DAL
         public bool Delete(int id)
         {
             var test = db.Urun.FirstOrDefault(m => m.urunID == id);
-            if (test != null && test.satinAlinmaDurumu==false)
+            if (test != null && test.satinAlinmaDurumu == false)
             {
                 test.Stok.adet--;
                 if (test.Stok.adet == 0)
