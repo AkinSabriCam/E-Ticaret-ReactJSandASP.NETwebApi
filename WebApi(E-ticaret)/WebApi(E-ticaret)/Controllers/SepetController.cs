@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DAL;
-using DAL.Models
+using DAL.Models;
 namespace WebApi_E_ticaret_.Controllers
 {
     

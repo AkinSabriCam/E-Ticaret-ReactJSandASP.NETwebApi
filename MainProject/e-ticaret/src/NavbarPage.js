@@ -19,15 +19,11 @@ export class NavbarPage extends Component {
     fetch("http://localhost:50040/api/Kategoriler/GetAllCategory").then(data=>data.json())
       .then(result=>{this.setState({Category:result},function(err){if(!err){console.log(this.state.Category)}});})
       .catch(error=>console.log("error"));
-      
   }
 
   toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
   } 
-  toggleCollapse = () => {
-  this.setState({ isOpen: !this.state.isOpen });
-  }
 render(){
     let Category=this.state.Category.map((kat,ind)=>{
   
@@ -72,9 +68,9 @@ render(){
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar>           
-           <MDBBtn rounded outline color="warning" onClick={this.LoginShow}> Sign In </MDBBtn>
+           <MDBBtn rounded outline color="warning"> Sign In </MDBBtn>
            <MDBNavbar></MDBNavbar> 
-           <MDBBtn rounded outline color="warning"  onClick={this.RegisterShow}> Sign Up </MDBBtn>
+           <MDBBtn rounded outline color="warning"> Sign Up </MDBBtn>
            </MDBNavbar>
            </MDBNavbar>
            <MDBNavbar>
@@ -94,8 +90,6 @@ render(){
           <MDBNavbarNav  center>
           {Category}
           </MDBNavbarNav>
-          <MDBNavItem>
-          </MDBNavItem>
         </MDBCollapse>
       </MDBNavbar>
       </div>
