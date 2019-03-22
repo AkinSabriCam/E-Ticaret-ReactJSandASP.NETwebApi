@@ -52,6 +52,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="kategoriDAL.cs" />
     <Compile Include="kullaniciDAL.cs" />
+    <Compile Include="kullaniciLogDAL.cs" />
     <Compile Include="Models\AltKategori.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
