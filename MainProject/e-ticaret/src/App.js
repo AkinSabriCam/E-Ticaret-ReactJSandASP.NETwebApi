@@ -7,6 +7,7 @@ import {NavbarPage} from './NavbarPage';
 import { ProductDetail } from './ProductDetail';
 import {Login} from './Login';
 import {Register} from './Register';
+import {ProductsByCategory} from './ProductsByCategory';
 
 class App extends Component {
   render() {
@@ -15,11 +16,12 @@ class App extends Component {
      <Router>
       <div>
      <NavbarPage></NavbarPage>
-     <Route  exact path="/" component={HomePage}/>
+     <Route exact path="/" component={HomePage}/>
 
-     <Route  exact path="/ProductDetail/" component={ProductDetail}/>
-     <Route  path="/Login" component={Login}/>
-     <Route  path="/Register" component={Register}/>
+     <Route exact path="/ProductDetail/" component={ProductDetail}/>
+     <Route path="/Login" component={Login}/>
+     <Route path="/Register" component={Register}/>
+     <Route path="/ProductsByCategory" component={ProductsByCategory}/>
      </div>
      </Router>
      
