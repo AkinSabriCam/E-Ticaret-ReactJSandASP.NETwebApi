@@ -23,14 +23,23 @@ componentDidMount(){
     this.setState({show: false });
   }
 
-
   Login(){
-
-
+    let UserName=document.getElementById("username").value;
+    let Password=document.getElementById("password").value;
+    
+    fetch("http://localhost:50040/token",{
+      method:"post",
+      headers:{
+        "content-type":"application/x-www-form-urlencoded"
+      },
+      body:`UserName=${UserName}&Password=${Password}&grant_type=password`
+    }).then(data=>data.json())
+    .then(result=>console.log(result))
+    .catch(err=>console.log(err));
 }
+  
   render(){
     return (
-        
         <div className='menu'>
           <Modal show={this.state.show} onHide={this.LoginClose}>
             <Modal.Header closeButton>
@@ -38,16 +47,16 @@ componentDidMount(){
             </Modal.Header>
             <Modal.Body>
             <div className="form-group">
-            <label htmlFor="formGroupExampleInput" placeholder="kullaniciAdi">Username</label>
+            <label htmlFor="formGroupExampleInput" placeholder="Username">Username</label>
             <input 
             type="text"
             className="form-control"
-            id="formGroupExampleInput"/>
+            id="username"/>
             <label htmlFor="formGroupExampleInput" placeholder="******">Password</label>
             <input
             type="text"
             className="form-control"
-            id="formGroupExampleInput"/>
+            id="password"/>
             </div>
             </Modal.Body>
             <Modal.Footer>

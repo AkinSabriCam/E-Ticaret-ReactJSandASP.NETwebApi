@@ -12,7 +12,8 @@ export class NavbarPage extends Component {
     this.state={
       isOpen:false,
       Category:[],
-      show: false
+      show: false,
+      UrunCount:0
     }
   }
   componentDidMount(){
@@ -20,7 +21,9 @@ export class NavbarPage extends Component {
       .then(result=>{this.setState({Category:result},function(err){if(!err){console.log(this.state.Category)}});})
       .catch(error=>console.log("error"));
       
-  }
+    
+      console.log(sessionStorage.getItem("SepettekiUrun"));    
+    }
 
   toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
@@ -40,11 +43,11 @@ render(){
           <MDBDropdownMenu>
           {
                  kat.AltKategori.map((altkat,ind)=>{
-                    return(
+                  return(
                       <MDBDropdownItem>{altkat.altKategori1}</MDBDropdownItem>
-                    )
+                  )
                 })
-            }
+           }
           </MDBDropdownMenu>   
         </MDBDropdown>
       </MDBNavItem>
@@ -80,7 +83,7 @@ render(){
            <MDBNavbar>
            <MDBNavbarNav right>
            <button type="button" class="btn btn-warning">
-            Sepetim <span class="badge badge-light">7</span>
+            Sepetim <span class="badge badge-light">{this.state.UrunCount}</span>
             <span class="sr-only">unread messages</span>
           </button>
            </MDBNavbarNav>

@@ -8,7 +8,8 @@ export class ProductDetail extends React.Component{
         this.state={
             Product:{},
             prodid:0,
-            
+            sepetId:0,
+            sepettekiUrun:0
         }
         this.SepeteEkle=this.SepeteEkle.bind(this);
     }
@@ -16,36 +17,72 @@ export class ProductDetail extends React.Component{
         const {productId} = this.props.location.state;
         console.log(productId);
        fetch("http://localhost:50040/api/Urunler/GetProductById/"+productId).then(data=>data.json())
-        .then(result=>{this.setState({Product:result}); console.log(result)})
-        .catch(error=>console.log( "Error :"+error))
-        
+       .then(result=>{this.setState({Product:result}); console.log(result)})
+       .catch(error=>console.log( "Error :"+error))
     }
     SepeteEkle(urunID){
-        var adet=document.getElementById("adet").value;
-        if(!isNaN(adet))
+        sessionStorage.setItem("User","true");
+        var urunadet=document.getElementById("adet").value;
+        if(!isNaN(urunadet))
         {   //adet number bir değişken ise buraya girecektir
-            if(adet<=(this.state.Product.Stok.adet)){
+            if(urunadet<=(this.state.Product.Stok.adet)){
                     // girilen adet değeri stok adetinden az veya eşit ise buraya girecektir
                     console.log("girilen adet makuldur");
                     if(sessionStorage.getItem("User")==null){
                     
-                    fetch("http://localhost:50040/",
+                    let urun={
+                    adet:urunadet,
+                    urunID:this.state.Product.urunID,
+                    sepetID:this.state.sepetId
+                    }
+
+                    fetch("http://localhost:50040/api/Sepet/PostProductForVisitor",
                     {
                         method:"POST",
-                        data:{
-
+                        body:JSON.stringify(urun),
+                        headers:{
+                            "Content-type":"application/json"
                         }
+                    }).then(data=>data.json())
+                    .then(result=>{
+                        this.setState({sepetId:result})
+                        let urunsayisi=this.state.sepettekiUrun;
+                        this.setState({sepettekiUrun:urunsayisi++});
+                        sessionStorage.setItem("sepetid",result);    
+                        sessionStorage.setItem("SepettekiUrun",this.state.sepettekiUrun);
+                       
                     })
-
-                    
+                    .catch(error=>console.log("errorr"));
                     }
                     else if(sessionStorage.getItem("User")=="true"){
+                        let urun={
+                            adet:urunadet,
+                            urunID:this.state.Product.urunID,
+                            sepetID:this.state.sepetId,
+                            kullaniciID:1
+                            }
+                        
+                        console.log("user sepete ürün eklemek istiyor")
+                            // bir kullanıcı önceden ziyaretçi olarak sepet oluşturmamış ise buraya girecektir.
+                            // bu kullanıcıya ait bir sepet var ama siparis verilmiş ise yeni sepet oluşturulacaktır
+                            // bu kullanıcıya ait bir sepet ziyaretçi olarak mevcut ise 
+                            fetch("http://localhost:50040/api/Sepet/PostProductForUser",
+                            {
+                                method:"POST",
+                                body:JSON.stringify(urun),
+                                headers:{
+                                    "Content-type":"application/json"
+                                }
+                            }).then(data=>data.json())
+                            .then(result=>{this.setState({sepetId:result})
+                                sessionStorage.setItem("sepetid",result);    
+                             })
+                            .catch(error=>console.log("errorr"));
 
                     }
                     else{
                         console.log("user sessionda bir problem var !!");
                     }
-
             }
             else{
                 // girilen adet stoktan fazla ise hata vermelidir yani buraya girecektir.
@@ -56,9 +93,7 @@ export class ProductDetail extends React.Component{
         {   //adet number değil ise buraya girececktir
             console.log("LÜTFEN ADET KISMINI SAYI OLACAK ŞEKİLDE GİRİNİZ");
         }
-
     }
-
     render(){
         return(
             <div>            
@@ -67,11 +102,9 @@ export class ProductDetail extends React.Component{
                         <div class="container-fliud">
                             <div class="wrapper row">
                                 <div class="preview col-md-6">
-                                    
                                     <div class="preview-pic tab-content">
                                         <div class="tab-pane active" id="pic-1"><img class="card-img-top"  src="http://placehold.it/1200x800" alt="" /></div>
                                     </div>
-
                                 </div>
                                 <div class="details col-md-6">
                                     <h3 class="product-title">{this.state.Product.ad}</h3>
@@ -91,13 +124,10 @@ export class ProductDetail extends React.Component{
                                     </div>
                                     <p class="product-description">41 reviews</p>
                                     <p class="product-description">Kalan Adet: <b>{this.state.Product.Stok  && this.state.Product.Stok.adet}</b></p>
-                                    
                                     <p class="product-description">Adet Giriniz:
                                     <input type="text" name="adet" id="adet"></input>
                                     </p>
                                     <h4 class="price">Güncel Fiyat: <span>{this.state.Product.fiyat}₺</span></h4>
-                                    
-                                   
                                     <div class="action">
                                         <button class="add-to-cart btn btn-outline-danger" type="button" onClick={()=>{this.SepeteEkle(this.state.Product.urunID)}}>sepete ekle</button>
                                         <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>

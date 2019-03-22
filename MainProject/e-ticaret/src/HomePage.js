@@ -46,7 +46,7 @@ export class HomePage extends React.Component{
       
       .catch(error=>console.log("error"));
     
-    
+      console.log("SepetuRUN SAYİSİ::"+sessionStorage.getItem("SepettekiUrun")); 
   }
   Detay(id){
     this.setState({Detay:true,ProductDetail:id});
