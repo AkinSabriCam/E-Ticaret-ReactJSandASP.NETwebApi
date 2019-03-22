@@ -43,9 +43,15 @@ render(){
           <MDBDropdownMenu>
           {
                  kat.AltKategori.map((altkat,ind)=>{
+ 
                   return(
                       <MDBDropdownItem>{altkat.altKategori1}</MDBDropdownItem>
                   )
+                    return(
+                      <Link to={{pathname:"/ProductsByCategory", state:{subCatId:altkat.altKategoriID}}}>
+                          <MDBDropdownItem>{altkat.altKategori1}</MDBDropdownItem>
+                      </Link>
+                    )
                 })
            }
           </MDBDropdownMenu>   
@@ -82,10 +88,12 @@ render(){
            </MDBNavbar>
            <MDBNavbar>
            <MDBNavbarNav right>
+
            <button type="button" class="btn btn-warning">
             Sepetim <span class="badge badge-light">{this.state.UrunCount}</span>
             <span class="sr-only">unread messages</span>
-          </button>
+            </button>
+         
            </MDBNavbarNav>
            </MDBNavbar>
       <MDBNavbar color="indigo" dark expand="md">
@@ -97,7 +105,6 @@ render(){
           <MDBNavbarNav  center>
           {Category}
           </MDBNavbarNav>
-          <MDBNavItem>
     
         </MDBCollapse>
       </MDBNavbar>
