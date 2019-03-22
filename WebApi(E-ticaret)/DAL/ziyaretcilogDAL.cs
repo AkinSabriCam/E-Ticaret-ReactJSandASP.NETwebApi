@@ -20,6 +20,7 @@ namespace DAL
             var log = db.logZiyaret.FirstOrDefault(x => x.logZiyaretID == 2);
             log.gunlukZiyaret++;
             log.haftalikZiyaret++;
+            log.toplamZiyaret++;
             db.SaveChanges();
 
             return true;
@@ -31,7 +32,6 @@ namespace DAL
             if ((log.gunlukTarih.Value.DayOfYear/7) != ((DateTime.Now.DayOfYear)/7))
             {
                 log.haftalikTarih++;
-                log.toplamZiyaret+= log.haftalikZiyaret;
                 log.haftalikZiyaret = 0;
                 db.SaveChanges();
             }

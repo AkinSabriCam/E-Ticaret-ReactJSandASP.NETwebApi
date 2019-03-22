@@ -97,7 +97,6 @@ render(){
           <MDBNavbarNav  center>
           {Category}
           </MDBNavbarNav>
-          <MDBNavItem>
     
         </MDBCollapse>
       </MDBNavbar>
