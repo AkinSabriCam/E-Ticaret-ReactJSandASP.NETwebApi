@@ -7,7 +7,11 @@ import {HomePage} from './HomePage';
 import {NavbarPage} from './NavbarPage';
 import { ProductDetail } from './ProductDetail';
 import Login from './Login';
+import {ProductDetail } from './ProductDetail';
 import {Register} from './Register';
+import {User} from './User';
+import {Siparis} from './Siparis';
+import {Favourite} from './Favourite'
 import {ProductsByCategory} from './ProductsByCategory';
 
 class App extends Component {
@@ -18,11 +22,15 @@ class App extends Component {
      <Router>
       <div>
      <NavbarPage></NavbarPage>
-     <Route exact path="/" component={HomePage}/>
 
-     <Route exact path="/ProductDetail/" component={ProductDetail}/>
-     <Route path="/Login" component={Login}/>
-     <Route path="/Register" component={Register}/>
+     <Route  exact path="/" component={HomePage}/>
+     <Route  exact path="/ProductDetail/" component={ProductDetail}/>
+     <Route  path="/Login" component={Login}/>
+     <Route  path="/Register" component={Register}/>
+     <Route  path="/User" component={User}/>
+     <Route  path="/Favourite" component={Favourite}/>
+     <Route  path="/Siparis"   component={Siparis}/>
+     <Route exact path="/" component={HomePage}/>
      <Route path="/ProductsByCategory" component={ProductsByCategory}/>
      </div>
      </Router>

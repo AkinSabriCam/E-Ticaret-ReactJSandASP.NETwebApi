@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="iletisimDAL.cs" />
     <Compile Include="kategoriDAL.cs" />
     <Compile Include="kullaniciDAL.cs" />
     <Compile Include="kullaniciLogDAL.cs" />

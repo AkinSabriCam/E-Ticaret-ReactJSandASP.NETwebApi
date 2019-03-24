@@ -23,7 +23,7 @@ namespace DAL
         }
 
         public Models.Urun GetProductById(int id)
-        {
+        {       
             var model = db.Urun.FirstOrDefault(m => m.urunID == id);
             if (model != null)
             {
@@ -47,9 +47,8 @@ namespace DAL
             {
                 return null;
             }
+
         }
-
-
 
         public bool PostProductAlreadyExist(ViewModels.ProductStokViewModel model)
         {

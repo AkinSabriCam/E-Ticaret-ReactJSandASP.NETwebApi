@@ -27,13 +27,9 @@ export class NavbarPage extends Component {
     
       console.log(sessionStorage.getItem("SepettekiUrun"));    
     }
-
   toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
   } 
-  toggleCollapse = () => {
-  this.setState({ isOpen: !this.state.isOpen });
-  }
 render(){
     let Category=this.state.Category.map((kat,ind)=>{
   
@@ -45,7 +41,8 @@ render(){
           </MDBDropdownToggle>
           <MDBDropdownMenu>
           {
-    /*   kat.AltKategori.map((altkat,ind)=>{
+
+       kat.AltKategori.map((altkat,ind)=>{
  
                   return(
                      
@@ -54,8 +51,9 @@ render(){
                   </Link>
                   )
                     
+
                 })
-              */   }
+              }
           </MDBDropdownMenu>   
         </MDBDropdown>
       </MDBNavItem>
@@ -83,9 +81,9 @@ render(){
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar>           
-           <MDBBtn rounded outline color="warning" onClick={this.LoginShow}> Sign In </MDBBtn>
+           <MDBBtn rounded outline color="warning"> Sign In </MDBBtn>
            <MDBNavbar></MDBNavbar> 
-           <MDBBtn rounded outline color="warning"  onClick={this.RegisterShow}> Sign Up </MDBBtn>
+           <MDBBtn rounded outline color="warning"> Sign Up </MDBBtn>
            </MDBNavbar>
            </MDBNavbar>
            <MDBNavbar>
@@ -107,7 +105,6 @@ render(){
           <MDBNavbarNav  center>
           {Category}
           </MDBNavbarNav>
-    
         </MDBCollapse>
       </MDBNavbar>
       </div>
