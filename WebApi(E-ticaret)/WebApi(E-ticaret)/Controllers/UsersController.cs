@@ -45,6 +45,28 @@ namespace WebApi_E_ticaret_.Controllers
             }
 
         }
+        [HttpGet]
+        public IHttpActionResult GetUserId(string username,string password)
+        {
+            
+            if (username!="" && password!="")
+            {
+                var model = kullaniciDal.GetuserId(username,password);
+                if (model != null)
+                {
+                    return Ok(model);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
         public IHttpActionResult PostUser(DAL.ViewModels.UserViewModel model)
         {
             if (ModelState.IsValid)

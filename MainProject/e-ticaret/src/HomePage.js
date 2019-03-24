@@ -5,6 +5,7 @@ import urun from './img/product01.jpg';
 import asus from './img/asus.jpg';
 import {Link,Redirect} from 'react-router-dom'
 import {ProductDetail} from './ProductDetail'
+import Cookies from 'js-cookie';
 
 
 export class HomePage extends React.Component{
@@ -20,33 +21,40 @@ export class HomePage extends React.Component{
    }
   
   componentDidMount(){
+     
     fetch("http://localhost:50040/api/Urunler/GetAllProducts").then(data=>data.json())
     .then(result=>{this.setState({Products:result})
-
-    if(sessionStorage.getItem("Oturum")==null){
+    console.log(result); 
+    if(Cookies.get("Oturum")==null){
           $.ajax({
           type:"PUT",
           url:"http://localhost:50040/api/ZiyaretLog/PutLogClick",
            suceess:function(){
             console.log("ok");
+           
           },
           error:function(err,status,xhr){
              console.log("Ziyaretçi loglama işleminde problem var !!" + err.status);
         }
        })
       //Her app.js render edildiğinde burası 1 kez çalışacak.
-      sessionStorage.setItem("Oturum","true")
+      let OneMinutes = new Date(new Date().getTime() + 1 * 60 * 1000);//
+            Cookies.set("Oturum","true",{
+              path:'',
+              expires:OneMinutes 
+            });
+      // cookie'ye  1 dakikalık tutma süresi veriliyor burada....
       }
       else{
-        console.log("session çalışmıyor");
-        console.log(sessionStorage.getItem("Oturum"));
+        console.log("cookie dolu");
+        console.log(Cookies.get("Oturum"));
       
       }
      })
       
       .catch(error=>console.log("error"));
     
-      console.log("SepetuRUN SAYİSİ::"+sessionStorage.getItem("SepettekiUrun")); 
+      
   }
   Detay(id){
     this.setState({Detay:true,ProductDetail:id});
@@ -54,7 +62,7 @@ export class HomePage extends React.Component{
   }
   render(){
 
-
+  
         let Cards=this.state.Products.map((urun,ind)=>{
 
           return(

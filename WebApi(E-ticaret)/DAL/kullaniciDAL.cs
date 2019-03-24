@@ -35,7 +35,18 @@ namespace DAL
                 return null;
             }
         }
-
+        public Models.Kullanici GetuserId(string username,string password)
+        {
+            var model = db.Kullanici.FirstOrDefault(x => x.kullaniciAdi == username &&x.sifre==password);
+            if (model != null)
+            {
+                return model;
+            }
+            else
+            {
+                return null;
+            }
+        }
         public bool PostUser(ViewModels.UserViewModel model)
         {
             var User = new Models.Kullanici();

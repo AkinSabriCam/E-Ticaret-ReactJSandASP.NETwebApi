@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 import './js/Custom.js';
+import { CookiesProvider } from 'react-cookie';
 import {Route,BrowserRouter as Router} from 'react-router-dom';
 import {HomePage} from './HomePage';
 import {NavbarPage} from './NavbarPage';
 import { ProductDetail } from './ProductDetail';
-import {Login} from './Login';
+import Login from './Login';
 import {Register} from './Register';
 import {ProductsByCategory} from './ProductsByCategory';
 
@@ -13,6 +14,7 @@ class App extends Component {
   render() {
     
     return (
+      <CookiesProvider>
      <Router>
       <div>
      <NavbarPage></NavbarPage>
@@ -24,7 +26,7 @@ class App extends Component {
      <Route path="/ProductsByCategory" component={ProductsByCategory}/>
      </div>
      </Router>
-     
+     </CookiesProvider>
     );
   }
 }

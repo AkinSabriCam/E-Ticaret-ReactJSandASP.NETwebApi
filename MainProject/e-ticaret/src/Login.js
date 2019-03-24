@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import './css/site.css';
 import {Modal,Button} from 'react-bootstrap';
+import Cookies from 'js-cookie';
 
-export class Login extends Component {
+
+export default class Login extends Component {
   constructor(props, context) {
     super(props, context);
     this.state={
@@ -34,11 +36,30 @@ componentDidMount(){
       },
       body:`UserName=${UserName}&Password=${Password}&grant_type=password`
     }).then(data=>data.json())
-    .then(result=>console.log(result))
+    .then(result=>{
+      console.log(result);
+      Cookies.set("Login","true");
+    })
     .catch(err=>console.log(err));
-}
+
+    // Kullanicinin Id sini almak için bir request yolluyorum
+    fetch(`http://localhost:50040/api/Users/GetUserId?username=${UserName}&password=${Password}`)
+    .then(data=>data.json())
+    .then(result=>{
+      let updateKullaniciId = {
+          type: "kullaniciId",
+          payload: result.kullaniciID
+        }
+        this.props.dispatch(updateKullaniciId);
+        console.log("ok");
+      })
+    .catch(err=>console.log(err));
+
+    
+  }
   
   render(){
+    
     return (
         <div className='menu'>
           <Modal show={this.state.show} onHide={this.LoginClose}>
@@ -66,6 +87,7 @@ componentDidMount(){
           </Modal>
         </div>
       )
+      
     }
   }
-  export default Login;
+

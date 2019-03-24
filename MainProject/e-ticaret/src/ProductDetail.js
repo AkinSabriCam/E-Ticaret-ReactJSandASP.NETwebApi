@@ -1,6 +1,9 @@
 import React from 'react'
 import './css/productDetail.css'
 import { number } from 'prop-types';
+import Cookies from 'js-cookie';
+
+
 
 export class ProductDetail extends React.Component{
     constructor(){
@@ -13,7 +16,10 @@ export class ProductDetail extends React.Component{
         }
         this.SepeteEkle=this.SepeteEkle.bind(this);
     }
+        
+        
     componentDidMount(){
+     
         const {productId} = this.props.location.state;
         console.log(productId);
        fetch("http://localhost:50040/api/Urunler/GetProductById/"+productId).then(data=>data.json())
@@ -25,17 +31,15 @@ export class ProductDetail extends React.Component{
         var urunadet=document.getElementById("adet").value;
         if(!isNaN(urunadet))
         {   //adet number bir değişken ise buraya girecektir
-            if(urunadet<=(this.state.Product.Stok.adet)){
+            if(urunadet<=(this.state.Product.Stok && this.state.Product.Stok.adet)){
                     // girilen adet değeri stok adetinden az veya eşit ise buraya girecektir
                     console.log("girilen adet makuldur");
-                    if(sessionStorage.getItem("User")==null){
-                    
-                    let urun={
-                    adet:urunadet,
-                    urunID:this.state.Product.urunID,
-                    sepetID:this.state.sepetId
+                    if(Cookies.get("Login")==null){
+                        let urun={
+                        adet:urunadet,
+                        urunID:this.state.Product.urunID,
+                        sepetID:Cookies.get("sepetid")
                     }
-
                     fetch("http://localhost:50040/api/Sepet/PostProductForVisitor",
                     {
                         method:"POST",
@@ -46,19 +50,23 @@ export class ProductDetail extends React.Component{
                     }).then(data=>data.json())
                     .then(result=>{
                         this.setState({sepetId:result})
-                        let urunsayisi=this.state.sepettekiUrun;
-                        this.setState({sepettekiUrun:urunsayisi++});
-                        sessionStorage.setItem("sepetid",result);    
-                        sessionStorage.setItem("SepettekiUrun",this.state.sepettekiUrun);
+                        let urunsayisi=Cookies.get("ProductCount");
+                        if(urunsayisi==0 || urunsayisi=="" || urunsayisi==null){
+                            urunsayisi=0;
+                        }
+                        urunsayisi=parseInt(urunsayisi)+1;
+                        Cookies.set("ProductCount",urunsayisi);
+                        Cookies.set("sepetid",result);    
+                        
                        
                     })
                     .catch(error=>console.log("errorr"));
                     }
-                    else if(sessionStorage.getItem("User")=="true"){
+                    else if(Cookies.get("Login")=="true"){
                         let urun={
                             adet:urunadet,
                             urunID:this.state.Product.urunID,
-                            sepetID:this.state.sepetId,
+                            sepetID:Cookies.get("sepetid"),
                             kullaniciID:1
                             }
                         
@@ -73,15 +81,20 @@ export class ProductDetail extends React.Component{
                                 headers:{
                                     "Content-type":"application/json"
                                 }
-                            }).then(data=>data.json())
-                            .then(result=>{this.setState({sepetId:result})
-                                sessionStorage.setItem("sepetid",result);    
-                             })
-                            .catch(error=>console.log("errorr"));
-
+                            })
+                            .then(()=>{
+                                    let urunsayisi=Cookies.get("ProductCount");
+                                    if(urunsayisi==0 || urunsayisi=="" || urunsayisi==null){
+                                        urunsayisi=0;
+                                    }
+                                    urunsayisi=parseInt(urunsayisi)+1
+                                    Cookies.set("ProductCount",urunsayisi)
+                                
+                            }).catch((err)=>{console.log("err")})
+                          
                     }
                     else{
-                        console.log("user sessionda bir problem var !!");
+                        console.log("login cookie de bir problem var !");
                     }
             }
             else{

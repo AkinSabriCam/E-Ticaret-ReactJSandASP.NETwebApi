@@ -5,6 +5,8 @@ import {Route,BrowserRouter as Router} from 'react-router-dom';
 import './css/site.css';
 import {Modal,Button} from 'react-bootstrap';
 import {Redirect,Link} from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 
 export class NavbarPage extends Component {
   constructor(props, context) {
@@ -17,6 +19,7 @@ export class NavbarPage extends Component {
     }
   }
   componentDidMount(){
+    console.log("asdasda"+Cookies.get("ProductCount"))
     fetch("http://localhost:50040/api/Kategoriler/GetAllCategory").then(data=>data.json())
       .then(result=>{this.setState({Category:result},function(err){if(!err){console.log(this.state.Category)}});})
       .catch(error=>console.log("error"));
@@ -42,18 +45,17 @@ render(){
           </MDBDropdownToggle>
           <MDBDropdownMenu>
           {
-                 kat.AltKategori.map((altkat,ind)=>{
+    /*   kat.AltKategori.map((altkat,ind)=>{
  
                   return(
-                      <MDBDropdownItem>{altkat.altKategori1}</MDBDropdownItem>
-                  )
-                    return(
+                     
                       <Link to={{pathname:"/ProductsByCategory", state:{subCatId:altkat.altKategoriID}}}>
-                          <MDBDropdownItem>{altkat.altKategori1}</MDBDropdownItem>
-                      </Link>
-                    )
+                      <MDBDropdownItem>{altkat.altKategori1}</MDBDropdownItem>
+                  </Link>
+                  )
+                    
                 })
-           }
+              */   }
           </MDBDropdownMenu>   
         </MDBDropdown>
       </MDBNavItem>
@@ -90,7 +92,7 @@ render(){
            <MDBNavbarNav right>
 
            <button type="button" class="btn btn-warning">
-            Sepetim <span class="badge badge-light">{this.state.UrunCount}</span>
+            Sepetim <span class="badge badge-light">{Cookies.get("ProductCount")}</span>
             <span class="sr-only">unread messages</span>
             </button>
          
