@@ -9,12 +9,30 @@ namespace DAL
     public class UrunDAL
     {
         Models.Entities db = new Models.Entities();
-        public List<Models.Urun> GetAllProduct()
+        public List<ViewModels.ProductStokViewModel> GetAllProduct()
         {
             var model = db.Urun.ToList();
+            var Products = new List<ViewModels.ProductStokViewModel>();
             if (model != null)
-            {
-                return model;
+            {   
+                foreach(var urun in model)
+                {
+                    var product = new ViewModels.ProductStokViewModel();
+                    product.ad = urun.ad;
+                    product.adet = urun.Stok.adet;
+                    product.altKategoriID = urun.altKategoriID;
+                    product.eklenmeTarihi = urun.eklenmeTarihi;
+                    product.fiyat = urun.fiyat;
+                    product.imagePath = urun.imagePath;
+                    product.markaID = urun.markaID;
+                    product.satinAlinmaDurumu = urun.satinAlinmaDurumu;
+                    product.stokID = urun.stokID;
+                    product.urunID = urun.urunID;
+
+                    Products.Add(product);
+                }
+
+                return Products;
             }
             else
             {
@@ -36,12 +54,28 @@ namespace DAL
 
         }
 
-        public List<Models.Urun> GetProductsByCategory(int id)
+        public List<ViewModels.ProductStokViewModel> GetProductsByCategory(int id)
         {
-            var model = db.Urun.Where(m => m.altKategoriID == id).ToList();
-            if (model != null)
+            var Urunler = db.Urun.Where(x=>x.altKategoriID==id).ToList();
+            var Products = new List<ViewModels.ProductStokViewModel>();
+            if (Urunler.Count>0)
             {
-                return model;
+                foreach(var model in Urunler) { 
+                
+                    var product = new ViewModels.ProductStokViewModel();
+                    product.ad = model.ad;
+                    product.adet = model.Stok.adet;
+                    product.altKategoriID = model.altKategoriID;
+                    product.eklenmeTarihi = model.eklenmeTarihi;
+                    product.fiyat = model.fiyat;
+                    product.imagePath = model.imagePath;
+                    product.markaID = model.markaID;
+                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
+                    product.stokID = model.stokID;
+                    product.urunID = model.urunID;
+                    Products.Add(product);
+                }
+                return Products;
             }
             else
             {

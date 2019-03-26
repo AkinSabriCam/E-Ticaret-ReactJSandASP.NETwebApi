@@ -14,5 +14,7 @@ namespace DAL.ViewModels
         public Nullable<int> adet { get; set; }
         public Nullable<decimal> toplamFiyat { get; set; }
         public int kullaniciID { get; set; }
+        public string ad { get; set; }
+        public Nullable<decimal> fiyat { get; set; }
     }
 }

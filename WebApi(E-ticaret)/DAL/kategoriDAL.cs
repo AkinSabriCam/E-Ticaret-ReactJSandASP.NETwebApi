@@ -9,12 +9,29 @@ namespace DAL
     public class kategoriDAL
     {
         Models.Entities db = new Models.Entities();
-        public List<Models.Kategori> GetAllCategory()
+        public List<ViewModels.KategoriAltKategoriViewModel> GetAllCategory()
         {
             var model = db.Kategori.ToList();
+            var Kategoriler = new List<ViewModels.KategoriAltKategoriViewModel>();
             if (model != null)
-            {
-                return model;
+            { 
+                foreach(var kat in model)
+                {
+                    var kategori = new ViewModels.KategoriAltKategoriViewModel();
+                    
+                    foreach (var altkat in kat.AltKategori)
+                    {
+                        var altkategori = new ViewModels.AltKategoriModelView();
+                        altkategori.altkategori = altkat.altKategori1;
+                        altkategori.altkategoriId = altkat.altKategoriID;
+                        kategori.AltKategoriler.Add(altkategori);
+ 
+                    }
+
+                    kategori.KategoriAdi = kat.kategori1;
+                    Kategoriler.Add(kategori);
+                }
+                return Kategoriler;
             }
             else
             {

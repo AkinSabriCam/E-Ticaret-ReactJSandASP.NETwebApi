@@ -21,7 +21,6 @@ export class HomePage extends React.Component{
    }
   
   componentDidMount(){
-     
     fetch("http://localhost:50040/api/Urunler/GetAllProducts").then(data=>data.json())
     .then(result=>{this.setState({Products:result})
     console.log(result); 
@@ -42,7 +41,7 @@ export class HomePage extends React.Component{
             Cookies.set("Oturum","true",{
               path:'',
               expires:OneMinutes 
-            });
+            },()=>{console.log("OTURUM SÜRESİ DOLDU")});
       // cookie'ye  1 dakikalık tutma süresi veriliyor burada....
       }
       else{
@@ -51,8 +50,7 @@ export class HomePage extends React.Component{
       
       }
      })
-      
-      .catch(error=>console.log("error"));
+    .catch(error=>console.log("error"));
     
       
   }

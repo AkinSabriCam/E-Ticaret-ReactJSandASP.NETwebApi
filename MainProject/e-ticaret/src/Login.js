@@ -45,14 +45,16 @@ componentDidMount(){
     // Kullanicinin Id sini almak için bir request yolluyorum
     fetch(`http://localhost:50040/api/Users/GetUserId?username=${UserName}&password=${Password}`)
     .then(data=>data.json())
-    .then(result=>{
-      let updateKullaniciId = {
-          type: "kullaniciId",
-          payload: result.kullaniciID
-        }
-        this.props.dispatch(updateKullaniciId);
-        console.log("ok");
-      })
+    .then(result=>{Cookies.set("kullaniciID",result.kullaniciID)
+      console.log(Cookies.get("kullaniciID"))
+    
+      fetch("http://localhost:50040/api/Sepet/GetProductCountinSepet/"+Cookies.get("kullaniciID"))
+      .then(data=>data.json())
+      .then(result=>{Cookies.set("ProductCount",result)})
+      .catch(err=>console.log(err));
+      
+    
+    })
     .catch(err=>console.log(err));
   }
   render(){
