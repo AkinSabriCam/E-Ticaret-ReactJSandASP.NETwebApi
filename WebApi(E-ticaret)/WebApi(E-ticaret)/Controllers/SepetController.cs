@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using DAL;
 using DAL.Models;
-
+using Newtonsoft.Json;
 namespace WebApi_E_ticaret_.Controllers
 {
     
@@ -20,6 +20,7 @@ namespace WebApi_E_ticaret_.Controllers
             var model = sepetDal.GetAllSepetforVisitor(id);
             if (model != null)
             {
+                
                 return Ok(model);
             }
             else
@@ -33,7 +34,7 @@ namespace WebApi_E_ticaret_.Controllers
         {  
             // buraya gönderilen Id kullanıcının id sidir.  
 
-            var model = sepetDal.GetAllSepetforVisitor(id);
+            var model = sepetDal.GetAllSepetforUser(id);
             if (model != null)
             {
                 return Ok(model);
@@ -41,6 +42,22 @@ namespace WebApi_E_ticaret_.Controllers
             else
             {
                 return NotFound();
+            }
+
+        }
+        [HttpGet]
+        public IHttpActionResult GetProductCountinSepet(int id)
+        {
+            // buraya gönderilen Id kullanıcının id sidir.  
+
+            var count = sepetDal.GetProductCountinSepet(id);
+            if (count> 0)
+            {
+                return Ok(count);
+            }
+            else
+            {
+                return Ok(count);
             }
 
         }

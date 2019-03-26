@@ -15,13 +15,12 @@ namespace WebApi_E_ticaret_
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
+             config.Formatters.Remove(config.Formatters.XmlFormatter);
             config.Formatters.Add(config.Formatters.JsonFormatter);
-            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings
-            .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
-            config.Formatters.JsonFormatter.SerializerSettings.
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+
+            var json = config.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
 
 
             config.Routes.MapHttpRoute(

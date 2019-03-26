@@ -9,12 +9,25 @@ namespace DAL
     public class sepetDAL
     {
         Models.Entities db = new Models.Entities();
-        public List<Models.SepettekiUrunler> GetAllSepetforVisitor(int sepetId)
+        public List<ViewModels.UserSepettekiUrunlerViewModel> GetAllSepetforVisitor(int sepetId)
         {
             var Products = db.SepettekiUrunler.Where(x => x.sepetID == sepetId).ToList();
+
+            var SepettekiUrunler = new List<ViewModels.UserSepettekiUrunlerViewModel>();
             if (Products.Count != 0)
             {
-                return Products;
+                foreach (var sepUrun in Products)
+                {
+                    var sepettekiUrun = new ViewModels.UserSepettekiUrunlerViewModel();
+                    sepettekiUrun.ad = sepUrun.Urun.ad;
+                    sepettekiUrun.adet = sepUrun.adet;
+                    sepettekiUrun.fiyat = sepUrun.Urun.fiyat;
+                    sepettekiUrun.toplamFiyat = sepUrun.toplamFiyat;
+                    SepettekiUrunler.Add(sepettekiUrun);
+
+                }
+
+                return SepettekiUrunler;
             }
             else
             {
@@ -89,7 +102,7 @@ namespace DAL
                 var sepettekiUrun = new Models.SepettekiUrunler();
                 sepettekiUrun.adet = model.adet;
                 sepettekiUrun.sepetID = model.sepetID;
-                sepettekiUrun.urunID = model.urunID;
+                sepettekiUrun.urunID = product2.urunID;
                 sepettekiUrun.toplamFiyat = model.adet * product2.fiyat;
                 db.SepettekiUrunler.Add(sepettekiUrun);
                 db.SaveChanges();
@@ -112,7 +125,7 @@ namespace DAL
                             SepettekiUrunler.adet = model.adet;
                             SepettekiUrunler.sepetID = sep.sepetID;
                             SepettekiUrunler.adet = model.adet;
-                            SepettekiUrunler.urunID = model.urunID;
+                            SepettekiUrunler.urunID = product.urunID;
                             SepettekiUrunler.toplamFiyat = product.fiyat * model.adet;
                             db.SepettekiUrunler.Add(SepettekiUrunler);
                             db.SaveChanges();
@@ -133,7 +146,7 @@ namespace DAL
                     var sepettekiUrun1 = new Models.SepettekiUrunler();
                     sepettekiUrun1.adet = model.adet;
                     sepettekiUrun1.sepetID = NewSepet1.sepetID;
-                    sepettekiUrun1.urunID = model.urunID;
+                    sepettekiUrun1.urunID = product1.urunID;
                     sepettekiUrun1.toplamFiyat = model.adet * product1.fiyat;
                     db.SepettekiUrunler.Add(sepettekiUrun1);
                     db.SaveChanges();
@@ -142,6 +155,22 @@ namespace DAL
                 return true;
             }
             
+        }
+        public int GetProductCountinSepet(int id)
+        {
+            var sepet = db.Sepet.FirstOrDefault(x => x.kullaniciID == id);
+            if (sepet!=null)
+            {
+                return sepet.SepettekiUrunler.Count();
+            }
+            else
+            {
+                return 0;
+            }
+
+                        
+            
+
         }
     }
 }
