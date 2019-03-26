@@ -4,7 +4,15 @@ import './css/site.css';
 export class Favourite extends Component{
     render(){
         return(
-            <div class="cart_section">
+            <div>
+            <div class="home" style={{height:50}}>
+		    
+		    <div class="home_overlay"></div>
+		    <div class="home_content d-flex flex-column align-items-center justify-content-center">
+			<h4 class="home_title">Favorilerim</h4>
+		    </div>
+	        </div>
+            <div class="cart_section" style={{marginTop:-100}} >
                 <div class="container">
                     <div class="row">
                     <div class="col-lg-10 offset-lg-1">
@@ -146,6 +154,7 @@ export class Favourite extends Component{
                 </div>
             </div>
             </div>
+        </div>
         )
     }
 

@@ -4,7 +4,7 @@ import {Modal,Button} from 'react-bootstrap';
 import Cookies from 'js-cookie';
 
 
-export default class Login extends Component {
+export default class Login extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state={
@@ -54,10 +54,7 @@ componentDidMount(){
         console.log("ok");
       })
     .catch(err=>console.log(err));
-
-    
   }
-  
   render(){
     
     return (

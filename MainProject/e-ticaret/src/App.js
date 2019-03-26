@@ -5,14 +5,14 @@ import { CookiesProvider } from 'react-cookie';
 import {Route,BrowserRouter as Router} from 'react-router-dom';
 import {HomePage} from './HomePage';
 import {NavbarPage} from './NavbarPage';
-import { ProductDetail } from './ProductDetail';
+import {ProductDetail} from './ProductDetail';
 import Login from './Login';
-import {ProductDetail } from './ProductDetail';
 import {Register} from './Register';
 import {User} from './User';
 import {Siparis} from './Siparis';
 import {Favourite} from './Favourite'
 import {ProductsByCategory} from './ProductsByCategory';
+import { PersonalDetail } from './PersonalDetail';
 
 class App extends Component {
   render() {
@@ -28,10 +28,11 @@ class App extends Component {
      <Route  path="/Login" component={Login}/>
      <Route  path="/Register" component={Register}/>
      <Route  path="/User" component={User}/>
-     <Route  path="/Favourite" component={Favourite}/>
-     <Route  path="/Siparis"   component={Siparis}/>
+     <Route  path="/User/Favourite" component={Favourite}/>
+     <Route  path="/User/Siparis"   component={Siparis}/>
      <Route exact path="/" component={HomePage}/>
      <Route path="/ProductsByCategory" component={ProductsByCategory}/>
+     <Route  path="/User/PersonalDetail"   component={PersonalDetail}/>
      </div>
      </Router>
      </CookiesProvider>

@@ -1,6 +1,6 @@
 
-    import React from 'react';
-    import './ShopStyle/shop_styles.css';
+  import React from 'react';
+  import './ShopStyle/shop_styles.css';
 	import './ShopStyle/shop_responsive.css';
 	import './ShopStyle/plugins/jquery-ui.css';
 	import {Link,Redirect} from 'react-router-dom';
@@ -139,7 +139,7 @@
 				<div className="col-lg-9">
 
 					<div className="shop_content">
-						<div className="shop_bar clearfix">
+						<div className="yr clearfix">
 							<div className="shop_product_count"><span>{this.state.Products.count}</span> products found</div>
 							<div className="shop_sorting">
 								<span>Sort by:</span>

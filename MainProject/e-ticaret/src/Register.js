@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './css/site.css';
 import {Modal,Button, Dropdown} from 'react-bootstrap';
-
+import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
   
 export class Register extends Component {
   constructor(props, context) {
@@ -67,13 +67,10 @@ export class Register extends Component {
         {console.log(cy)}
         return(
           <div>
-            <Dropdown.Menu>
-            <Dropdown.Item>{cy}</Dropdown.Item>
-            </Dropdown.Menu>
+                <MDBDropdownItem>{cy}</MDBDropdownItem>
         </div>
       )
   })
-    
      console.log(this.state.Location);
     return (
         <div className='menu'>
@@ -126,11 +123,13 @@ export class Register extends Component {
                 placeholder="************"/>
 
                 <label htmlFor="formGroupExampleInput">Il</label>
-                <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">Dropdown Button</Dropdown.Toggle>
-                  {city}
-                </Dropdown>
-                  
+                <MDBDropdown>
+                <MDBDropdownToggle caret color="primary">Il Seçiniz..</MDBDropdownToggle>
+                <MDBDropdownMenu  basic >
+                {city}
+                <MDBDropdownItem divider />
+                </MDBDropdownMenu>
+                 </MDBDropdown>                  
                 <label htmlFor="formGroupExampleInput">Ilce</label>
                 
                 
@@ -149,10 +148,3 @@ export class Register extends Component {
   }
   
 export default Register;
-/*{
-  kat.AltKategori.map((altkat,ind)=>{
-     return(
-       <MDBDropdownItem>{altkat.altKategori1}</MDBDropdownItem>
-     )
- })
-}*/
