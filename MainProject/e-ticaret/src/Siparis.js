@@ -5,7 +5,7 @@ import "./styles/cart_styles.css";
 import Cookies from 'js-cookie';
 import{Redirect} from 'react-router';
 
-export class Siparis extends Component{
+export class Siparis extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -40,18 +40,10 @@ export class Siparis extends Component{
 
             }
     }
-
     render(){
         let Urunler=this.state.SiparisProducts.map((sepet,ind)=>{
             return(
-                <div>
-            <div class="home" style={{height:50}}>
-		    <div class="home_overlay"></div>
-		    <div class="home_content d-flex flex-column align-items-center justify-content-center">
-			<h4 class="home_title">Siparişlerim</h4>
-		    </div>
-	        </div>
-            <div class="cart_section" style={{marginTop:-100}}>
+            <div>
                 <div class="cart_container">
                 <div class="cart_title"></div>
                 <div class="cart_items">
@@ -94,16 +86,28 @@ export class Siparis extends Component{
                 <button type="button" class="button cart_button_checkout">Buy</button>						    
                 </div>
                 <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-            </div>
-            </div>
+            <br></br>
             
+            <br></br>
+            <br></br>
+            </div>
+            </div>
             )
-        })
-        )
-    }
 
+        })
+        return(
+            <div class="cart_section">
+                <div class="container">
+                    <div class="row">
+                    <div class="col-lg-10 offset-lg-1">
+                        {Urunler}
+                    </div>
+                </div>
+            </div>
+            </div>
+        )
+        
+    }
 }
+
 export default Siparis;

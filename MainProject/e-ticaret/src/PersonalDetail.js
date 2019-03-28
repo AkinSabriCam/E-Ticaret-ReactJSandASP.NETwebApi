@@ -8,25 +8,15 @@ export class PersonalDetail extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      name:"",
-      lastname:"",
-      email:"",
-      username:"",
-      password:""
+      User:[]
     }
   }
   componentDidMount(){
-    fetch("http://localhost:50040/api/Users/GetUserById/")
+    fetch("http://localhost:50040/api/Users/GetUserById/"+Cookies.get("kullaniciId"))
       .then(response => response.json())
-      .then((jsonData) => {
-          // jsonData is parsed json object received from url
-          console.log(jsonData)
-      })
-      .catch((error) => {
-      // handle your errors here
-      console.error(error)
-        })
-  } 
+      .then((jsonData) =>{{console.log(jsonData)}}).catch((error) =>{console.error(error)})
+      console.log(Cookies.get("kullaniciId"))
+    } 
 
     render(){
         return(
@@ -53,19 +43,19 @@ export class PersonalDetail extends React.Component{
                           <div class="form-group">
                             <label class="col-lg-8 control-label">First name:</label>
                             <div class="col-lg-8">
-                              <input class="form-control" type="text" value="Jane"/>
+                              <input class="form-control" type="text" placeholder="Jane"/>
                             </div>
                           </div>
                           <div class="form-group">
                             <label class="col-lg-8 control-label">Last name:</label>
                             <div class="col-lg-8">
-                              <input class="form-control" type="text" value="Bishop"/>
+                              <input class="form-control" type="text" placeholder="Bishop"/>
                             </div>
                           </div>
                           <div class="form-group">
                             <label class="col-lg-8 control-label">Email:</label>
                             <div class="col-lg-8">
-                              <input class="form-control" type="text" value="janesemail@gmail.com"/>
+                              <input class="form-control" type="text" placeholder="janesemail@gmail.com"/>
                             </div>
                           </div>
                           <div class="form-group">
@@ -95,13 +85,13 @@ export class PersonalDetail extends React.Component{
                           <div class="form-group">
                             <label class="col-md-8 control-label">Username:</label>
                             <div class="col-md-8">
-                              <input class="form-control" type="text" value="janeuser"/>
+                              <input class="form-control" type="text" placeholder="janeuser"/>
                             </div>
                           </div>
                           <div class="form-group">
                             <label class="col-md-8 control-label">Password:</label>
                             <div class="col-md-8">
-                              <input class="form-control" type="password" value="11111122333"/>
+                              <input class="form-control" type="password" placeholder="11111122333"/>
                             </div>
                           </div>
                           <div class="form-group">

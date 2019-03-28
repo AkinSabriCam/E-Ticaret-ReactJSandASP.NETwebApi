@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import cartt from './img/shopping_cart.jpg';
 import './css/site.css';
-export class Favourite extends Component{
+export class Favourite extends React.Component{
     render(){
         return(
             <div>
@@ -59,8 +59,6 @@ export class Favourite extends Component{
                             </div>
             
                         </div>
-                        <br></br>
-                        <br></br>
                         <div class="cart_container">
                             <div class="cart_title"></div>
                             <div class="cart_items">
@@ -102,10 +100,7 @@ export class Favourite extends Component{
 						    <div class="cart_buttons">
                             <button type="button" class="button cart_button_checkout">Remove</button>						    
                             </div>
-            
                         </div>
-                        <br></br>
-                        <br></br>
                         <div class="cart_container">
                             <div class="cart_title"></div>
                             <div class="cart_items">
@@ -143,13 +138,10 @@ export class Favourite extends Component{
 								<div class="order_total_amount">$2000</div>
 							</div>
 						    </div>
-
 						    <div class="cart_buttons">
                             <button type="button" class="button cart_button_checkout">Remove</button>						    
                             </div>
-            
                         </div>
-
                     </div>
                 </div>
             </div>

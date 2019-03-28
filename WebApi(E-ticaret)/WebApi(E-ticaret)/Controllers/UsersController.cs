@@ -83,7 +83,7 @@ namespace WebApi_E_ticaret_.Controllers
 
         }
 
-        public IHttpActionResult PutUser(DAL.ViewModels.UserViewModel model)
+        /*public IHttpActionResult PutUser(DAL.ViewModels.UserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace WebApi_E_ticaret_.Controllers
             {
                 return BadRequest();
             }
-        }
+        }*/
         public IHttpActionResult DeleteUser(int id)
         {
             if (id > 0)
