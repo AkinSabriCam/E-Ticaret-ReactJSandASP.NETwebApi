@@ -5,7 +5,7 @@ import "./styles/cart_styles.css";
 import Cookies from 'js-cookie';
 import{Redirect} from 'react-router';
 
-export class Siparis extends Component{
+export class Siparis extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -40,10 +40,10 @@ export class Siparis extends Component{
 
             }
     }
-
     render(){
         let Urunler=this.state.SiparisProducts.map((sepet,ind)=>{
             return(
+            <div>
                 <div class="cart_container">
                 <div class="cart_title"></div>
                 <div class="cart_items">
@@ -91,7 +91,7 @@ export class Siparis extends Component{
             <br></br>
             <br></br>
             </div>
-            
+            </div>
             )
 
         })
@@ -106,7 +106,8 @@ export class Siparis extends Component{
             </div>
             </div>
         )
+        
     }
-
 }
+
 export default Siparis;

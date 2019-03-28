@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import cartt from './img/shopping_cart.jpg';
 import './css/site.css';
-export class Favourite extends Component{
+export class Favourite extends React.Component{
     render(){
         return(
-            <div class="cart_section">
+            <div>
+            <div class="home" style={{height:50}}>
+		    
+		    <div class="home_overlay"></div>
+		    <div class="home_content d-flex flex-column align-items-center justify-content-center">
+			<h4 class="home_title">Favorilerim</h4>
+		    </div>
+	        </div>
+            <div class="cart_section" style={{marginTop:-100}} >
                 <div class="container">
                     <div class="row">
                     <div class="col-lg-10 offset-lg-1">
@@ -51,8 +59,6 @@ export class Favourite extends Component{
                             </div>
             
                         </div>
-                        <br></br>
-                        <br></br>
                         <div class="cart_container">
                             <div class="cart_title"></div>
                             <div class="cart_items">
@@ -94,10 +100,7 @@ export class Favourite extends Component{
 						    <div class="cart_buttons">
                             <button type="button" class="button cart_button_checkout">Remove</button>						    
                             </div>
-            
                         </div>
-                        <br></br>
-                        <br></br>
                         <div class="cart_container">
                             <div class="cart_title"></div>
                             <div class="cart_items">
@@ -135,17 +138,15 @@ export class Favourite extends Component{
 								<div class="order_total_amount">$2000</div>
 							</div>
 						    </div>
-
 						    <div class="cart_buttons">
                             <button type="button" class="button cart_button_checkout">Remove</button>						    
                             </div>
-            
                         </div>
-
                     </div>
                 </div>
             </div>
             </div>
+        </div>
         )
     }
 

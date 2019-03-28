@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import {Favourite} from "./Favourite";
+import {Link,Redirect} from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 
 export class User extends Component{
     render(){
@@ -16,9 +19,10 @@ export class User extends Component{
                         </div>
 
                         <ul class="cat_menu">
-                          <li><a href="#">Siparişlerim <i class="fas fa-chevron-right ml-auto"></i></a></li>
-                          <li><a href="#">Bilgilerim<i class="fas fa-chevron-right"></i></a></li>
-                          <li><a href="#">Favorilerim<i class="fas fa-chevron-right"></i></a></li>
+                        
+                          <li><a href="#" > <Link to={{pathname:"/User/Siparislerim"}}> Siparişlerim </Link>  <i class="fas fa-chevron-right ml-auto"></i></a></li>
+                          <li><a href="#">  <Link to={{pathname:"/User/PersonalDetail"}}> Üyelik Bilgilerim </Link><i class="fas fa-chevron-right"></i></a></li>
+                          <li><a href="#">  <Link to={{pathname:"/User/Favourite"}}> Favorilerim </Link><i class="fas fa-chevron-right"></i></a></li>
                         </ul>
 
                       </div>

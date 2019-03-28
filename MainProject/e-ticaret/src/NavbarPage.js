@@ -95,10 +95,14 @@ render(){
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
-          <MDBNavbar>           
+          <MDBNavbar>
+           <Link to="/Login">         
            <MDBBtn rounded outline color="warning"> Sign In </MDBBtn>
+           </Link>
            <MDBNavbar></MDBNavbar> 
+           <Link to="/Register" >
            <MDBBtn rounded outline color="warning"> Sign Up </MDBBtn>
+           </Link>
            </MDBNavbar>
            </MDBNavbar>
            <MDBNavbar>

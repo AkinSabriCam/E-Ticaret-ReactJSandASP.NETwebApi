@@ -4,7 +4,7 @@ import {Modal,Button} from 'react-bootstrap';
 import Cookies from 'js-cookie';
 
 
-export default class Login extends Component {
+export default class Login extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state={
@@ -25,42 +25,38 @@ componentDidMount(){
     this.setState({show: false });
   }
 
-  Login(){
-    let UserName=document.getElementById("username").value;
-    let Password=document.getElementById("password").value;
-    
-    fetch("http://localhost:50040/token",{
-      method:"post",
-      headers:{
-        "content-type":"application/x-www-form-urlencoded"
-      },
-      body:`UserName=${UserName}&Password=${Password}&grant_type=password`
-    }).then(data=>data.json())
-    .then(result=>{
-      console.log(result);
-      Cookies.set("Login","true");
-    })
-    .catch(err=>console.log(err));
+          Login(){
+            let UserName=document.getElementById("username").value;
+            let Password=document.getElementById("password").value;
+            
+            fetch("http://localhost:50040/token",{
+              method:"post",
+              headers:{
+                "content-type":"application/x-www-form-urlencoded"
+              },
+              body:`UserName=${UserName}&Password=${Password}&grant_type=password`
+            }).then(data=>data.json())
+            .then(result=>{
+              console.log(result);
+              Cookies.set("Login","true");
+            })
+            .catch(err=>console.log(err));
 
-    // Kullanicinin Id sini almak için bir request yolluyorum
-    fetch(`http://localhost:50040/api/Users/GetUserId?username=${UserName}&password=${Password}`)
-    .then(data=>data.json())
-    .then(result=>{Cookies.set("kullaniciID",result.kullaniciID)
-      console.log(Cookies.get("kullaniciID"))
-    
-      fetch("http://localhost:50040/api/Sepet/GetProductCountinSepet/"+Cookies.get("kullaniciID"))
-      .then(data=>data.json())
-      .then(result=>{Cookies.set("ProductCount",result)})
-      .catch(err=>console.log(err));
-      
-    
-    })
-    .catch(err=>console.log(err));
-
-   
-    
+            // Kullanicinin Id sini almak için bir request yolluyorum
+            fetch(`http://localhost:50040/api/Users/GetUserId?username=${UserName}&password=${Password}`)
+            .then(data=>data.json())
+            .then(result=>{Cookies.set("kullaniciID",result.kullaniciID)
+              console.log(Cookies.get("kullaniciID"))
+            
+              fetch("http://localhost:50040/api/Sepet/GetProductCountinSepet/"+Cookies.get("kullaniciID"))
+              .then(data=>data.json())
+              .then(result=>{Cookies.set("ProductCount",result)})
+              .catch(err=>console.log(err));
+              
+            
+            })
+            .catch(err=>console.log(err));
   }
-  
   render(){
     
     return (

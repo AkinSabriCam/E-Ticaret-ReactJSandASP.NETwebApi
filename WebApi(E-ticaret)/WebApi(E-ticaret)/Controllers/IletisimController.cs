@@ -11,9 +11,8 @@ namespace WebApi_E_ticaret_.Controllers
     public class IletisimController : ApiController
     {
         DAL.iletisimDAL iletisimDal = new iletisimDAL();
-
         [HttpGet]
-        public IHttpActionResult GetAllProvince()
+        public IHttpActionResult GetAllCity()
         {
             var model = iletisimDal.GetAllCity();
             if (model != null)
@@ -25,86 +24,6 @@ namespace WebApi_E_ticaret_.Controllers
                 return NotFound();
             }
         }
-
-        [HttpGet]
-        public IHttpActionResult GetProvinceById(int id)
-        {
-            if (id > 0)
-            {
-                var model = iletisimDal.GetProvinceByid(id);
-                if (model != null)
-                {
-                    return Ok(model);
-                }
-                else
-                {
-                    return NotFound();
-                }
-
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-
-        [HttpPost]
-        public IHttpActionResult PostProvince(DAL.Models.Il model)
-        {
-            if (ModelState.IsValid)
-            {
-                iletisimDal.PostProvince(model);
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-
-        [HttpPut]
-        public IHttpActionResult PutProvince(DAL.Models.Il model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (iletisimDal.PutProvince(model))
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-        [HttpDelete]
-        public IHttpActionResult DeleteProvince(int id)
-        {
-            if (id > 0)
-            {
-                if (iletisimDal.DeleteProvince(id))
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return NotFound();
-                }
-
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-      
 
         [HttpGet]
         public IHttpActionResult GetCityById(int id)
@@ -130,7 +49,7 @@ namespace WebApi_E_ticaret_.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult PostCity(DAL.Models.Ilce model)
+        public IHttpActionResult PostCity(DAL.Models.Il model)
         {
             if (ModelState.IsValid)
             {
@@ -145,7 +64,7 @@ namespace WebApi_E_ticaret_.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult PutCity(DAL.Models.Ilce model)
+        public IHttpActionResult PutCity(DAL.Models.Il model)
         {
             if (ModelState.IsValid)
             {
@@ -184,6 +103,99 @@ namespace WebApi_E_ticaret_.Controllers
                 return BadRequest();
             }
         }
+        [HttpGet]
+        public IHttpActionResult GetAllLocation()
+        {
+            var model = iletisimDal.GetAllLocation();
+            if (model != null)
+            {
+                return Ok(model);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
 
+
+        [HttpGet]
+        public IHttpActionResult GetLocationById(int id)
+        {
+            if (id > 0)
+            {
+                var model = iletisimDal.GetLocationByid(id);
+                if (model != null)
+                {
+                    return Ok(model);
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpPost]
+        public IHttpActionResult PostLocaiton(DAL.Models.Ilce model)
+        {
+            if (ModelState.IsValid)
+            {
+                iletisimDal.PostLocation(model);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpPut]
+        public IHttpActionResult PutLocation(DAL.Models.Ilce model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (iletisimDal.PutLocation(model))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+        [HttpDelete]
+        public IHttpActionResult DeleteLocation(int id)
+        {
+            if (id > 0)
+            {
+                if (iletisimDal.DeleteLocation(id))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        
     }
 }

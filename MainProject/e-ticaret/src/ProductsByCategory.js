@@ -7,7 +7,7 @@
 		import $ from 'jquery';				
 
 		let Urunler = [];
-
+						
     export class ProductsByCategory extends React.Component {
 
 			constructor(props) {
@@ -217,8 +217,9 @@
 						</div>
 						</div>
 						</div>
-						</div>
-						</div>
+					</div>
+
+				</div>
 					)
       }
     }
