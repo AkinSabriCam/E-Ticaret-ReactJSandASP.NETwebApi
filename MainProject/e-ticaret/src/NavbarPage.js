@@ -6,6 +6,7 @@ import './css/site.css';
 import {Modal,Button} from 'react-bootstrap';
 import {Redirect,Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
+import $ from 'jquery';	
 
 
 export class NavbarPage extends Component {
@@ -15,7 +16,8 @@ export class NavbarPage extends Component {
       isOpen:false,
       Category:[],
       show: false,
-      UrunCount:0
+      UrunCount:0,
+      text: ''
     }
   }
   componentDidMount(){
@@ -36,8 +38,16 @@ export class NavbarPage extends Component {
   toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
   } 
+
+  getText = () => {
+    
+    var val = document.getElementById("searchInput").value;
+    this.setState({text:val});
+  }
+
+
 render(){
-    let Category=this.state.Category.map((kat,ind)=>{
+    let Kategoriler=this.state.Category.map((kat,ind)=>{
   
       return(
         <MDBNavItem>
@@ -46,24 +56,20 @@ render(){
             <span className="mr-2">{kat.KategoriAdi}</span>
           </MDBDropdownToggle>
           <MDBDropdownMenu>
-         {
-       kat.AltKategoriler.map((altkat,ind)=>{
+          {
+              kat.AltKategoriler.map((altkat,ind)=>{
    
-                  return(
-                     
-                      <Link to={{pathname:"/ProductsByCategory", state:{subCatId:altkat.altKategoriID}}}>
+                  return(                    
+                  <Link to={{pathname:"/ProductsByCategory", state:{subCatId:altkat.altkategoriId}}}>
                       <MDBDropdownItem>{altkat.altkategori}</MDBDropdownItem>
                   </Link>
                   )
-                    
-
                 })
-            }
+          }
           </MDBDropdownMenu>   
         </MDBDropdown>
       </MDBNavItem>
       )
-  
     })
 
   return (
@@ -73,9 +79,13 @@ render(){
       <MDBNavItem>
               <MDBFormInline waves >
                 <div className="md-form my-0">
-                  <input className="form-control mr-sm-2" type="text"  style={{width:500}} placeholder="Bu sitede ara..." aria-label="Search" />
+                  <input id="searchInput" onInput={this.getText} className="form-control mr-sm-2" type="text"  style={{width:500}} placeholder="Bu sitede ara..." aria-label="Search" />
                 </div>
-                <MDBBtn rounded outline color="warning">Search</MDBBtn> 
+                
+               <Link to={{pathname:"/SearchProducts", state:{searchText: this.state.text}}}> 
+                    <MDBBtn rounded outline color="warning">Search</MDBBtn>   
+               </Link>
+
               </MDBFormInline>
             </MDBNavItem>
           </MDBNavbarNav>
@@ -95,23 +105,23 @@ render(){
            <MDBNavbarNav right>
 
            <Link to="/Siparis" className="btn btn-dark">
-            Sepetim <span class="badge badge-light">{Cookies.get("ProductCount")}</span>
-            <span class="sr-only">unread messages</span>
+                Sepetim <span className="badge badge-light">{Cookies.get("ProductCount")}</span>
+                <span className="sr-only">unread messages</span>
             </Link>
          
            </MDBNavbarNav>
            </MDBNavbar>
-      <MDBNavbar color="indigo" dark expand="md">
-        <MDBNavbarBrand>
-          <strong className="white-text">KATEGORİLER</strong>
-        </MDBNavbarBrand>
-        <MDBNavbarToggler  onClick={this.toggleCollapse}/>
-        <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
-          <MDBNavbarNav  center>
-          {Category}
-          </MDBNavbarNav>
-        </MDBCollapse>
-      </MDBNavbar>
+          <MDBNavbar color="indigo" dark expand="md">
+            <MDBNavbarBrand>
+              <strong className="white-text">KATEGORİLER</strong>
+          </MDBNavbarBrand>
+          <MDBNavbarToggler  onClick={this.toggleCollapse}/>
+            <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
+              <MDBNavbarNav  center>
+                {Kategoriler}
+            </MDBNavbarNav>
+          </MDBCollapse>
+       </MDBNavbar>
       </div>
     )
   }

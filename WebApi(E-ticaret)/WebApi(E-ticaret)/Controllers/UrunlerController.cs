@@ -71,6 +71,81 @@ namespace WebApi_E_ticaret_.Controllers
             }
         }
 
+        [HttpGet]
+        public IHttpActionResult GetProductsBySearch(string search)
+        {
+            if (search != "")
+            {
+                var model = urunDal.GetProductsBySearch(search);
+                if (model.Count > 0)
+                    return Ok(model);
+                else
+                    return NotFound();
+            }
+            else
+                return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByBestSellers(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetProductsOrderByBestSellers(id);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByNameASC(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetProductsOrderByNameASC(id);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByNameDESC(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetProductsOrderByNameDESC(id);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByPriceASC(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetProductsOrderByPriceASC(id);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByPriceDESC(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetProductsOrderByPriceDESC(id);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
         [HttpPost]
         public IHttpActionResult PostProductAlreadyExist(DAL.ViewModels.ProductStokViewModel model)
         {

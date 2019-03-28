@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Akın\Documents\GitHub\E-Ticaret-REACT-Js.-and-ASP.NET-RESTFULLAPI\WebApi(E-ticaret)\DAL\Models\Entites.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\HP\Documents\GitHub\E-Ticaret-ReactJSandASP.NETwebApi\WebApi(E-ticaret)\DAL\Models\Entites.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

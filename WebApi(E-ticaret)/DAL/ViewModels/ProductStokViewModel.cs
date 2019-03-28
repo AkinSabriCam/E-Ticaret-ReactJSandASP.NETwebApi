@@ -11,9 +11,11 @@ namespace DAL.ViewModels
         public int urunID { get; set; }
         public string ad { get; set; }
         public Nullable<int> markaID { get; set; }
+        public string marka { get; set; }
         public Nullable<int> altKategoriID { get; set; }
         public Nullable<decimal> fiyat { get; set; }
         public Nullable<System.DateTime> eklenmeTarihi { get; set; }
+        public string altkategori { get; set; }
         public Nullable<int> stokID { get; set; }
         public Nullable<bool> satinAlinmaDurumu { get; set; }
         public string imagePath { get; set; }
