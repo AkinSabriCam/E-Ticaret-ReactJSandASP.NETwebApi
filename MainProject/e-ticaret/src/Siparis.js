@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { Router } from "react-router";
 import{Redirect} from 'react-router';
 
-export class Siparis extends Component{
+export class Siparis extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -43,6 +43,7 @@ export class Siparis extends Component{
 
             }
     }
+
     UrunKaldir(sepetID,sepettekiUrunID){
         console.log(sepetID+"  "+sepettekiUrunID);
         fetch(`http://localhost:50040/api/Sepet/DeleteProductinSepet?sepetid=${sepetID}&uruninsepetid=${sepettekiUrunID}`,{
@@ -98,7 +99,8 @@ export class Siparis extends Component{
         let Urunler=this.state.SiparisProducts.map((sepet,ind)=>{
             {ToplamSiparisTutari+=sepet.toplamFiyat}
             return( 
-                <div class="cart_container">
+            <div>
+             <div class="cart_container">
                 <div class="cart_items">
                     <ul class="cart_list">
                         <li class="cart_item clearfix">
@@ -130,6 +132,8 @@ export class Siparis extends Component{
                     < a className="btn btn-danger" onClick={()=>this.UrunKaldir(sepet.sepetID,sepet.sepettekiUrunID)}>Ürünü Kaldır</a>
                 </div>
             </div>
+
+            </div>
             )
          })
         return(
@@ -153,7 +157,8 @@ export class Siparis extends Component{
             
             </div>
         )
+        
     }
-
 }
+
 export default Siparis;

@@ -7,6 +7,7 @@ import {Login} from './Login'
 import {Modal,Button} from 'react-bootstrap';
 import {Redirect,Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
+import $ from 'jquery';
 
 
 export class NavbarPage extends Component {
@@ -17,9 +18,12 @@ export class NavbarPage extends Component {
       Category:[],
       show: false,
       UrunCount:0,
-      login:false
+      login:false,
+      text: ''
+
     }
     this.LoginPage=this.LoginPage.bind(this);
+    this. getText=this.getText.bind(this);
   }
   componentDidMount(){
     fetch("http://localhost:50040/api/Kategoriler/GetAllCategory",{
@@ -38,15 +42,21 @@ export class NavbarPage extends Component {
   toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
   } 
-  
   LoginPage(){
    this.setState({login:true});
   }
   
-render(){
+  getText = () => {
     
-    let Category=this.state.Category.map((kat,ind)=>{
+    var val = document.getElementById("searchInput").value;
+    this.setState({text:val});
+  }
+
+
+render(){
   
+    let Category=this.state.Category.map((kat,ind)=>{
+
       return(
         <MDBNavItem>
         <MDBDropdown>
@@ -54,24 +64,23 @@ render(){
             <span className="mr-2">{kat.KategoriAdi}</span>
           </MDBDropdownToggle>
           <MDBDropdownMenu>
-         {
-       kat.AltKategoriler.map((altkat,ind)=>{
+          {
+              kat.AltKategoriler.map((altkat,ind)=>{
    
+
                   return(
                      
                       <Link to={{pathname:"/ProductsByCategory", state:{subCatId:altkat.altkategoriId}}}>
+
                       <MDBDropdownItem>{altkat.altkategori}</MDBDropdownItem>
                   </Link>
                   )
-                    
-
                 })
-            }
+          }
           </MDBDropdownMenu>   
         </MDBDropdown>
       </MDBNavItem>
       )
-  
     })
 
 
@@ -82,9 +91,13 @@ render(){
       <MDBNavItem>
               <MDBFormInline waves >
                 <div className="md-form my-0">
-                  <input className="form-control mr-sm-2" type="text"  style={{width:500}} placeholder="Bu sitede ara..." aria-label="Search" />
+                  <input id="searchInput" onInput={this.getText} className="form-control mr-sm-2" type="text"  style={{width:500}} placeholder="Bu sitede ara..." aria-label="Search" />
                 </div>
-                <MDBBtn rounded outline color="warning">Search</MDBBtn> 
+                
+               <Link to={{pathname:"/SearchProducts", state:{searchText: this.state.text}}}> 
+                    <MDBBtn rounded outline color="warning">Search</MDBBtn>   
+               </Link>
+
               </MDBFormInline>
             </MDBNavItem>
           </MDBNavbarNav>
@@ -94,22 +107,27 @@ render(){
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
+
           <MDBNavbar>           
            <Link to="/Login"><MDBBtn rounded outline color="warning" onClick={this.LoginPage}> Sign In </MDBBtn></Link>
+          
            <MDBNavbar></MDBNavbar> 
+           <Link to="/Register" >
            <MDBBtn rounded outline color="warning"> Sign Up </MDBBtn>
+           </Link>
            </MDBNavbar>
            </MDBNavbar>
            <MDBNavbar>
            <MDBNavbarNav right>
 
            <Link to="/Siparis" className="btn btn-dark">
-            Sepetim <span class="badge badge-light">{Cookies.get("ProductCount")}</span>
-            <span class="sr-only">unread messages</span>
+                Sepetim <span className="badge badge-light">{Cookies.get("ProductCount")}</span>
+                <span className="sr-only">unread messages</span>
             </Link>
          
            </MDBNavbarNav>
            </MDBNavbar>
+
       <MDBNavbar color="indigo" dark expand="md">
       <MDBNavbarBrand>
           <Link to="/"><strong className="white-text btnAnasayfa">ANASAYFA</strong></Link>
@@ -124,6 +142,7 @@ render(){
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBNavbar>
+
       </div>
     )
   }

@@ -78,6 +78,42 @@
     <Compile Include="Models\Favoriler.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FN_OrderByBestSallers1_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByBestSallers_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByNameASC1_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByNameASC_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByNameDESC1_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByNameDESC_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByPriceASC1_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByPriceASC_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByPriceDESC1_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByPriceDESC_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_SearchProduct1_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_SearchProduct_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Il.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
@@ -132,9 +168,6 @@
     <Compile Include="Models\Stok.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>Entites.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Urun.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
@@ -147,8 +180,11 @@
     <Compile Include="SiparisSepetLogDAL.cs" />
     <Compile Include="UrunDAL.cs" />
     <Compile Include="ViewModels\AltKategoriModelView.cs" />
+
     <Compile Include="ViewModels\CityandDistrictViewModel.cs" />
     <Compile Include="ViewModels\IlceViewModel.cs" />
+    <Compile Include="ViewModels\ilceViewModel.cs" />
+    <Compile Include="ViewModels\ililceViewModel.cs" />
     <Compile Include="ViewModels\KategoriAltKategoriViewModel.cs" />
     <Compile Include="ViewModels\ProductStokViewModel.cs" />
     <Compile Include="ViewModels\UserSepettekiUrunlerViewModel.cs" />

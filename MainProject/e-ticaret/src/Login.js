@@ -7,6 +7,7 @@ import { HomePage } from "./HomePage";
 
 
 export  class Login extends Component {
+
   constructor(props, context) {
     super(props, context);
     this.state={
@@ -27,6 +28,7 @@ componentDidMount(){
   LoginClose() {
     this.setState({show: false });
   }
+
 
   Login(){
     let UserName=document.getElementById("username").value;
@@ -74,10 +76,7 @@ componentDidMount(){
     })
     .catch(err=>console.log(err));
 
-   
-    
   }
-  
   render(){
     if(this.state.redirect){
       return <Redirect to="/"/>

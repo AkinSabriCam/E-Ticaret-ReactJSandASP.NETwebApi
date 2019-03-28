@@ -12,6 +12,8 @@ namespace DAL.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Entities : DbContext
     {
@@ -46,8 +48,87 @@ namespace DAL.Models
         public virtual DbSet<Siparis> Siparis { get; set; }
         public virtual DbSet<SiparisDetay> SiparisDetay { get; set; }
         public virtual DbSet<Stok> Stok { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Urun> Urun { get; set; }
         public virtual DbSet<ZiyaretciMesaj> ZiyaretciMesaj { get; set; }
+    
+        [DbFunction("Entities", "FN_OrderByBestSallers")]
+        public virtual IQueryable<FN_OrderByBestSallers_Result> FN_OrderByBestSallers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByBestSallers_Result>("[Entities].[FN_OrderByBestSallers]()");
+        }
+    
+        [DbFunction("Entities", "FN_OrderByNameASC")]
+        public virtual IQueryable<FN_OrderByNameASC_Result> FN_OrderByNameASC()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByNameASC_Result>("[Entities].[FN_OrderByNameASC]()");
+        }
+    
+        [DbFunction("Entities", "FN_OrderByNameDESC")]
+        public virtual IQueryable<FN_OrderByNameDESC_Result> FN_OrderByNameDESC()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByNameDESC_Result>("[Entities].[FN_OrderByNameDESC]()");
+        }
+    
+        [DbFunction("Entities", "FN_OrderByPriceASC")]
+        public virtual IQueryable<FN_OrderByPriceASC_Result> FN_OrderByPriceASC()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByPriceASC_Result>("[Entities].[FN_OrderByPriceASC]()");
+        }
+    
+        [DbFunction("Entities", "FN_OrderByPriceDESC")]
+        public virtual IQueryable<FN_OrderByPriceDESC_Result> FN_OrderByPriceDESC()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByPriceDESC_Result>("[Entities].[FN_OrderByPriceDESC]()");
+        }
+    
+        [DbFunction("Entities", "FN_SearchProduct")]
+        public virtual IQueryable<FN_SearchProduct_Result> FN_SearchProduct(string text)
+        {
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_SearchProduct_Result>("[Entities].[FN_SearchProduct](@text)", textParameter);
+        }
+    
+        [DbFunction("Entities", "FN_OrderByBestSallers1")]
+        public virtual IQueryable<FN_OrderByBestSallers1_Result> FN_OrderByBestSallers1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByBestSallers1_Result>("[Entities].[FN_OrderByBestSallers1]()");
+        }
+    
+        [DbFunction("Entities", "FN_OrderByNameASC1")]
+        public virtual IQueryable<FN_OrderByNameASC1_Result> FN_OrderByNameASC1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByNameASC1_Result>("[Entities].[FN_OrderByNameASC1]()");
+        }
+    
+        [DbFunction("Entities", "FN_OrderByNameDESC1")]
+        public virtual IQueryable<FN_OrderByNameDESC1_Result> FN_OrderByNameDESC1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByNameDESC1_Result>("[Entities].[FN_OrderByNameDESC1]()");
+        }
+    
+        [DbFunction("Entities", "FN_OrderByPriceASC1")]
+        public virtual IQueryable<FN_OrderByPriceASC1_Result> FN_OrderByPriceASC1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByPriceASC1_Result>("[Entities].[FN_OrderByPriceASC1]()");
+        }
+    
+        [DbFunction("Entities", "FN_OrderByPriceDESC1")]
+        public virtual IQueryable<FN_OrderByPriceDESC1_Result> FN_OrderByPriceDESC1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByPriceDESC1_Result>("[Entities].[FN_OrderByPriceDESC1]()");
+        }
+    
+        [DbFunction("Entities", "FN_SearchProduct1")]
+        public virtual IQueryable<FN_SearchProduct1_Result> FN_SearchProduct1(string text)
+        {
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_SearchProduct1_Result>("[Entities].[FN_SearchProduct1](@text)", textParameter);
+        }
     }
 }

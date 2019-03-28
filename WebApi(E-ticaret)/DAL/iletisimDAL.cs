@@ -27,7 +27,7 @@ namespace DAL
             }
 
         }
-        public Models.Il GetProvinceByid(int id)
+        public Models.Il GetCityByid(int id)
         {
             var model = db.Il.FirstOrDefault(x => x.ilID == id);
             if (model != null)
@@ -39,6 +39,7 @@ namespace DAL
                 return null;
             }
         }
+
         public List<ViewModels.IlceViewModel> GetDistrictsByCityId(int id)
         {
             var Ilceler = db.Ilce.Where(x => x.ilID == id).ToList();
@@ -60,13 +61,16 @@ namespace DAL
             }
         }
         public bool PostProvince(Models.Il model)
+
+        public bool PostCity(Models.Il model)
+
         {
             db.Il.Add(model);
             db.SaveChanges();
             return true;
 
         }
-        public bool PutProvince(Models.Il model)
+        public bool PutCity(Models.Il model)
         {
 
             var test = db.Il.FirstOrDefault(m => m.ilID == model.ilID);
@@ -82,7 +86,7 @@ namespace DAL
             }
 
         }
-        public bool DeleteProvince(int id)
+        public bool DeleteCity(int id)
         {
             var model = db.Il.FirstOrDefault(m => m.ilID == id);
             if (model != null)
@@ -96,10 +100,23 @@ namespace DAL
                 return false;
             }
         }
+        public List<Models.Ilce> GetAllLocation()
+        {
+
+            var model = db.Ilce.ToList();
+            if (model != null)
+            {
+                return model;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
 
 
-        
-        public Models.Ilce GetCityByid(int id)
+        public Models.Ilce GetLocationByid(int id)
         {
             var model = db.Ilce.FirstOrDefault(x => x.ilceID == id);
             if (model != null)
@@ -111,14 +128,14 @@ namespace DAL
                 return null;
             }
         }
-        public bool PostCity(Models.Ilce model)
+        public bool PostLocation(Models.Ilce model)
         {
             db.Ilce.Add(model);
             db.SaveChanges();
             return true;
 
         }
-        public bool PutCity(Models.Ilce model)
+        public bool PutLocation(Models.Ilce model)
         {
 
             var test = db.Ilce.FirstOrDefault(m => m.ilceID == model.ilceID);
@@ -134,7 +151,7 @@ namespace DAL
             }
 
         }
-        public bool DeleteCity(int id)
+        public bool DeleteLocation(int id)
         {
             var model = db.Ilce.FirstOrDefault(m => m.ilceID == id);
             if (model != null)

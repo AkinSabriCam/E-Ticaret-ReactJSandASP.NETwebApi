@@ -75,15 +75,37 @@ namespace DAL
             db.Kullanici.Add(User);
             db.SaveChanges();
 
-            var iletisim = db.Iletisim.FirstOrDefault(x => x.ilceID == model.ilceID && x.ilID == model.ilID);
+            var Useril = new Models.Il();
+            Useril.il1 = model.il;
+       
+            db.Il.Add(Useril);
+            db.SaveChanges();
 
+
+            var Userilce = new Models.Ilce();
+            Userilce.ilce1 = model.ilce;
+            Userilce.ilID = Useril.ilID;
+
+            db.Ilce.Add(Userilce);
+            db.SaveChanges();
+
+
+            var UserContact = new Models.Iletisim();
+            UserContact.detay = model.acikAdres;
+            UserContact.ilID = Useril.ilID;
+            UserContact.ilceID = Userilce.ilceID;
+
+            db.Iletisim.Add(UserContact);
+            db.SaveChanges();
+
+            //var iletisim = db.Iletisim.FirstOrDefault(x => x.ilceID == model.ilceID && x.ilID == model.ilID);
             var UserInformation = new Models.KullaniciBilgileri();
             UserInformation.ad = model.ad;
-            UserInformation.iletisimID = iletisim.iletisimID;
+            UserInformation.iletisimID = UserContact.iletisimID;
             UserInformation.kullaniciID = User.kullaniciID;
             UserInformation.soyad = model.soyad;
             UserInformation.cinsiyet = model.cinsiyet;
-
+            db.KullaniciBilgileri.Add(UserInformation);
             db.SaveChanges();
             return true;
             
@@ -93,7 +115,7 @@ namespace DAL
             var testUser = db.Kullanici.FirstOrDefault(x => x.kullaniciID == model.kullaniciID);
             if (testUser != null)
             {
-                
+
                 testUser.kullaniciAdi = model.kullaniciAdi;
                 testUser.kayitTarihi = model.kayitTarihi;
                 testUser.email = model.email;

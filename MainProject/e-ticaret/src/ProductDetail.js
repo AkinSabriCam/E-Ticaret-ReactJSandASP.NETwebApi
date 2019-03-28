@@ -158,3 +158,4 @@ export class ProductDetail extends React.Component{
         )
     }
 }
+export default ProductDetail;
