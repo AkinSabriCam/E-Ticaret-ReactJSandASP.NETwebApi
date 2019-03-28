@@ -23,12 +23,28 @@ namespace DAL
             }
         }
 
-        public Models.Kullanici GetusersByid(int id)
+        public ViewModels.UserViewModel GetusersByid(int id)
         {
             var model = db.Kullanici.FirstOrDefault(x=>x.kullaniciID==id);
+            
             if (model != null)
             {
-                return model;
+                var user = new ViewModels.UserViewModel();
+                user.ad = model.KullaniciBilgileri.ad;
+                user.soyad = model.KullaniciBilgileri.soyad;
+                user.cinsiyet = model.KullaniciBilgileri.cinsiyet;
+                user.ilID = model.KullaniciBilgileri.Iletisim.ilID;
+                user.ilceID = model.KullaniciBilgileri.Iletisim.ilceID;
+                user.Detay = model.KullaniciBilgileri.Iletisim.detay;
+
+                user.kullaniciID = model.kullaniciID;
+                user.rolID = model.rolID;
+                user.kayitTarihi = model.kayitTarihi;
+                user.kullaniciAdi = model.kullaniciAdi;
+                user.sifre = model.sifre;
+                user.email = model.email;
+
+                return user;
             }
             else
             {
@@ -77,24 +93,22 @@ namespace DAL
             var testUser = db.Kullanici.FirstOrDefault(x => x.kullaniciID == model.kullaniciID);
             if (testUser != null)
             {
-                var iletisim = db.Iletisim.FirstOrDefault(x => x.ilID == model.ilID && x.ilceID == model.ilceID);
-                iletisim.ilceID = model.ilceID;
-                iletisim.ilID = model.ilID;
-                db.SaveChanges();
-
-
+                
                 testUser.kullaniciAdi = model.kullaniciAdi;
                 testUser.kayitTarihi = model.kayitTarihi;
                 testUser.email = model.email;
                 testUser.sifre = model.sifre;
-                testUser.rolID = model.rolID;
+                
                 db.SaveChanges();
 
                 var userInformation = db.KullaniciBilgileri.FirstOrDefault(x => x.kullaniciID == testUser.kullaniciID);
-                userInformation.iletisimID = iletisim.iletisimID;
                 userInformation.ad = model.ad;
                 userInformation.cinsiyet = model.cinsiyet;
                 userInformation.soyad = model.soyad;
+                testUser.KullaniciBilgileri.Iletisim.ilID = model.ilID;
+                testUser.KullaniciBilgileri.Iletisim.ilceID = model.ilceID;
+                testUser.KullaniciBilgileri.Iletisim.detay = model.Detay;
+
 
                 db.SaveChanges();
                 return true;

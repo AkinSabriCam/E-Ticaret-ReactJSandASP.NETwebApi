@@ -56,16 +56,17 @@ namespace DAL
 
         public List<ViewModels.ProductStokViewModel> GetProductsByCategory(int id)
         {
-            var Urunler = db.Urun.Where(x=>x.altKategoriID==id).ToList();
+            var Altkategori = db.AltKategori.FirstOrDefault(x=>x.altKategoriID==id);
             var Products = new List<ViewModels.ProductStokViewModel>();
-            if (Urunler.Count>0)
+            if (Altkategori.Urun.Count>0)
             {
-                foreach(var model in Urunler) { 
+                foreach(var model in Altkategori.Urun.ToList()) { 
                 
                     var product = new ViewModels.ProductStokViewModel();
                     product.ad = model.ad;
                     product.adet = model.Stok.adet;
                     product.altKategoriID = model.altKategoriID;
+                    product.altkategori = Altkategori.altKategori1;
                     product.eklenmeTarihi = model.eklenmeTarihi;
                     product.fiyat = model.fiyat;
                     product.imagePath = model.imagePath;

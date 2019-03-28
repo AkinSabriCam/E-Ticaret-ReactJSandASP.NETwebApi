@@ -44,7 +44,7 @@
                 <div className="home">
 		            <div className="home_overlay"></div>
 		            <div className="home_content d-flex flex-column align-items-center justify-content-center">
-			            <h2 className="home_title">{urun.AltKategori.altKategori1}</h2>
+			            <h2 className="home_title">{urun.altkategori}</h2>
 		            </div>
 	            </div>
 			

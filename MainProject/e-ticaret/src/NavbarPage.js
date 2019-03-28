@@ -3,6 +3,7 @@ import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNav
 MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem,MDBBtn,MDBInput} from "mdbreact";
 import {Route,BrowserRouter as Router} from 'react-router-dom';
 import './css/site.css';
+import {Login} from './Login'
 import {Modal,Button} from 'react-bootstrap';
 import {Redirect,Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -15,11 +16,12 @@ export class NavbarPage extends Component {
       isOpen:false,
       Category:[],
       show: false,
-      UrunCount:0
+      UrunCount:0,
+      login:false
     }
+    this.LoginPage=this.LoginPage.bind(this);
   }
   componentDidMount(){
-    console.log("asdasda"+Cookies.get("ProductCount"))
     fetch("http://localhost:50040/api/Kategoriler/GetAllCategory",{
       method:"GET",
       headers:{
@@ -36,7 +38,13 @@ export class NavbarPage extends Component {
   toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
   } 
+  
+  LoginPage(){
+   this.setState({login:true});
+  }
+  
 render(){
+    
     let Category=this.state.Category.map((kat,ind)=>{
   
       return(
@@ -51,7 +59,7 @@ render(){
    
                   return(
                      
-                      <Link to={{pathname:"/ProductsByCategory", state:{subCatId:altkat.altKategoriID}}}>
+                      <Link to={{pathname:"/ProductsByCategory", state:{subCatId:altkat.altkategoriId}}}>
                       <MDBDropdownItem>{altkat.altkategori}</MDBDropdownItem>
                   </Link>
                   )
@@ -65,6 +73,7 @@ render(){
       )
   
     })
+
 
   return (
       <div className='menu'>
@@ -86,7 +95,7 @@ render(){
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar>           
-           <MDBBtn rounded outline color="warning"> Sign In </MDBBtn>
+           <Link to="/Login"><MDBBtn rounded outline color="warning" onClick={this.LoginPage}> Sign In </MDBBtn></Link>
            <MDBNavbar></MDBNavbar> 
            <MDBBtn rounded outline color="warning"> Sign Up </MDBBtn>
            </MDBNavbar>
@@ -102,6 +111,9 @@ render(){
            </MDBNavbarNav>
            </MDBNavbar>
       <MDBNavbar color="indigo" dark expand="md">
+      <MDBNavbarBrand>
+          <Link to="/"><strong className="white-text btnAnasayfa">ANASAYFA</strong></Link>
+        </MDBNavbarBrand>
         <MDBNavbarBrand>
           <strong className="white-text">KATEGORİLER</strong>
         </MDBNavbarBrand>

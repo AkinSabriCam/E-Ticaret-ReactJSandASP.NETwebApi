@@ -49,15 +49,22 @@ namespace WebApi_E_ticaret_.Controllers
         public IHttpActionResult GetProductCountinSepet(int id)
         {
             // buraya gönderilen Id kullanıcının id sidir.  
-
-            var count = sepetDal.GetProductCountinSepet(id);
+           
+            int  count = sepetDal.GetProductCountinSepet(id);
             if (count> 0)
             {
-                return Ok(count);
+                return Ok(
+                    new{
+                    value = count
+                });
             }
             else
             {
-                return Ok(count);
+                return Ok(
+                    new
+                    {
+                        value = count
+                    });
             }
 
         }
@@ -88,7 +95,90 @@ namespace WebApi_E_ticaret_.Controllers
             }
 
         }
+        [HttpDelete]
+        public IHttpActionResult DeleteSepet(int id)
+        {  
+            if (id > 0)
+            {
+                if (sepetDal.DeleteSepet(id))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
 
+        }
+        [HttpDelete]
+        public IHttpActionResult DeleteProductinSepet(int sepetid , int uruninsepetid)
+        {
+            if(sepetid>0 && uruninsepetid > 0)
+            {
+                if (sepetDal.DeleteProductinSepet(sepetid, uruninsepetid))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+
+        }
+
+        [HttpPut]
+        public IHttpActionResult PutSepettoUser(int sepetid, int kullaniciId)
+        {
+            if (sepetid > 0 && kullaniciId > 0)
+            {
+                if (sepetDal.PutSepettoUser(sepetid,kullaniciId))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+
+        }
+        [HttpPut]
+        [Authorize(Roles ="Kayıtlı Kullanıcı")]
+        public IHttpActionResult SiparisTamamla(int kullaniciId)
+        {
+            if (kullaniciId > 0)
+            {
+                if(sepetDal.SiparisTamamla(kullaniciId))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            else{
+                return BadRequest();
+            }
+
+        }
 
 
     }

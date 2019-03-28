@@ -82,7 +82,7 @@ namespace WebApi_E_ticaret_.Controllers
             }
 
         }
-
+        [HttpPut]
         public IHttpActionResult PutUser(DAL.ViewModels.UserViewModel model)
         {
             if (ModelState.IsValid)

@@ -29,18 +29,22 @@ namespace DAL
         public bool PutDate()
         {
             var log=db.logZiyaret.FirstOrDefault(x => x.logZiyaretID == 2);
-            if ((log.gunlukTarih.Value.DayOfYear/7) != ((DateTime.Now.DayOfYear)/7))
-            {
-                log.haftalikTarih++;
-                log.haftalikZiyaret = 0;
-                db.SaveChanges();
-            }
-            else if (log.gunlukTarih.Value.Day != DateTime.Now.Day)
+
+            if (log.gunlukTarih.Value.Day != DateTime.Now.Day)
             {
                 log.gunlukTarih = DateTime.Now;
                 log.gunlukZiyaret = 0;
                 db.SaveChanges();
+
+                if ((log.gunlukTarih.Value.DayOfYear / 7) != ((DateTime.Now.DayOfYear) / 7))
+                {
+                    log.haftalikTarih++;
+                    log.haftalikZiyaret = 0;
+                    db.SaveChanges();
+                }
+
             }
+
             return true;
         }
 

@@ -21,6 +21,11 @@ export class HomePage extends React.Component{
    }
   
   componentDidMount(){
+    /*Cookies.remove("kullaniciID");
+    Cookies.remove("ProductCount");
+    Cookies.remove("Login");
+    Cookies.remove("token");*/
+    
     fetch("http://localhost:50040/api/Urunler/GetAllProducts").then(data=>data.json())
     .then(result=>{this.setState({Products:result})
     console.log(result); 

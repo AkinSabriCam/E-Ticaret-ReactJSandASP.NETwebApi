@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import './css/site.css';
 import {Modal,Button} from 'react-bootstrap';
 import Cookies from 'js-cookie';
+import {Redirect,Switch,Route}  from 'react-router';
+import { HomePage } from "./HomePage";
 
 
-export default class Login extends Component {
+export  class Login extends Component {
   constructor(props, context) {
     super(props, context);
     this.state={
       Category:[],
-      show: true
+      show: true,
+      redirect:false
     }
     
     this.LoginClose = this.LoginClose.bind(this);
@@ -17,7 +20,7 @@ export default class Login extends Component {
   }
 
 componentDidMount(){
-  sessionStorage.setItem("User","true");
+  
   // kullanıcı giriş yaptığında bu bilgiye dair bir session tutulmaktadır.
 }
 
@@ -30,15 +33,19 @@ componentDidMount(){
     let Password=document.getElementById("password").value;
     
     fetch("http://localhost:50040/token",{
-      method:"post",
-      headers:{
+       method:"post",
+       headers:{
         "content-type":"application/x-www-form-urlencoded"
-      },
+       },
       body:`UserName=${UserName}&Password=${Password}&grant_type=password`
     }).then(data=>data.json())
     .then(result=>{
-      console.log(result);
+        
+      Cookies.set("token",result.access_token);
+      console.log(result.access_token);
       Cookies.set("Login","true");
+      this.setState({redirect:true});
+      
     })
     .catch(err=>console.log(err));
 
@@ -46,14 +53,24 @@ componentDidMount(){
     fetch(`http://localhost:50040/api/Users/GetUserId?username=${UserName}&password=${Password}`)
     .then(data=>data.json())
     .then(result=>{Cookies.set("kullaniciID",result.kullaniciID)
+      
       console.log(Cookies.get("kullaniciID"))
-    
-      fetch("http://localhost:50040/api/Sepet/GetProductCountinSepet/"+Cookies.get("kullaniciID"))
-      .then(data=>data.json())
-      .then(result=>{Cookies.set("ProductCount",result)})
+      if(Cookies.get("sepetid")!=null){
+        fetch(`http://localhost:50040/api/Sepet/PutSepettoUser?sepetid=${Cookies.get("sepetid")}&kullaniciId=${Cookies.get("kullaniciID")}`,{
+          method:"PUT"
+        })
+      .then(console.log("sepetler match lendi"))
+      .catch(err=>console.log(err));
+      }
+      else{
+        fetch('http://localhost:50040/api/Sepet/GetProductCountinSepet/'+Cookies.get("kullaniciID"))
+        .then(data=>data.json())
+        .then(result=>{Cookies.set("ProductCount",result.value)
+        console.log(result.value);
+        })
       .catch(err=>console.log(err));
       
-    
+      }
     })
     .catch(err=>console.log(err));
 
@@ -62,7 +79,9 @@ componentDidMount(){
   }
   
   render(){
-    
+    if(this.state.redirect){
+      return <Redirect to="/"/>
+    }  
     return (
         <div className='menu'>
           <Modal show={this.state.show} onHide={this.LoginClose}>
@@ -93,4 +112,4 @@ componentDidMount(){
       
     }
   }
-
+  export default Login;

@@ -23,5 +23,6 @@ namespace DAL.ViewModels
         public Nullable<int> ilID { get; set; }
         public Nullable<int> ilceID { get; set; }
 
+        public string Detay { get; set; }
     }
 }

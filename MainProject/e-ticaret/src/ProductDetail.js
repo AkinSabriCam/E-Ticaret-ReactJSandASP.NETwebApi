@@ -27,7 +27,7 @@ export class ProductDetail extends React.Component{
        .catch(error=>console.log( "Error :"+error))
     }
     SepeteEkle(urunID){
-        sessionStorage.setItem("User","true");
+       
         var urunadet=document.getElementById("adet").value;
         if(!isNaN(urunadet))
         {   //adet number bir değişken ise buraya girecektir
@@ -56,7 +56,11 @@ export class ProductDetail extends React.Component{
                         }
                         urunsayisi=parseInt(urunsayisi)+1;
                         Cookies.set("ProductCount",urunsayisi);
-                        Cookies.set("sepetid",result);    
+                        
+                        let tenMinutes = new Date(new Date().getTime() + 10 * 60 * 1000);
+                        Cookies.set("sepetid",result,{
+                            expires:tenMinutes
+                        });    
                         
                        
                     })
@@ -89,7 +93,7 @@ export class ProductDetail extends React.Component{
                                     }
                                     urunsayisi=parseInt(urunsayisi)+1
                                     Cookies.set("ProductCount",urunsayisi)
-                                
+                                    window.location = '/ProductDetail';
                             }).catch((err)=>{console.log("err")})
                           
                     }

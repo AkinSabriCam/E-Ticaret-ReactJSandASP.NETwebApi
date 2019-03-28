@@ -172,7 +172,7 @@
           <Key>
             <PropertyRef Name="siparisID" />
           </Key>
-          <Property Name="siparisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="siparisID" Type="int" Nullable="false" />
           <Property Name="siparisTarihi" Type="date" />
           <Property Name="siparisTutari" Type="money" />
         </EntityType>
