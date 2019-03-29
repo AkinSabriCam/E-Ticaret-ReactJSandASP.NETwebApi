@@ -218,6 +218,7 @@
         
 					let Urunler = this.state.Products.map((urun,ind) => {
             return (
+
 								<div>				
 									
 									<div className="product_grid_border"></div>
@@ -240,6 +241,7 @@
 											<li className="product_mark product_new">new</li>
 										</ul>
 									</div>
+
 
 								</div>
 

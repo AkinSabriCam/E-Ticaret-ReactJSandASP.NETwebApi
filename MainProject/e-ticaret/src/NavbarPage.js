@@ -3,10 +3,11 @@ import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNav
 MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem,MDBBtn,MDBInput} from "mdbreact";
 import {Route,BrowserRouter as Router} from 'react-router-dom';
 import './css/site.css';
+import {Login} from './Login'
 import {Modal,Button} from 'react-bootstrap';
 import {Redirect,Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
-import $ from 'jquery';	
+import $ from 'jquery';
 
 
 export class NavbarPage extends Component {
@@ -17,11 +18,14 @@ export class NavbarPage extends Component {
       Category:[],
       show: false,
       UrunCount:0,
+      login:false,
       text: ''
+
     }
+    this.LoginPage=this.LoginPage.bind(this);
+    this. getText=this.getText.bind(this);
   }
   componentDidMount(){
-    console.log("asdasda"+Cookies.get("ProductCount"))
     fetch("http://localhost:50040/api/Kategoriler/GetAllCategory",{
       method:"GET",
       headers:{
@@ -39,15 +43,20 @@ export class NavbarPage extends Component {
   this.setState({ isOpen: !this.state.isOpen });
   } 
 
-  getText = () => {   
+  LoginPage(){
+   this.setState({login:true});
+  }
+  
+  getText = () => {
     var val = document.getElementById("searchInput").value;
     this.setState({text:val});
   }
 
 
 render(){
-    let Kategoriler=this.state.Category.map((kat,ind)=>{
   
+    let Category=this.state.Category.map((kat,ind)=>{
+
       return(
         <MDBNavItem>
         <MDBDropdown>
@@ -58,8 +67,11 @@ render(){
           {
               kat.AltKategoriler.map((altkat,ind)=>{
    
-                  return(                    
-                  <Link to={{pathname:"/ProductsByCategory", state:{subCatId:altkat.altkategoriId}}}>
+
+                  return(
+                     
+                      <Link to={{pathname:"/ProductsByCategory", state:{subCatId:altkat.altkategoriId}}}>
+
                       <MDBDropdownItem>{altkat.altkategori}</MDBDropdownItem>
                   </Link>
                   )
@@ -70,6 +82,7 @@ render(){
       </MDBNavItem>
       )
     })
+
 
   return (
       <div className='menu'>
@@ -94,10 +107,10 @@ render(){
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
-          <MDBNavbar>
-           <Link to="/Login">         
-           <MDBBtn rounded outline color="warning"> Sign In </MDBBtn>
-           </Link>
+
+          <MDBNavbar>           
+           <Link to="/Login"><MDBBtn rounded outline color="warning" onClick={this.LoginPage}> Sign In </MDBBtn></Link>
+          
            <MDBNavbar></MDBNavbar> 
            <Link to="/Register" >
            <MDBBtn rounded outline color="warning"> Sign Up </MDBBtn>
@@ -114,17 +127,22 @@ render(){
          
            </MDBNavbarNav>
            </MDBNavbar>
-          <MDBNavbar color="indigo" dark expand="md">
-            <MDBNavbarBrand>
-              <strong className="white-text">KATEGORİLER</strong>
-          </MDBNavbarBrand>
-          <MDBNavbarToggler  onClick={this.toggleCollapse}/>
-            <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
-              <MDBNavbarNav  center>
-                {Kategoriler}
-            </MDBNavbarNav>
-          </MDBCollapse>
-       </MDBNavbar>
+
+      <MDBNavbar color="indigo" dark expand="md">
+      <MDBNavbarBrand>
+          <Link to="/"><strong className="white-text btnAnasayfa">ANASAYFA</strong></Link>
+        </MDBNavbarBrand>
+        <MDBNavbarBrand>
+          <strong className="white-text">KATEGORİLER</strong>
+        </MDBNavbarBrand>
+        <MDBNavbarToggler  onClick={this.toggleCollapse}/>
+        <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
+          <MDBNavbarNav  center>
+          {Category}
+          </MDBNavbarNav>
+        </MDBCollapse>
+      </MDBNavbar>
+
       </div>
     )
   }

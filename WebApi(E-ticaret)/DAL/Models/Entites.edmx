@@ -172,7 +172,7 @@
           <Key>
             <PropertyRef Name="siparisID" />
           </Key>
-          <Property Name="siparisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="siparisID" Type="int" Nullable="false" />
           <Property Name="siparisTarihi" Type="date" />
           <Property Name="siparisTutari" Type="money" />
         </EntityType>
@@ -1243,7 +1243,7 @@
           <FunctionImport Name="FN_OrderByPriceASC1" IsComposable="true" ReturnType="Collection(Model.FN_OrderByPriceASC1_Result)" />
           <FunctionImport Name="FN_OrderByPriceDESC1" IsComposable="true" ReturnType="Collection(Model.FN_OrderByPriceDESC1_Result)" />
           <FunctionImport Name="FN_SearchProduct1" IsComposable="true" ReturnType="Collection(Model.FN_SearchProduct1_Result)">
-            <Parameter Name="text" Mode="In" Type="String" />
+          <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="FN_OrderByBestSallers_Result">

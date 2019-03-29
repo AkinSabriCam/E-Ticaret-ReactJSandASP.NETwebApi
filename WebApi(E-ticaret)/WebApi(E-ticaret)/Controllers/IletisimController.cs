@@ -14,7 +14,7 @@ namespace WebApi_E_ticaret_.Controllers
         [HttpGet]
         public IHttpActionResult GetAllCity()
         {
-            var model = iletisimDal.GetAllCity();
+            var model = iletisimDal.GetAllCityandDistrict();
             if (model != null)
             {
                 return Ok(model);
@@ -41,6 +41,30 @@ namespace WebApi_E_ticaret_.Controllers
                 }
 
             }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetDistrictsByCityId(int id)
+        {
+            if (id > 0)
+            {
+                var model=iletisimDal.GetDistrictsByCityId(id);
+                if (model != null)
+                {
+                    return Ok(model);
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+
             else
             {
                 return BadRequest();

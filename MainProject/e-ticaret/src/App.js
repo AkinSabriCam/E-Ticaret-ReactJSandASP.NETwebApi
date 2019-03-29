@@ -10,8 +10,11 @@ import Login from './Login';
 import {Register} from './Register';
 import {User} from './User';
 import {Siparis} from './Siparis';
+
+import {Favourite} from './Favourite';
+import {KullaniciGuncelle} from './KullaniciGuncelle';
 import {Siparislerim} from './Siparislerim';
-import {Favourite} from './Favourite'
+
 import {ProductsByCategory} from './ProductsByCategory';
 
 import {SearchProducts} from './SearchProducts';
@@ -29,18 +32,25 @@ class App extends Component {
           <div>
             <NavbarPage></NavbarPage>
 
-            <Route exact path="/" component={HomePage}/>
-            <Route exact path="/ProductDetail/" component={ProductDetail}/>
-            <Route path="/Login" component={Login}/>
-            <Route path="/Register" component={Register}/>
-            <Route path="/User" component={User}/>     
-            <Route path="/User/Favourite" component={Favourite}/>
-            <Route path="/User/Siparislerim" component={Siparislerim}/>
-            <Route path="/Siparis" component={Siparis}/>
-            <Route exact path="/" component={HomePage}/>
-            <Route path="/ProductsByCategory" component={ProductsByCategory}/>
-            <Route path="/User/PersonalDetail" component={PersonalDetail}/>
-            <Route path="/SearchProducts" component={SearchProducts}/> 
+
+
+     <Route exact path="/" component={HomePage}/>
+     <Route exact path="/ProductDetail/" component={ProductDetail}/>
+     <Route path="/Login" component={Login}/>
+     <Route path="/Register" component={Register}/>
+     <Route path="/User" component={User}/>
+     
+     <Route path="/Siparis" component={Siparis}/>
+     <Route path="/KullaniciGuncelle" component={KullaniciGuncelle}/>
+
+     <Route path="/User/Favourite" component={Favourite}/>
+     <Route path="/User/Siparislerim" component={Siparislerim}/>
+   
+     
+     <Route path="/ProductsByCategory" component={ProductsByCategory}/>
+     <Route path="/User/PersonalDetail" component={PersonalDetail}/>
+     <Route path="/SearchProducts" component={SearchProducts}/> 
+
 
           </div>
         </Router>

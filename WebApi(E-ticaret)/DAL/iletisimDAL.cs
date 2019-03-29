@@ -9,6 +9,24 @@ namespace DAL
     public class iletisimDAL
     {
         Models.Entities db = new Models.Entities();
+        public ViewModels.CityandDistrictViewModel GetAllCityandDistrict()
+        {
+
+            var model = db.Il.ToList();
+            var modelIlce = db.Ilce.ToList();
+            if (model != null)
+            {
+                var CityandDistrict = new ViewModels.CityandDistrictViewModel();
+                CityandDistrict.Iller = model;
+                CityandDistrict.Ilceler = modelIlce;
+                return CityandDistrict;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
         public List<Models.Il> GetAllCity()
         {
 
@@ -35,6 +53,27 @@ namespace DAL
                 return null;
             }
         }
+        public List<ViewModels.ilceViewModel> GetDistrictsByCityId(int id)
+        {
+            var Ilceler = db.Ilce.Where(x => x.ilID == id).ToList();
+            var IlcelerViewModel = new List<ViewModels.ilceViewModel>();
+            if (Ilceler.Count > 0)
+            {
+                foreach (var ilce in Ilceler)
+                {
+                    var ilceviewmodel = new ViewModels.ilceViewModel();
+                    ilceviewmodel.ilce = ilce.ilce1;
+                    ilceviewmodel.ilceID = ilce.ilceID;
+                    IlcelerViewModel.Add(ilceviewmodel);
+                }
+                return IlcelerViewModel;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public bool PostCity(Models.Il model)
         {
             db.Il.Add(model);

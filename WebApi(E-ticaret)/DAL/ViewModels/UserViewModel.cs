@@ -8,7 +8,7 @@ namespace DAL.ViewModels
 {
     public class UserViewModel
     {
-        public int kullaniciID { get; set; } 
+          public int kullaniciID { get; set; } 
         public string kullaniciAdi { get; set; }
         public string sifre { get; set; } 
         public string email { get; set; }
@@ -20,9 +20,10 @@ namespace DAL.ViewModels
         public string soyad { get; set; } 
         public Nullable<bool> cinsiyet { get; set; } 
 
-        public string il { get; set; } 
-        public string ilce { get; set; } 
+        public int ilID { get; set; } 
+        public int ilceID { get; set; } 
         public string acikAdres { get; set; }
 
+        public string Detay { get; set; }
     }
 }
