@@ -83,7 +83,7 @@ export class Siparis extends React.Component{
                 if(result.ok){
                     console.log("siparis tamamlandı"+result.status)
                     Cookies.remove("ProductCount");
-                    Cookies.remove("sepetId");
+                    Cookies.remove("sepetid");
                  }
                  else{
                      console.log("kullanici yetkili değil..");

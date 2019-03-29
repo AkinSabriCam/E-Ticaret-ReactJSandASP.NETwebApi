@@ -11,7 +11,7 @@ namespace DAL
         public void PostSatinAlinanLog(List<Models.SepettekiUrunler> model)
         {
             var db = new Models.Entities();
-            foreach(var sepettekiUrun in model)
+            foreach (var sepettekiUrun in model)
             {
                 var logsatinalinan = new Models.logSatinAlinan();
                 logsatinalinan.adet = sepettekiUrun.adet;

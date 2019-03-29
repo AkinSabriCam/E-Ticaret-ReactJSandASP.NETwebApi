@@ -11,12 +11,11 @@ namespace DAL
         Models.Entities db = new Models.Entities();
         public bool PostSiparisLog(Models.logSepet model)
         {
-            
-                db.logSepet.Add(model);
-                db.SaveChanges();
-            
+
+            db.logSepet.Add(model);
+            db.SaveChanges();
+
             return true;
         }
-
     }
 }

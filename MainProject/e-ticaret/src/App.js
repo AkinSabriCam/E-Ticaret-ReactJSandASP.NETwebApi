@@ -41,14 +41,9 @@ class App extends Component {
      <Route  path="/Siparis"   component={Siparis}/>
      <Route  path="/KullaniciGuncelle"   component={KullaniciGuncelle}/>
 
-     <Route exact path="/" component={HomePage}/>
-     <Route exact path="/ProductDetail/" component={ProductDetail}/>
-     <Route path="/Login" component={Login}/>
-     <Route path="/Register" component={Register}/>
-     <Route path="/User" component={User}/>     
      <Route path="/User/Favourite" component={Favourite}/>
      <Route path="/User/Siparislerim" component={Siparislerim}/>
-     <Route path="/Siparis"   component={Siparis}/>
+   
      
      <Route path="/ProductsByCategory" component={ProductsByCategory}/>
      <Route path="/User/PersonalDetail"   component={PersonalDetail}/>

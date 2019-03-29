@@ -27,6 +27,20 @@ namespace DAL
             }
 
         }
+        public List<Models.Il> GetAllCity()
+        {
+
+            var model = db.Il.ToList();
+            if (model != null)
+            {
+                return model;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
         public Models.Il GetCityByid(int id)
         {
             var model = db.Il.FirstOrDefault(x => x.ilID == id);
@@ -39,18 +53,17 @@ namespace DAL
                 return null;
             }
         }
-
-        public List<ViewModels.IlceViewModel> GetDistrictsByCityId(int id)
+        public List<ViewModels.ilceViewModel> GetDistrictsByCityId(int id)
         {
             var Ilceler = db.Ilce.Where(x => x.ilID == id).ToList();
-            var IlcelerViewModel = new List<ViewModels.IlceViewModel>();
-            if (Ilceler.Count>0)
+            var IlcelerViewModel = new List<ViewModels.ilceViewModel>();
+            if (Ilceler.Count > 0)
             {
-                foreach(var ilce in Ilceler)
+                foreach (var ilce in Ilceler)
                 {
-                    var ilceviewmodel = new ViewModels.IlceViewModel();
-                    ilceviewmodel.Ilce = ilce.ilce1;
-                    ilceviewmodel.IlceID = ilce.ilceID;
+                    var ilceviewmodel = new ViewModels.ilceViewModel();
+                    ilceviewmodel.ilce = ilce.ilce1;
+                    ilceviewmodel.ilceID = ilce.ilceID;
                     IlcelerViewModel.Add(ilceviewmodel);
                 }
                 return IlcelerViewModel;
@@ -60,10 +73,8 @@ namespace DAL
                 return null;
             }
         }
-        public bool PostProvince(Models.Il model)
 
         public bool PostCity(Models.Il model)
-
         {
             db.Il.Add(model);
             db.SaveChanges();

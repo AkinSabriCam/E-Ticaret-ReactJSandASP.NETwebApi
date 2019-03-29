@@ -19,9 +19,6 @@ namespace DAL
                 foreach (var sepUrun in Products)
                 {
                     var sepettekiUrun = new ViewModels.UserSepettekiUrunlerViewModel();
-                    sepettekiUrun.sepettekiUrunID = sepUrun.sepettekiUrunID;
-                    sepettekiUrun.urunID = sepUrun.urunID;
-                    sepettekiUrun.sepetID = sepUrun.sepetID;
                     sepettekiUrun.ad = sepUrun.Urun.ad;
                     sepettekiUrun.adet = sepUrun.adet;
                     sepettekiUrun.fiyat = sepUrun.Urun.fiyat;
@@ -38,30 +35,29 @@ namespace DAL
             }
 
         }
-        public List<ViewModels.UserSepettekiUrunlerViewModel> GetAllSepetforUser(int kullaniciId)
-      {
-            var sepet = db.Sepet.FirstOrDefault(x => x.kullaniciID == kullaniciId && x.siparisVerildiMi == false);
-            if (sepet != null )
+        public List<ViewModels.SepettekiUrunViewModel> GetAllSepetforUser(int kullaniciId)
+        {
+            var sepet = db.Sepet.FirstOrDefault(x => x.kullaniciID == kullaniciId &x.siparisVerildiMi==false);
+            if (sepet != null)
             {
-                if (sepet.SepettekiUrunler.ToList().Count>0)
-                {
-                    var Products = new List<ViewModels.UserSepettekiUrunlerViewModel>();
-                    foreach(var sepettekiurun in sepet.SepettekiUrunler.ToList())
+                var Products = db.SepettekiUrunler.Where(x => x.sepetID == sepet.sepetID).ToList();
+                var ProductList = new List<ViewModels.SepettekiUrunViewModel>();
+                if (Products.Count != 0)
+                {   
+                    foreach(var sepettekiUrun in Products)
                     {
-
-                        var sepettekiUrun = new ViewModels.UserSepettekiUrunlerViewModel();
-                        sepettekiUrun.sepettekiUrunID = sepettekiurun.sepettekiUrunID;
-                        sepettekiUrun.sepetID = sepettekiurun.sepetID;
-                        sepettekiUrun.urunID = sepettekiurun.urunID;
-                        sepettekiUrun.ad = sepettekiurun.Urun.ad;
-                        sepettekiUrun.adet = sepettekiurun.adet;
-                        sepettekiUrun.fiyat = sepettekiurun.Urun.fiyat;
-                        sepettekiUrun.toplamFiyat = sepettekiurun.toplamFiyat;
-
-                        Products.Add(sepettekiUrun);
-
+                        var prod = new ViewModels.SepettekiUrunViewModel();
+                        prod.ad = sepettekiUrun.Urun.ad;
+                        prod.adet = sepettekiUrun.adet;
+                        prod.fiyat = (decimal)sepettekiUrun.Urun.fiyat;
+                        prod.toplamFiyat = sepettekiUrun.toplamFiyat;
+                        prod.urunID = sepettekiUrun.urunID;
+                        prod.sepetID = sepettekiUrun.sepetID;
+                        prod.sepettekiUrunID = sepettekiUrun.sepettekiUrunID;
+                        ProductList.Add(prod);
+                        
                     }
-                    return Products;
+                    return ProductList;
                 }
                 else
                 {
@@ -82,9 +78,9 @@ namespace DAL
                 // ziyaretçinin sepeti var ve siparis verilmemiş ise buraya girecektir.
                 var product = db.Urun.FirstOrDefault(x => x.urunID == model.urunID);
                 product.Stok.adet -= model.adet;
-                    model.toplamFiyat = model.adet * product.fiyat;
-                    db.SepettekiUrunler.Add(model);
-                    db.SaveChanges();
+                model.toplamFiyat = model.adet * product.fiyat;
+                db.SepettekiUrunler.Add(model);
+                db.SaveChanges();
                 // var olan sepet id 'sini tekrar geri döndürecektir
                 var SepetLogDal = new SiparisSepetLogDAL();
                 var logsepet = new Models.logSepet();
@@ -92,8 +88,8 @@ namespace DAL
                 logsepet.urunID = model.urunID;
                 SepetLogDal.PostSiparisLog(logsepet);
                 return (int)model.sepetID;
-                
-             }
+
+            }
             else
             {   // ziyaretçiye ait sepet yok ise veya var olan sepet siparis verilmiş ise buraya girecektir.
                 // burada sepet oluşturulacaktır
@@ -157,7 +153,7 @@ namespace DAL
                         if (sep.siparisVerildiMi == false)
                         {
                             var product = db.Urun.FirstOrDefault(x => x.urunID == model.urunID);
-                             product.Stok.adet -= model.adet;
+                            product.Stok.adet -= model.adet;
 
                             var SepettekiUrunler = new Models.SepettekiUrunler();
                             SepettekiUrunler.adet = model.adet;
@@ -167,7 +163,7 @@ namespace DAL
                             SepettekiUrunler.toplamFiyat = product.fiyat * model.adet;
                             db.SepettekiUrunler.Add(SepettekiUrunler);
                             db.SaveChanges();
-                            
+
                             logsepet1.adet = model.adet;
                             logsepet1.urunID = model.urunID;
                             SepetLogDal1.PostSiparisLog(logsepet1);
@@ -204,8 +200,8 @@ namespace DAL
                 NewSepet2.kullaniciID = model.kullaniciID;
                 NewSepet2.siparisVerildiMi = false;
                 db.Sepet.Add(NewSepet2);
-                db.SaveChanges(); 
-              
+                db.SaveChanges();
+
 
                 var product2 = db.Urun.FirstOrDefault(x => x.urunID == model.urunID);
                 product2.Stok.adet -= model.adet;
@@ -224,12 +220,13 @@ namespace DAL
                 SepetLogDal.PostSiparisLog(logsepet);
                 return true;
             }
-            
+
+
         }
         public int GetProductCountinSepet(int id)
         {
             var sepet = db.Sepet.FirstOrDefault(x => x.kullaniciID == id);
-            if (sepet!=null && sepet.siparisVerildiMi==false)
+            if (sepet != null && sepet.siparisVerildiMi == false)
             {
                 return sepet.SepettekiUrunler.Count();
             }
@@ -239,17 +236,16 @@ namespace DAL
             }
 
         }
-
         public bool DeleteSepet(int id)
         {
             var model = db.Sepet.FirstOrDefault(x => x.sepetID == id);
             if (model != null)
             {
-                foreach(var prod in model.SepettekiUrunler.ToList())
+                foreach (var prod in model.SepettekiUrunler.ToList())
                 {
                     prod.Urun.Stok.adet += prod.adet;
                     db.SepettekiUrunler.Remove(prod);
-                   
+
                 }
                 db.Sepet.Remove(model);
                 db.SaveChanges();
@@ -262,7 +258,7 @@ namespace DAL
 
         }
 
-        public bool DeleteProductinSepet(int sepetid,int productid)
+        public bool DeleteProductinSepet(int sepetid, int productid)
         {
             var sepet = db.Sepet.FirstOrDefault(x => x.sepetID == sepetid);
             if (sepet != null)
@@ -308,17 +304,14 @@ namespace DAL
             {
                 return false;
             }
-
-
-            
         }
         public bool SiparisTamamla(int kullaniciId)
         {
             var sepet = db.Sepet.FirstOrDefault(x => x.kullaniciID == kullaniciId && x.siparisVerildiMi == false);
-            if(sepet!=null)
+            if (sepet != null)
             {
                 var siparis = new Models.Siparis();
-               
+
                 siparis.sepetID = sepet.sepetID;
                 db.Siparis.Add(siparis);
                 sepet.siparisVerildiMi = true;
@@ -326,7 +319,7 @@ namespace DAL
 
                 var siparisDetay = new Models.SiparisDetay();
                 siparisDetay.siparisID = siparis.siparisID;
-               
+
                 siparisDetay.siparisTarihi = DateTime.Now;
 
                 decimal siparisTutari = 0;
@@ -347,7 +340,9 @@ namespace DAL
             {
                 return false;
             }
-            
+
+
         }
+
     }
 }
