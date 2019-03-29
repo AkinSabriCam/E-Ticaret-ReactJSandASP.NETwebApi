@@ -23,28 +23,12 @@ namespace DAL
             }
         }
 
-        public ViewModels.UserViewModel GetusersByid(int id)
+        public Models.Kullanici GetusersByid(int id)
         {
             var model = db.Kullanici.FirstOrDefault(x=>x.kullaniciID==id);
-            
             if (model != null)
             {
-                var user = new ViewModels.UserViewModel();
-                user.ad = model.KullaniciBilgileri.ad;
-                user.soyad = model.KullaniciBilgileri.soyad;
-                user.cinsiyet = model.KullaniciBilgileri.cinsiyet;
-                user.ilID = model.KullaniciBilgileri.Iletisim.ilID;
-                user.ilceID = model.KullaniciBilgileri.Iletisim.ilceID;
-                user.Detay = model.KullaniciBilgileri.Iletisim.detay;
-
-                user.kullaniciID = model.kullaniciID;
-                user.rolID = model.rolID;
-                user.kayitTarihi = model.kayitTarihi;
-                user.kullaniciAdi = model.kullaniciAdi;
-                user.sifre = model.sifre;
-                user.email = model.email;
-
-                return user;
+                return model;
             }
             else
             {
@@ -75,25 +59,12 @@ namespace DAL
             db.Kullanici.Add(User);
             db.SaveChanges();
 
-            var Useril = new Models.Il();
-            Useril.il1 = model.il;
-       
-            db.Il.Add(Useril);
-            db.SaveChanges();
-
-
-            var Userilce = new Models.Ilce();
-            Userilce.ilce1 = model.ilce;
-            Userilce.ilID = Useril.ilID;
-
-            db.Ilce.Add(Userilce);
-            db.SaveChanges();
-
+            
 
             var UserContact = new Models.Iletisim();
-            UserContact.detay = model.acikAdres;
-            UserContact.ilID = Useril.ilID;
-            UserContact.ilceID = Userilce.ilceID;
+            UserContact.detay = model.Detay;
+            UserContact.ilID = model.ilID;
+            UserContact.ilceID = model.ilceID;
 
             db.Iletisim.Add(UserContact);
             db.SaveChanges();
@@ -120,7 +91,7 @@ namespace DAL
                 testUser.kayitTarihi = model.kayitTarihi;
                 testUser.email = model.email;
                 testUser.sifre = model.sifre;
-                
+
                 db.SaveChanges();
 
                 var userInformation = db.KullaniciBilgileri.FirstOrDefault(x => x.kullaniciID == testUser.kullaniciID);
