@@ -195,20 +195,26 @@
 					}				
 			}
 
-			getFilterByBrand = (markaAd) => {
-				const {subCatId} = this.props.location.state;
-				if(subCatId!=null){
-					console.log(subCatId);
-				}else{
-					console.log("parametre hatalı");
-				}
-
-				fetch("http://localhost:50040/api/Urunler/GetFilterByBrand/"+subCatId+"?marka="+markaAd).then(data=>data.json())
-				.then(result=>this.setState({Products:result}))
-				.catch(error=>console.log("error"));
-			}
-
       render() {
+
+				
+				const {subCatId} = this.props.location.state;
+				$(function() {		
+					$(".btn").click(function(){
+						let markaAd = $(this).text();
+						if(subCatId!=null){
+							console.log(subCatId);
+						}else{
+							console.log("parametre hatalı");
+						}
+		
+						fetch("http://localhost:50040/api/Urunler/GetFilterByBrand?id="+subCatId+"&marka="+markaAd).then(data=>data.json())
+						.then(result=>this.setState({Products:result}))
+						.catch(error=>console.log("error"));
+						window.location.reload();
+					});					
+				});
+				
         
 					let Urunler = this.state.Products.map((urun,ind) => {
             return (
@@ -260,9 +266,10 @@
 					let uniqueBrands = [...new Set(Marka)];
 					let Markalar = uniqueBrands.map((marka,ind) => {						
 						return(
-								<li><button type="button" id={marka} onclick={this.getFilterByBrands(marka)} className="btn btn-link">{marka}</button></li>
+								<li><button type="button" id={marka} className="btn btn-link">{marka}</button></li>
 							)
-					})					
+					})		
+
 					return(
 							<div>
 										<div className="home">
