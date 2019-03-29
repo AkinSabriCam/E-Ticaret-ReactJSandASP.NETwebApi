@@ -21,7 +21,7 @@ export class HomePage extends React.Component{
    }
   
   componentDidMount(){
-  /*  Cookies.remove("kullaniciID");
+   /* Cookies.remove("kullaniciID");
     Cookies.remove("ProductCount");
     Cookies.remove("Login");
     Cookies.remove("token");

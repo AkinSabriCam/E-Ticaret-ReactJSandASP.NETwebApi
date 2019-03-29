@@ -9,21 +9,25 @@ namespace DAL
     public class sepetDAL
     {
         Models.Entities db = new Models.Entities();
-        public List<ViewModels.UserSepettekiUrunlerViewModel> GetAllSepetforVisitor(int sepetId)
+        public List<ViewModels.SepettekiUrunViewModel> GetAllSepetforVisitor(int sepetId)
         {
             var Products = db.SepettekiUrunler.Where(x => x.sepetID == sepetId).ToList();
 
-            var SepettekiUrunler = new List<ViewModels.UserSepettekiUrunlerViewModel>();
+            var SepettekiUrunler = new List<ViewModels.SepettekiUrunViewModel>();
             if (Products.Count != 0)
             {
                 foreach (var sepUrun in Products)
                 {
-                    var sepettekiUrun = new ViewModels.UserSepettekiUrunlerViewModel();
+                    var sepettekiUrun = new ViewModels.SepettekiUrunViewModel();
                     sepettekiUrun.ad = sepUrun.Urun.ad;
                     sepettekiUrun.adet = sepUrun.adet;
-                    sepettekiUrun.fiyat = sepUrun.Urun.fiyat;
+                    sepettekiUrun.fiyat = (decimal)sepUrun.Urun.fiyat;
                     sepettekiUrun.toplamFiyat = sepUrun.toplamFiyat;
+                    sepettekiUrun.sepetID = sepUrun.sepetID;
+                    sepettekiUrun.sepettekiUrunID = sepUrun.sepettekiUrunID;
+                    sepettekiUrun.urunID = sepUrun.urunID;
                     SepettekiUrunler.Add(sepettekiUrun);
+                    
 
                 }
 
