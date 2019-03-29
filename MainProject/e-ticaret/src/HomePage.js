@@ -59,8 +59,6 @@ export class HomePage extends React.Component{
   
   }
   render(){
-
-  
         let Cards=this.state.Products.map((urun,ind)=>{
 
           return(

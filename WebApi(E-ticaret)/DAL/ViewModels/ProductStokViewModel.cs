@@ -16,6 +16,7 @@ namespace DAL.ViewModels
         public Nullable<decimal> fiyat { get; set; }
         public Nullable<System.DateTime> eklenmeTarihi { get; set; }
         public string altkategori { get; set; }
+        public string kategori { get; set; }
         public Nullable<int> stokID { get; set; }
         public Nullable<bool> satinAlinmaDurumu { get; set; }
         public string imagePath { get; set; }

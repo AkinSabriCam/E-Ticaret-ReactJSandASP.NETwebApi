@@ -4,9 +4,8 @@
 		import './ShopStyle/shop_responsive.css';
 		import './ShopStyle/plugins/jquery-ui.css';
 		import {Link,Redirect} from 'react-router-dom';
-		import $ from 'jquery';				
-
-		let Urunler = [];
+		import $ from 'jquery';	
+		import {Checkbox} from 'react-mdl';			
 						
     export class ProductsByCategory extends React.Component {
 
@@ -14,7 +13,6 @@
 				super(props);
 				this.state={
 					Products:[],
-					altKategori:"",
 					Shop:false,
 					ProductDetail:0,
 				}
@@ -30,12 +28,29 @@
 				}
 				
 				fetch("http://localhost:50040/api/Urunler/GetProductsByCategory/"+subCatId).then(data=>data.json())
-    		.then(result=>this.setState({Products:result, altKategori: result.altkategori}))
+    		.then(result=>this.setState({Products:result}))
 				.catch(error=>console.log("error"));			
 			}
 
 			prod(id){
 				this.setState({Shop:true, ProductDetail:id});
+			}
+
+			OrderByBestSeller = () => {
+				const {subCatId} = this.props.location.state;
+				if(subCatId!=null){
+					console.log(subCatId);
+				}else{
+					console.log("parametre hatalı");
+				}
+
+				fetch("http://localhost:50040/api/Urunler/GetProductsOrderByBestSellers/"+subCatId).then(data=>data.json())
+    		.then(result=>this.setState({Products:result}))
+				.catch(error=>console.log("error"));
+	
+				$(function () {
+						$("#spanOrder").text("En Çok Satanlar")
+				});				
 			}
 
 			OrderByNameASC = () => {
@@ -46,50 +61,156 @@
 					console.log("parametre hatalı");
 				}
 
-				fetch("http://localhost:50040/api/Urunler/GetProductsByCategory/"+subCatId).then(data=>data.json())
+				fetch("http://localhost:50040/api/Urunler/GetProductsByNameASC/"+subCatId).then(data=>data.json())
     		.then(result=>this.setState({Products:result}))
 				.catch(error=>console.log("error"));
-
-				let sortedProducts = this.state.Products.sort((a, b) => a.fiyat < b.fiyat);
-				this.setState({Products: sortedProducts});
-				
+	
 				$(function () {
 						$("#spanOrder").text("Ad A->Z")
-				});	
-				Urunler = this.state.Products.map((urun,ind) => {
-					return (
-							<div>				
-								<div className="product_grid">
-								<div className="product_grid_border"></div>
+				});				
+			}
+			OrderByNameDESC = () => {
+				const {subCatId} = this.props.location.state;
+				if(subCatId!=null){
+					console.log(subCatId);
+				}else{
+					console.log("parametre hatalı");
+				}
 
-				
-								<div className="product_item is_new">
-									<div className="product_border"></div>
-									<div className="product_image d-flex flex-column align-items-center justify-content-center">
-										<Link to={{pathname:"/ProductDetail",state:{productId:urun.urunID}}}>
-												<img src="https://via.placeholder.com/150" alt="" />
-										</Link>
-									</div>
-									<div className="product_content">
-										<div className="product_price">{urun.fiyat} ₺</div>
-										<div className="product_name"><div><a href="#" tabindex="0">{urun.ad}</a></div></div>
-									</div>
-									<div className="product_fav"><i className="fas fa-heart"></i></div>
-									<ul className="product_marks">
-										<li className="product_mark product_discount">-25%</li>
-										<li className="product_mark product_new">new</li>
-									</ul>
-								</div>
+				fetch("http://localhost:50040/api/Urunler/GetProductsByNameDESC/"+subCatId).then(data=>data.json())
+    		.then(result=>this.setState({Products:result}))
+				.catch(error=>console.log("error"));
+	
+				$(function () {
+						$("#spanOrder").text("Ad Z->A")
+				});				
+			}
+			OrderByPriceASC = () => {
+				const {subCatId} = this.props.location.state;
+				if(subCatId!=null){
+					console.log(subCatId);
+				}else{
+					console.log("parametre hatalı");
+				}
 
-							</div>
-						</div>
-					)
-				})
+				fetch("http://localhost:50040/api/Urunler/GetProductsByPriceASC/"+subCatId).then(data=>data.json())
+    		.then(result=>this.setState({Products:result}))
+				.catch(error=>console.log("error"));
+	
+				$(function () {
+						$("#spanOrder").text("Fiyat Artan")
+				});				
+			}
+			
+			OrderByPriceDESC = () => {
+				const {subCatId} = this.props.location.state;
+				if(subCatId!=null){
+					console.log(subCatId);
+				}else{
+					console.log("parametre hatalı");
+				}
+
+				fetch("http://localhost:50040/api/Urunler/GetProductsByPriceDESC/"+subCatId).then(data=>data.json())
+    		.then(result=>this.setState({Products:result}))
+				.catch(error=>console.log("error"));
+	
+				$(function () {
+						$("#spanOrder").text("Fiyat Azalan")
+				});				
+			}
+
+			getFilterCB1 = () => {
+					var cb1 = document.getElementById("cb1").checked;
+					if(cb1 == true){
+							const {subCatId} = this.props.location.state;
+							if(subCatId!=null){
+							console.log(subCatId);
+							}else{
+								console.log("parametre hatalı");
+							}
+
+							fetch("http://localhost:50040/api/Urunler/GetFilterUnder500/"+subCatId).then(data=>data.json())
+							.then(result=>this.setState({Products:result}))
+							.catch(error=>console.log("error"));
+					}				
+			}
+			getFilterCB2 = () => {
+				var cb2 = document.getElementById("cb2").checked;
+				if(cb2 == true){
+						const {subCatId} = this.props.location.state;
+						if(subCatId!=null){
+							console.log(subCatId);
+						}else{
+							console.log("parametre hatalı");
+						}
+
+						fetch("http://localhost:50040/api/Urunler/GetFilterBetween500And1500/"+subCatId).then(data=>data.json())
+						.then(result=>this.setState({Products:result}))
+						.catch(error=>console.log("error"));
+				}				
+			}
+			getFilterCB3 = () => {
+				var cb3 = document.getElementById("cb3").checked;
+				if(cb3 == true){
+						const {subCatId} = this.props.location.state;
+						if(subCatId!=null){
+							console.log(subCatId);
+						}else{
+							console.log("parametre hatalı");
+						}
+
+						fetch("http://localhost:50040/api/Urunler/GetFilterBetween1500And2500/"+subCatId).then(data=>data.json())
+						.then(result=>this.setState({Products:result}))
+						.catch(error=>console.log("error"));
+				}				
+			}
+			getFilterCB4 = () => {
+				var cb4 = document.getElementById("cb4").checked;
+				if(cb4 == true){
+						const {subCatId} = this.props.location.state;
+						if(subCatId!=null){
+							console.log(subCatId);
+						}else{
+							console.log("parametre hatalı");
+						}
+
+						fetch("http://localhost:50040/api/Urunler/GetFilterBetween2500And4000/"+subCatId).then(data=>data.json())
+						.then(result=>this.setState({Products:result}))
+						.catch(error=>console.log("error"));
+				}				
+			}
+			getFilterCB5 = () => {
+					var cb5 = document.getElementById("cb5").checked;
+					if(cb5 == true){
+							const {subCatId} = this.props.location.state;
+							if(subCatId!=null){
+								console.log(subCatId);
+							}else{
+								console.log("parametre hatalı");
+							}
+
+							fetch("http://localhost:50040/api/Urunler/GetFilterOver4000/"+subCatId).then(data=>data.json())
+							.then(result=>this.setState({Products:result}))
+							.catch(error=>console.log("error"));
+					}				
+			}
+
+			getFilterByBrand = (markaAd) => {
+				const {subCatId} = this.props.location.state;
+				if(subCatId!=null){
+					console.log(subCatId);
+				}else{
+					console.log("parametre hatalı");
+				}
+
+				fetch("http://localhost:50040/api/Urunler/GetFilterByBrand/"+subCatId+"?marka="+markaAd).then(data=>data.json())
+				.then(result=>this.setState({Products:result}))
+				.catch(error=>console.log("error"));
 			}
 
       render() {
         
-					Urunler = this.state.Products.map((urun,ind) => {
+					let Urunler = this.state.Products.map((urun,ind) => {
             return (
 								<div>				
 									
@@ -119,12 +240,35 @@
 						)
 					})
 
+					let altKategoriler = this.state.Products.map((urun,ind) => {
+						return(
+								urun.altkategori
+						)
+					})
+					let uniqueAltKategori = [...new Set(altKategoriler)];
+					let altKategori = uniqueAltKategori.map((altkat,ind) => {
+							return(
+								<h2 className="home_title">{altkat}</h2>
+							)
+					})
+
+					let Marka = this.state.Products.map((urun,ind) => {
+							return(
+								urun.marka
+							)
+					})
+					let uniqueBrands = [...new Set(Marka)];
+					let Markalar = uniqueBrands.map((marka,ind) => {						
+						return(
+								<li><button type="button" id={marka} onclick={this.getFilterByBrands(marka)} className="btn btn-link">{marka}</button></li>
+							)
+					})					
 					return(
 							<div>
 										<div className="home">
 											<div className="home_overlay"></div>
 											<div className="home_content d-flex flex-column align-items-center justify-content-center">
-											<h2 className="home_title">{this.state.altKategori}</h2>
+													{altKategori}
 											</div>
 										</div>
 
@@ -134,54 +278,27 @@
 														<div className="row">
 													<div className="col-lg-3">
 														<div className="shop_sidebar">
-													<div className="sidebar_section">
-										<div className="sidebar_title">Categories</div>
-										<ul className="sidebar_categories">
-
-											<li><a href="#">NoteBook</a></li>
-											<li><a href="#">Laptop</a></li>
-											<li><a href="#">Masa Üstü</a></li>
-											<li><a href="#">Gamebook</a></li>
-											<li><a href="#">2 si 1 Arada</a></li>
-
-										</ul>
-									</div>
 									<div className="sidebar_section filter_by_section">
 										<div className="sidebar_title">Filter By</div>
-										<div className="sidebar_subtitle">Price</div>
-										<div className="filter_price">
-											<div id="slider-range" className="slider_range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
-												<div className="ui-slider-range ui-corner-all ui-widget-header" style={{left:"0%", width:"100%"}}></div>
-												<span tabindex="0" className="ui-slider-handle ui-corner-all ui-state-default" style={{left:"0%"}}></span>
-												<span tabindex="0" className="ui-slider-handle ui-corner-all ui-state-default" style={{left:"100%"}}></span>
-											</div>
-											<p>Range: </p>
-											<p><input type="text" id="amount" className="amount" readonly style={{border:0, fontWeight:"bold"}} /></p>
-										</div>
-									</div>
-									<div className="sidebar_section">
-										<div className="sidebar_subtitle color_subtitle">Color</div>
-										<ul className="colors_list">
-											<li className="color"><a href="#" style={{background: "#b19c83"}}></a></li>
-											<li className="color"><a href="#" style={{background: "#000000"}}></a></li>
-											<li className="color"><a href="#" style={{background: "#999999"}}></a></li>
-											<li className="color"><a href="#" style={{background: "#0e8ce4"}}></a></li>
-											<li className="color"><a href="#" style={{background: "#df3b3b"}}></a></li>
-											<li className="color"><a href="#" style={{background: "#ffffff", border: "solid 1px #e1e1e1"}}></a></li>
-										</ul>
-									</div>
-									<div className="sidebar_section">
 										<div className="sidebar_subtitle brands_subtitle">Brands</div>
 										<ul className="brands_list">
 
-												<li className="brand"><a href="#">ASUS</a></li>
-												<li className="brand"><a href="#">MSI</a></li>
-												<li className="brand"><a href="#">TOSHIBA</a></li>
-												<li className="brand"><a href="#">HP</a></li>
-												<li className="brand"><a href="#">LENOVO</a></li>
-												<li className="brand"><a href="#">APPLE</a></li>
+												{Markalar}
 											
 										</ul>
+									</div>
+									<div className="sidebar_section">
+										
+										<div className="sidebar_subtitle">Price</div>
+										<form action="#">
+											<ul>
+												<li><input id="cb1" type="checkbox" onclick={this.getFilterCB1} value="<500" className="mr-sm-2" style={{width:25}}/>500 ₺ Altı</li>
+												<li><input id="cb2" type="checkbox" onclick={this.getFilterCB2} value="500 AND 1500" className="mr-sm-2" style={{width:25}}/>500 - 1500 ₺ Arası</li>
+												<li><input id="cb3" type="checkbox" onclick={this.getFilterCB3} value="1500 AND 2500" className="mr-sm-2" style={{width:25}}/>1500 - 2500 ₺ Arası</li>
+												<li><input id="cb4" type="checkbox" onclick={this.getFilterCB4} value="2500 AND 4000" className="mr-sm-2" style={{width:25}}/>2500 - 4000 ₺ Arası</li>
+												<li><input id="cb5" type="checkbox" onclick={this.getFilterCB5} value=">4000" className="mr-sm-2" style={{width:25}}/>4000 ₺ Üstü</li>
+											</ul>
+									</form>
 									</div>
 								</div>
 
@@ -198,11 +315,11 @@
 												<li>
 													<span id="spanOrder" className="sorting_text">---<i className="fas fa-chevron-down"></i></span>
 													<ul>
-															<li className="shop_sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>En Çok Satanlar</li>
+															<li className="shop_sorting_button" data-isotope-option='{ "sortBy": "original-order" }' onClick={this.OrderByBestSeller}>En Çok Satanlar</li>
 															<li className="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }' onClick={this.OrderByNameASC}>Ad A->Z</li>
-															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>Ad Z->A</li>
-															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>Fiyat Artan </li>
-															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>Fiyat Azalan</li>
+															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByNameDESC}>Ad Z->A</li>
+															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByPriceASC}>Fiyat Artan </li>
+															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByPriceDESC}>Fiyat Azalan</li>
 													</ul>
 												</li>
 											</ul>

@@ -146,6 +146,78 @@ namespace WebApi_E_ticaret_.Controllers
             else return BadRequest();
         }
 
+        [HttpGet]
+        public IHttpActionResult GetFilterUnder500(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetFilterUnder500(id);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetFilterBetween500And1500(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetFilterBetween500And1500(id);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetFilterBetween1500And2500(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetFilterBetween1500And2500(id);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetFilterBetween2500And4000(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetFilterBetween2500And4000(id);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetFilterOver4000(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetFilterOver4000(id);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetFilterByBrand(int id, string marka)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.GetFilterByBrand(id, marka);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
         [HttpPost]
         public IHttpActionResult PostProductAlreadyExist(DAL.ViewModels.ProductStokViewModel model)
         {

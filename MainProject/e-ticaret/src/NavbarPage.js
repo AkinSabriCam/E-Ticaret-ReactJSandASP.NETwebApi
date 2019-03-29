@@ -39,8 +39,7 @@ export class NavbarPage extends Component {
   this.setState({ isOpen: !this.state.isOpen });
   } 
 
-  getText = () => {
-    
+  getText = () => {   
     var val = document.getElementById("searchInput").value;
     this.setState({text:val});
   }

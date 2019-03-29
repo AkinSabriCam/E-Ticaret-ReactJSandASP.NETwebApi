@@ -25,26 +25,26 @@ class App extends Component {
     
     return (
       <CookiesProvider>
-     <Router>
-      <div>
-     <NavbarPage></NavbarPage>
+        <Router>
+          <div>
+            <NavbarPage></NavbarPage>
 
-     <Route exact path="/" component={HomePage}/>
-     <Route exact path="/ProductDetail/" component={ProductDetail}/>
-     <Route path="/Login" component={Login}/>
-     <Route path="/Register" component={Register}/>
-     <Route path="/User" component={User}/>     
-     <Route path="/User/Favourite" component={Favourite}/>
-     <Route path="/User/Siparislerim" component={Siparislerim}/>
-     <Route path="/Siparis"   component={Siparis}/>
-     <Route exact path="/" component={HomePage}/>
-     <Route path="/ProductsByCategory" component={ProductsByCategory}/>
-     <Route path="/User/PersonalDetail"   component={PersonalDetail}/>
-     <Route path="/SearchProducts"   component={SearchProducts}/> 
+            <Route exact path="/" component={HomePage}/>
+            <Route exact path="/ProductDetail/" component={ProductDetail}/>
+            <Route path="/Login" component={Login}/>
+            <Route path="/Register" component={Register}/>
+            <Route path="/User" component={User}/>     
+            <Route path="/User/Favourite" component={Favourite}/>
+            <Route path="/User/Siparislerim" component={Siparislerim}/>
+            <Route path="/Siparis" component={Siparis}/>
+            <Route exact path="/" component={HomePage}/>
+            <Route path="/ProductsByCategory" component={ProductsByCategory}/>
+            <Route path="/User/PersonalDetail" component={PersonalDetail}/>
+            <Route path="/SearchProducts" component={SearchProducts}/> 
 
-     </div>
-     </Router>
-     </CookiesProvider>
+          </div>
+        </Router>
+      </CookiesProvider>
     );
   }
 }

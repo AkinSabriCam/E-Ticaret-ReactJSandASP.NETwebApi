@@ -35,6 +35,72 @@ export class SearchProducts extends React.Component {
         this.setState({ProductDetail:id});
     }
 
+    OrderByNameASC = () => {
+        const {subCatId} = this.props.location.state;
+        if(subCatId!=null){
+            console.log(subCatId);
+        }else{
+            console.log("parametre hatalı");
+        }
+
+        fetch("http://localhost:50040/api/Urunler/GetProductsByNameASC/"+subCatId).then(data=>data.json())
+    .then(result=>this.setState({Products:result}))
+        .catch(error=>console.log("error"));
+
+        $(function () {
+                $("#spanOrder").text("Ad A->Z")
+        });				
+    }
+    OrderByNameDESC = () => {
+        const {subCatId} = this.props.location.state;
+        if(subCatId!=null){
+            console.log(subCatId);
+        }else{
+            console.log("parametre hatalı");
+        }
+
+        fetch("http://localhost:50040/api/Urunler/GetProductsByNameDESC/"+subCatId).then(data=>data.json())
+    .then(result=>this.setState({Products:result}))
+        .catch(error=>console.log("error"));
+
+        $(function () {
+                $("#spanOrder").text("Ad Z->A")
+        });				
+    }
+    OrderByPriceASC = () => {
+        const {subCatId} = this.props.location.state;
+        if(subCatId!=null){
+            console.log(subCatId);
+        }else{
+            console.log("parametre hatalı");
+        }
+
+        fetch("http://localhost:50040/api/Urunler/GetProductsByPriceASC/"+subCatId).then(data=>data.json())
+    .then(result=>this.setState({Products:result}))
+        .catch(error=>console.log("error"));
+
+        $(function () {
+                $("#spanOrder").text("Fiyat Artan")
+        });				
+    }
+    
+    OrderByPriceDESC = () => {
+        const {subCatId} = this.props.location.state;
+        if(subCatId!=null){
+            console.log(subCatId);
+        }else{
+            console.log("parametre hatalı");
+        }
+
+        fetch("http://localhost:50040/api/Urunler/GetProductsByPriceDESC/"+subCatId).then(data=>data.json())
+    .then(result=>this.setState({Products:result}))
+        .catch(error=>console.log("error"));
+
+        $(function () {
+                $("#spanOrder").text("Fiyat Azalan")
+        });				
+    }
+
     render() {
         Urunler = this.state.Products.map((urun,ind) => {
             return (
@@ -132,11 +198,11 @@ export class SearchProducts extends React.Component {
                                                     <li>
                                                         <span id="spanOrder" className="sorting_text">---<i className="fas fa-chevron-down"></i></span>
                                                         <ul>
-                                                                <li className="shop_sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>En Çok Satanlar</li>
-                                                                <li className="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }' onClick={this.OrderByNameASC}>Ad A->Z</li>
-                                                                <li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>Ad Z->A</li>
-                                                                <li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>Fiyat Artan </li>
-                                                                <li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>Fiyat Azalan</li>
+                                                            <li className="shop_sorting_button" data-isotope-option='{ "sortBy": "original-order" }' onClick={this.OrderByBestSeller}>En Çok Satanlar</li>
+															<li className="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }' onClick={this.OrderByNameASC}>Ad A->Z</li>
+															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByNameDESC}>Ad Z->A</li>
+															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByPriceASC}>Fiyat Artan </li>
+															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByPriceDESC}>Fiyat Azalan</li>
                                                         </ul>
                                                     </li>
                                                 </ul>
