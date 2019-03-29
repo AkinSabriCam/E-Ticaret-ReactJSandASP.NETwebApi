@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL.ViewModels
 {
-    public class IlceViewModel
+    public class ilceViewModel
     {
-        public string Ilce;
-        public int IlceID;
+        public int ilceID { get; set; }
+        public string ilce { get; set; }
     }
 }
