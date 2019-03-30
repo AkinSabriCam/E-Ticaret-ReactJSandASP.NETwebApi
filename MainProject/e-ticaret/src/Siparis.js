@@ -58,7 +58,7 @@ export class Siparis extends React.Component{
                 window.location = '/Siparis';
                }else{
                 Cookies.remove("sepetid")
-                window.location = '/';
+                //window.location = '/';
                }
                
                
