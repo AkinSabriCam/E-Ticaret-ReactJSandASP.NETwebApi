@@ -50,6 +50,7 @@ namespace DAL.Models
         public virtual DbSet<Stok> Stok { get; set; }
         public virtual DbSet<Urun> Urun { get; set; }
         public virtual DbSet<ZiyaretciMesaj> ZiyaretciMesaj { get; set; }
+        public virtual DbSet<EnCokSatanUrunler> EnCokSatanUrunler { get; set; }
     
         [DbFunction("Entities", "FN_OrderByBestSallers")]
         public virtual IQueryable<FN_OrderByBestSallers_Result> FN_OrderByBestSallers()
@@ -129,6 +130,12 @@ namespace DAL.Models
                 new ObjectParameter("text", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_SearchProduct1_Result>("[Entities].[FN_SearchProduct1](@text)", textParameter);
+        }
+    
+        [DbFunction("Entities", "FN_OrderByBestSallers2")]
+        public virtual IQueryable<FN_OrderByBestSallers2_Result> FN_OrderByBestSallers2()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByBestSallers2_Result>("[Entities].[FN_OrderByBestSallers2]()");
         }
     }
 }

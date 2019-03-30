@@ -56,6 +56,7 @@ namespace DAL
 
         }
 
+        //ProductsByCategory
         public List<ViewModels.ProductStokViewModel> GetProductsByCategory(int id)
         {
             var AltKategori= db.AltKategori.FirstOrDefault(x => x.altKategoriID == id);
@@ -88,41 +89,9 @@ namespace DAL
 
         }
 
-
-        public List<ViewModels.ProductStokViewModel> GetProductsBySearch(string search)
-        {
-            var searchResults = db.FN_SearchProduct1(search).ToList();
-            var Products = new List<ViewModels.ProductStokViewModel>();
-            if (searchResults.Count > 0)
-            {
-                foreach (var model in searchResults)
-                {
-                    var product = new ViewModels.ProductStokViewModel();
-                    product.ad = model.ad;
-                    product.adet = model.adet;
-                    product.altKategoriID = model.altKategoriID;
-                    product.eklenmeTarihi = model.eklenmeTarihi;
-                    product.fiyat = model.fiyat;
-                    product.altkategori = model.altKategori;
-                    product.imagePath = model.imagePath;
-                    product.markaID = model.markaID;
-                    product.marka = model.marka;
-                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
-                    product.stokID = model.stokID;
-                    product.urunID = model.urunID;
-                    Products.Add(product);
-                }
-                return Products;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public List<ViewModels.ProductStokViewModel> GetProductsOrderByBestSellers(int id)
         {
-            var bestSellers = db.FN_OrderByBestSallers1().Where(x => x.altKategoriID == id).ToList();
+            var bestSellers = db.FN_OrderByBestSallers2().Where(x => x.altKategoriID == id).ToList();
             var Products = new List<ViewModels.ProductStokViewModel>();
             if (bestSellers.Count > 0)
             {
@@ -275,23 +244,24 @@ namespace DAL
             }
         }
 
-        public List<ViewModels.ProductStokViewModel> GetFilterUnder500(int id)
+        public List<ViewModels.ProductStokViewModel> GetFilterByPrice(int id, int min, int max)
         {
-            var AltKategori = db.AltKategori.FirstOrDefault(x => x.altKategoriID == id);
-            var filteredProducts = db.Urun.Where(x => x.fiyat < 500 && x.altKategoriID == id).ToList();
+            if (max < min)
+                max = min + 1;
+
+            var filteredProducts = db.Urun.Where(x => x.fiyat >= min && x.fiyat <= max && x.altKategoriID == id).ToList();
             var Products = new List<ViewModels.ProductStokViewModel>();
             if (filteredProducts.Count > 0)
             {
                 foreach (var model in filteredProducts)
                 {
-
                     var product = new ViewModels.ProductStokViewModel();
                     product.ad = model.ad;
                     product.adet = model.Stok.adet;
                     product.altKategoriID = model.altKategoriID;
                     product.eklenmeTarihi = model.eklenmeTarihi;
                     product.fiyat = model.fiyat;
-                    product.altkategori = AltKategori.altKategori1;
+                    product.altkategori = model.AltKategori.altKategori1;
                     product.imagePath = model.imagePath;
                     product.markaID = model.markaID;
                     product.marka = model.Marka.marka1;
@@ -306,148 +276,12 @@ namespace DAL
             {
                 return null;
             }
-
         }
 
-        public List<ViewModels.ProductStokViewModel> GetFilterBetween500And1500(int id)
-        {
-            var AltKategori = db.AltKategori.FirstOrDefault(x => x.altKategoriID == id);
-            var filteredProducts = db.Urun.Where(x => x.fiyat >= 500 && x.fiyat < 1500 && x.altKategoriID == id).ToList();
-            var Products = new List<ViewModels.ProductStokViewModel>();
-            if (filteredProducts.Count > 0)
-            {
-                foreach (var model in filteredProducts)
-                {
 
-                    var product = new ViewModels.ProductStokViewModel();
-                    product.ad = model.ad;
-                    product.adet = model.Stok.adet;
-                    product.altKategoriID = model.altKategoriID;
-                    product.eklenmeTarihi = model.eklenmeTarihi;
-                    product.fiyat = model.fiyat;
-                    product.altkategori = AltKategori.altKategori1;
-                    product.imagePath = model.imagePath;
-                    product.markaID = model.markaID;
-                    product.marka = model.Marka.marka1;
-                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
-                    product.stokID = model.stokID;
-                    product.urunID = model.urunID;
-                    Products.Add(product);
-                }
-                return Products;
-            }
-            else
-            {
-                return null;
-            }
-
-        }
-
-        public List<ViewModels.ProductStokViewModel> GetFilterBetween1500And2500(int id)
-        {
-            var AltKategori = db.AltKategori.FirstOrDefault(x => x.altKategoriID == id);
-            var filteredProducts = db.Urun.Where(x => x.fiyat >= 1500 && x.fiyat < 2500 && x.altKategoriID == id).ToList();
-            var Products = new List<ViewModels.ProductStokViewModel>();
-            if (filteredProducts.Count > 0)
-            {
-                foreach (var model in filteredProducts)
-                {
-
-                    var product = new ViewModels.ProductStokViewModel();
-                    product.ad = model.ad;
-                    product.adet = model.Stok.adet;
-                    product.altKategoriID = model.altKategoriID;
-                    product.eklenmeTarihi = model.eklenmeTarihi;
-                    product.fiyat = model.fiyat;
-                    product.altkategori = AltKategori.altKategori1;
-                    product.imagePath = model.imagePath;
-                    product.markaID = model.markaID;
-                    product.marka = model.Marka.marka1;
-                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
-                    product.stokID = model.stokID;
-                    product.urunID = model.urunID;
-                    Products.Add(product);
-                }
-                return Products;
-            }
-            else
-            {
-                return null;
-            }
-
-        }
-
-        public List<ViewModels.ProductStokViewModel> GetFilterBetween2500And4000(int id)
-        {
-            var AltKategori = db.AltKategori.FirstOrDefault(x => x.altKategoriID == id);
-            var filteredProducts = db.Urun.Where(x => x.fiyat >= 2500 && x.fiyat < 4000 && x.altKategoriID == id).ToList();
-            var Products = new List<ViewModels.ProductStokViewModel>();
-            if (filteredProducts.Count > 0)
-            {
-                foreach (var model in filteredProducts)
-                {
-
-                    var product = new ViewModels.ProductStokViewModel();
-                    product.ad = model.ad;
-                    product.adet = model.Stok.adet;
-                    product.altKategoriID = model.altKategoriID;
-                    product.eklenmeTarihi = model.eklenmeTarihi;
-                    product.fiyat = model.fiyat;
-                    product.altkategori = AltKategori.altKategori1;
-                    product.imagePath = model.imagePath;
-                    product.markaID = model.markaID;
-                    product.marka = model.Marka.marka1;
-                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
-                    product.stokID = model.stokID;
-                    product.urunID = model.urunID;
-                    Products.Add(product);
-                }
-                return Products;
-            }
-            else
-            {
-                return null;
-            }
-
-        }
-
-        public List<ViewModels.ProductStokViewModel> GetFilterOver4000(int id)
-        {
-            var AltKategori = db.AltKategori.FirstOrDefault(x => x.altKategoriID == id);
-            var filteredProducts = db.Urun.Where(x => x.fiyat >= 4000 && x.altKategoriID == id).ToList();
-            var Products = new List<ViewModels.ProductStokViewModel>();
-            if (filteredProducts.Count > 0)
-            {
-                foreach (var model in filteredProducts)
-                {
-
-                    var product = new ViewModels.ProductStokViewModel();
-                    product.ad = model.ad;
-                    product.adet = model.Stok.adet;
-                    product.altKategoriID = model.altKategoriID;
-                    product.eklenmeTarihi = model.eklenmeTarihi;
-                    product.fiyat = model.fiyat;
-                    product.altkategori = AltKategori.altKategori1;
-                    product.imagePath = model.imagePath;
-                    product.markaID = model.markaID;
-                    product.marka = model.Marka.marka1;
-                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
-                    product.stokID = model.stokID;
-                    product.urunID = model.urunID;
-                    Products.Add(product);
-                }
-                return Products;
-            }
-            else
-            {
-                return null;
-            }
-
-        }
 
         public List<ViewModels.ProductStokViewModel> GetFilterByBrand(int id, string marka)
         {
-            var AltKategori = db.AltKategori.FirstOrDefault(x => x.altKategoriID == id);
             var filteredProducts = db.Urun.Where(x => x.Marka.marka1 == marka && x.altKategoriID == id).ToList();
             var Products = new List<ViewModels.ProductStokViewModel>();
             if (filteredProducts.Count > 0)
@@ -461,7 +295,7 @@ namespace DAL
                     product.altKategoriID = model.altKategoriID;
                     product.eklenmeTarihi = model.eklenmeTarihi;
                     product.fiyat = model.fiyat;
-                    product.altkategori = AltKategori.altKategori1;
+                    product.altkategori = model.AltKategori.altKategori1;
                     product.imagePath = model.imagePath;
                     product.markaID = model.markaID;
                     product.marka = model.Marka.marka1;
@@ -477,7 +311,265 @@ namespace DAL
                 return null;
             }
 
+        }//endOfProductsByCategory
+
+        //Search
+        public List<ViewModels.ProductStokViewModel> GetProductsBySearch(string search)
+        {
+            var searchResults = db.FN_SearchProduct1(search).ToList();
+            var Products = new List<ViewModels.ProductStokViewModel>();
+            if (searchResults.Count > 0)
+            {
+                foreach (var model in searchResults)
+                {
+                    var product = new ViewModels.ProductStokViewModel();
+                    product.ad = model.ad;
+                    product.adet = model.adet;
+                    product.altKategoriID = model.altKategoriID;
+                    product.eklenmeTarihi = model.eklenmeTarihi;
+                    product.fiyat = model.fiyat;
+                    product.altkategori = model.altKategori;
+                    product.imagePath = model.imagePath;
+                    product.markaID = model.markaID;
+                    product.marka = model.marka;
+                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
+                    product.stokID = model.stokID;
+                    product.urunID = model.urunID;
+                    Products.Add(product);
+                }
+                return Products;
+            }
+            else
+            {
+                return null;
+            }
         }
+
+        public List<ViewModels.ProductStokViewModel> GetProductsOrderByBestSellersInSearch(string search)
+        {
+            var bestSellers = db.FN_OrderByBestSallers2().Where(x => x.ad.Contains(search)).ToList();
+            var Products = new List<ViewModels.ProductStokViewModel>();
+            if (bestSellers.Count > 0)
+            {
+                foreach (var model in bestSellers)
+                {
+                    var product = new ViewModels.ProductStokViewModel();
+                    product.ad = model.ad;
+                    product.adet = model.adet;
+                    product.altKategoriID = model.altKategoriID;
+                    product.eklenmeTarihi = model.eklenmeTarihi;
+                    product.fiyat = model.fiyat;
+                    product.altkategori = model.altKategori;
+                    product.imagePath = model.imagePath;
+                    product.markaID = model.markaID;
+                    product.marka = model.marka;
+                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
+                    product.stokID = model.stokID;
+                    product.urunID = model.urunID;
+                    Products.Add(product);
+                }
+                return Products;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<ViewModels.ProductStokViewModel> GetProductsOrderByNameASCInSearch(string search)
+        {
+            var nameAsc = db.FN_OrderByNameASC1().Where(x => x.ad.Contains(search)).ToList();
+            var Products = new List<ViewModels.ProductStokViewModel>();
+            if (nameAsc.Count > 0)
+            {
+                foreach (var model in nameAsc)
+                {
+                    var product = new ViewModels.ProductStokViewModel();
+                    product.ad = model.ad;
+                    product.adet = model.adet;
+                    product.altKategoriID = model.altKategoriID;
+                    product.eklenmeTarihi = model.eklenmeTarihi;
+                    product.fiyat = model.fiyat;
+                    product.altkategori = model.altKategori;
+                    product.imagePath = model.imagePath;
+                    product.markaID = model.markaID;
+                    product.marka = model.marka;
+                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
+                    product.stokID = model.stokID;
+                    product.urunID = model.urunID;
+                    Products.Add(product);
+                }
+                return Products;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<ViewModels.ProductStokViewModel> GetProductsOrderByNameDESCInSearch(string search)
+        {
+            var nameDesc = db.FN_OrderByNameDESC1().Where(x => x.ad.Contains(search)).ToList();
+            var Products = new List<ViewModels.ProductStokViewModel>();
+            if (nameDesc.Count > 0)
+            {
+                foreach (var model in nameDesc)
+                {
+                    var product = new ViewModels.ProductStokViewModel();
+                    product.ad = model.ad;
+                    product.adet = model.adet;
+                    product.altKategoriID = model.altKategoriID;
+                    product.eklenmeTarihi = model.eklenmeTarihi;
+                    product.fiyat = model.fiyat;
+                    product.altkategori = model.altKategori;
+                    product.imagePath = model.imagePath;
+                    product.markaID = model.markaID;
+                    product.marka = model.marka;
+                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
+                    product.stokID = model.stokID;
+                    product.urunID = model.urunID;
+                    Products.Add(product);
+                }
+                return Products;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<ViewModels.ProductStokViewModel> GetProductsOrderByPriceASCInSearch(string search)
+        {
+            var priceAsc = db.FN_OrderByPriceASC1().Where(x => x.ad.Contains(search)).ToList();
+            var Products = new List<ViewModels.ProductStokViewModel>();
+            if (priceAsc.Count > 0)
+            {
+                foreach (var model in priceAsc)
+                {
+                    var product = new ViewModels.ProductStokViewModel();
+                    product.ad = model.ad;
+                    product.adet = model.adet;
+                    product.altKategoriID = model.altKategoriID;
+                    product.eklenmeTarihi = model.eklenmeTarihi;
+                    product.fiyat = model.fiyat;
+                    product.altkategori = model.altKategori;
+                    product.imagePath = model.imagePath;
+                    product.markaID = model.markaID;
+                    product.marka = model.marka;
+                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
+                    product.stokID = model.stokID;
+                    product.urunID = model.urunID;
+                    Products.Add(product);
+                }
+                return Products;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<ViewModels.ProductStokViewModel> GetProductsOrderByPriceDESCInSearch(string search)
+        {
+            var priceDesc = db.FN_OrderByPriceDESC1().Where(x => x.ad.Contains(search)).ToList();
+            var Products = new List<ViewModels.ProductStokViewModel>();
+            if (priceDesc.Count > 0)
+            {
+                foreach (var model in priceDesc)
+                {
+                    var product = new ViewModels.ProductStokViewModel();
+                    product.ad = model.ad;
+                    product.adet = model.adet;
+                    product.altKategoriID = model.altKategoriID;
+                    product.eklenmeTarihi = model.eklenmeTarihi;
+                    product.fiyat = model.fiyat;
+                    product.altkategori = model.altKategori;
+                    product.imagePath = model.imagePath;
+                    product.markaID = model.markaID;
+                    product.marka = model.marka;
+                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
+                    product.stokID = model.stokID;
+                    product.urunID = model.urunID;
+                    Products.Add(product);
+                }
+                return Products;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<ViewModels.ProductStokViewModel> GetFilterByPriceInSearch(string search, int min, int max)
+        {
+            if (max < min)
+                max = min + 1;
+
+            var searchResults = db.FN_SearchProduct1(search).ToList();
+            var filteredProducts = searchResults.Where(x => x.fiyat >= min && x.fiyat <= max).ToList();
+            var Products = new List<ViewModels.ProductStokViewModel>();
+            if (filteredProducts.Count > 0)
+            {
+                foreach (var model in filteredProducts)
+                {
+                    var product = new ViewModels.ProductStokViewModel();
+                    product.ad = model.ad;
+                    product.adet = model.adet;
+                    product.altKategoriID = model.altKategoriID;
+                    product.eklenmeTarihi = model.eklenmeTarihi;
+                    product.fiyat = model.fiyat;
+                    product.altkategori = model.altKategori;
+                    product.imagePath = model.imagePath;
+                    product.markaID = model.markaID;
+                    product.marka = model.marka;
+                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
+                    product.stokID = model.stokID;
+                    product.urunID = model.urunID;
+                    Products.Add(product);
+                }
+                return Products;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        
+
+        public List<ViewModels.ProductStokViewModel> GetFilterByBrandInSearch(string search, string marka)
+        {
+            var searchResults = db.FN_SearchProduct1(search).ToList();
+            var filteredProducts = searchResults.Where(x => x.marka == marka).ToList();
+            var Products = new List<ViewModels.ProductStokViewModel>();
+            if (filteredProducts.Count > 0)
+            {
+                foreach (var model in filteredProducts)
+                {
+
+                    var product = new ViewModels.ProductStokViewModel();
+                    product.ad = model.ad;
+                    product.adet = model.adet;
+                    product.altKategoriID = model.altKategoriID;
+                    product.eklenmeTarihi = model.eklenmeTarihi;
+                    product.fiyat = model.fiyat;
+                    product.altkategori = model.altKategori;
+                    product.imagePath = model.imagePath;
+                    product.markaID = model.markaID;
+                    product.marka = model.marka;
+                    product.satinAlinmaDurumu = model.satinAlinmaDurumu;
+                    product.stokID = model.stokID;
+                    product.urunID = model.urunID;
+                    Products.Add(product);
+                }
+                return Products;
+            }
+            else
+            {
+                return null;
+            }
+
+        }//endOfSearch
 
         public bool PostProductAlreadyExist(ViewModels.ProductStokViewModel model)
         {

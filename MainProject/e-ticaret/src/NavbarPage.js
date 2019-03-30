@@ -95,7 +95,7 @@ render(){
                 </div>
                 
                <Link to={{pathname:"/SearchProducts", state:{searchText: this.state.text}}}> 
-                    <MDBBtn rounded outline color="warning">Search</MDBBtn>   
+                    <button className="btn btn-warning">Search</button>   
                </Link>
 
               </MDBFormInline>

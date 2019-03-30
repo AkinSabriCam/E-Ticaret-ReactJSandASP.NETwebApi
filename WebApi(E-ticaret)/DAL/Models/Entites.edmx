@@ -172,7 +172,7 @@
           <Key>
             <PropertyRef Name="siparisID" />
           </Key>
-          <Property Name="siparisID" Type="int" Nullable="false" />
+          <Property Name="siparisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="siparisTarihi" Type="date" />
           <Property Name="siparisTutari" Type="money" />
         </EntityType>
@@ -206,6 +206,25 @@
           <Property Name="soyad" Type="nvarchar" MaxLength="50" />
           <Property Name="email" Type="nvarchar" MaxLength="50" />
           <Property Name="mesaj" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EnCokSatanUrunler">
+          <Key>
+            <PropertyRef Name="urunID" />
+          </Key>
+          <Property Name="urunID" Type="int" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="markaID" Type="int" />
+          <Property Name="marka" Type="nvarchar" MaxLength="20" />
+          <Property Name="altKategoriID" Type="int" />
+          <Property Name="altKategori" Type="nvarchar" MaxLength="20" />
+          <Property Name="fiyat" Type="money" />
+          <Property Name="eklenmeTarihi" Type="date" />
+          <Property Name="stokID" Type="int" />
+          <Property Name="adet" Type="int" />
+          <Property Name="satinAlinmaDurumu" Type="bit" />
+          <Property Name="imagePath" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_AltKategori_Kategori">
           <End Role="Kategori" Type="Self.Kategori" Multiplicity="0..1" />
@@ -580,6 +599,22 @@
           <EntitySet Name="Stok" EntityType="Self.Stok" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Urun" EntityType="Self.Urun" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ZiyaretciMesaj" EntityType="Self.ZiyaretciMesaj" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EnCokSatanUrunler" EntityType="Self.EnCokSatanUrunler" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EnCokSatanUrunler].[urunID] AS [urunID], 
+    [EnCokSatanUrunler].[ad] AS [ad], 
+    [EnCokSatanUrunler].[markaID] AS [markaID], 
+    [EnCokSatanUrunler].[marka] AS [marka], 
+    [EnCokSatanUrunler].[altKategoriID] AS [altKategoriID], 
+    [EnCokSatanUrunler].[altKategori] AS [altKategori], 
+    [EnCokSatanUrunler].[fiyat] AS [fiyat], 
+    [EnCokSatanUrunler].[eklenmeTarihi] AS [eklenmeTarihi], 
+    [EnCokSatanUrunler].[stokID] AS [stokID], 
+    [EnCokSatanUrunler].[adet] AS [adet], 
+    [EnCokSatanUrunler].[satinAlinmaDurumu] AS [satinAlinmaDurumu], 
+    [EnCokSatanUrunler].[imagePath] AS [imagePath]
+    FROM [dbo].[EnCokSatanUrunler] AS [EnCokSatanUrunler]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_AltKategori_Kategori" Association="Self.FK_AltKategori_Kategori">
             <End Role="Kategori" EntitySet="Kategori" />
             <End Role="AltKategori" EntitySet="AltKategori" />
@@ -1245,6 +1280,8 @@
           <FunctionImport Name="FN_SearchProduct1" IsComposable="true" ReturnType="Collection(Model.FN_SearchProduct1_Result)">
           <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="EnCokSatanUrunler" EntityType="Model.EnCokSatanUrunler" />
+          <FunctionImport Name="FN_OrderByBestSallers2" IsComposable="true" ReturnType="Collection(Model.FN_OrderByBestSallers2_Result)" />
         </EntityContainer>
         <ComplexType Name="FN_OrderByBestSallers_Result">
           <Property Type="Int32" Name="urunID" Nullable="false" />
@@ -1383,6 +1420,37 @@
           <Property Type="String" Name="imagePath" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="FN_SearchProduct1_Result">
+          <Property Type="Int32" Name="urunID" Nullable="false" />
+          <Property Type="String" Name="ad" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="markaID" Nullable="true" />
+          <Property Type="String" Name="marka" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="altKategoriID" Nullable="true" />
+          <Property Type="String" Name="altKategori" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="fiyat" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="eklenmeTarihi" Nullable="true" Precision="10" />
+          <Property Type="Int32" Name="stokID" Nullable="true" />
+          <Property Type="Int32" Name="adet" Nullable="true" />
+          <Property Type="Boolean" Name="satinAlinmaDurumu" Nullable="true" />
+          <Property Type="String" Name="imagePath" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="EnCokSatanUrunler">
+          <Key>
+            <PropertyRef Name="urunID" />
+          </Key>
+          <Property Name="urunID" Type="Int32" Nullable="false" />
+          <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="markaID" Type="Int32" />
+          <Property Name="marka" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="altKategoriID" Type="Int32" />
+          <Property Name="altKategori" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fiyat" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="eklenmeTarihi" Type="DateTime" Precision="0" />
+          <Property Name="stokID" Type="Int32" />
+          <Property Name="adet" Type="Int32" />
+          <Property Name="satinAlinmaDurumu" Type="Boolean" />
+          <Property Name="imagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="FN_OrderByBestSallers2_Result">
           <Property Type="Int32" Name="urunID" Nullable="false" />
           <Property Type="String" Name="ad" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="markaID" Nullable="true" />
@@ -1627,24 +1695,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="FN_OrderByBestSallers1" FunctionName="Model.Store.FN_OrderByBestSallers">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model.FN_OrderByBestSallers1_Result">
-                <ScalarProperty Name="urunID" ColumnName="urunID" />
-                <ScalarProperty Name="ad" ColumnName="ad" />
-                <ScalarProperty Name="markaID" ColumnName="markaID" />
-                <ScalarProperty Name="marka" ColumnName="marka" />
-                <ScalarProperty Name="altKategoriID" ColumnName="altKategoriID" />
-                <ScalarProperty Name="altKategori" ColumnName="altKategori" />
-                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
-                <ScalarProperty Name="eklenmeTarihi" ColumnName="eklenmeTarihi" />
-                <ScalarProperty Name="stokID" ColumnName="stokID" />
-                <ScalarProperty Name="adet" ColumnName="adet" />
-                <ScalarProperty Name="satinAlinmaDurumu" ColumnName="satinAlinmaDurumu" />
-                <ScalarProperty Name="imagePath" ColumnName="imagePath" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="FN_OrderByNameASC1" FunctionName="Model.Store.FN_OrderByNameASC">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model.FN_OrderByNameASC1_Result">
@@ -1720,6 +1770,42 @@
           <FunctionImportMapping FunctionImportName="FN_SearchProduct1" FunctionName="Model.Store.FN_SearchProduct">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model.FN_SearchProduct1_Result">
+                <ScalarProperty Name="urunID" ColumnName="urunID" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="markaID" ColumnName="markaID" />
+                <ScalarProperty Name="marka" ColumnName="marka" />
+                <ScalarProperty Name="altKategoriID" ColumnName="altKategoriID" />
+                <ScalarProperty Name="altKategori" ColumnName="altKategori" />
+                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
+                <ScalarProperty Name="eklenmeTarihi" ColumnName="eklenmeTarihi" />
+                <ScalarProperty Name="stokID" ColumnName="stokID" />
+                <ScalarProperty Name="adet" ColumnName="adet" />
+                <ScalarProperty Name="satinAlinmaDurumu" ColumnName="satinAlinmaDurumu" />
+                <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="EnCokSatanUrunler">
+            <EntityTypeMapping TypeName="Model.EnCokSatanUrunler">
+              <MappingFragment StoreEntitySet="EnCokSatanUrunler">
+                <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+                <ScalarProperty Name="satinAlinmaDurumu" ColumnName="satinAlinmaDurumu" />
+                <ScalarProperty Name="adet" ColumnName="adet" />
+                <ScalarProperty Name="stokID" ColumnName="stokID" />
+                <ScalarProperty Name="eklenmeTarihi" ColumnName="eklenmeTarihi" />
+                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
+                <ScalarProperty Name="altKategori" ColumnName="altKategori" />
+                <ScalarProperty Name="altKategoriID" ColumnName="altKategoriID" />
+                <ScalarProperty Name="marka" ColumnName="marka" />
+                <ScalarProperty Name="markaID" ColumnName="markaID" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="urunID" ColumnName="urunID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FN_OrderByBestSallers2" FunctionName="Model.Store.FN_OrderByBestSallers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.FN_OrderByBestSallers2_Result">
                 <ScalarProperty Name="urunID" ColumnName="urunID" />
                 <ScalarProperty Name="ad" ColumnName="ad" />
                 <ScalarProperty Name="markaID" ColumnName="markaID" />
