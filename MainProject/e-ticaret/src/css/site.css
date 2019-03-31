@@ -26,3 +26,8 @@
 .btnAnasayfa{
     color:black;
 }
+.wrapper{
+    position: absolute;
+    left:200px;
+    margin-left:200px;
+}
