@@ -5,7 +5,24 @@
 		import './ShopStyle/plugins/jquery-ui.css';
 		import {Link,Redirect} from 'react-router-dom';
 		import $ from 'jquery';	
-		import {Checkbox} from 'react-mdl';			
+
+		const styleSpan = {
+			fontSize: '14px',
+			fontWeight: 500,
+			textAlign: 'center',
+			visibility:'hidden',
+			color: '#0e8ce4',
+			marginLeft:180,
+		};
+		const styleButton = {
+			fontSize: '14px',
+			fontWeight: 500,
+			textAlign: 'center',
+			color: 'rgba(0,0,0,0.5)',
+			visibility:'hidden',	
+			marginLeft:10,
+		};
+			
 						
     export class ProductsByCategory extends React.Component {
 
@@ -13,7 +30,6 @@
 				super(props);
 				this.state={
 					Products:[],
-					Shop:false,
 					ProductDetail:0,
 				}
 			 this.prod=this.prod.bind(this);
@@ -33,7 +49,7 @@
 			}
 
 			prod(id){
-				this.setState({Shop:true, ProductDetail:id});
+				this.setState({ ProductDetail:id});
 			}
 
 			OrderByBestSeller = () => {
@@ -50,7 +66,13 @@
 	
 				$(function () {
 						$("#spanOrder").text("En Çok Satanlar")
-				});				
+				});	
+				document.getElementById("clear").style.visibility = "hidden";
+				document.getElementById("filterItem").style.visibility = "hidden";
+				document.getElementById("filtrele").disabled = false;
+				$(function () {
+						$("#filterItem").text("");
+				});			
 			}
 
 			OrderByNameASC = () => {
@@ -67,7 +89,13 @@
 	
 				$(function () {
 						$("#spanOrder").text("Ad A->Z")
-				});				
+				});
+				document.getElementById("clear").style.visibility = "hidden";
+				document.getElementById("filterItem").style.visibility = "hidden";
+				document.getElementById("filtrele").disabled = false;
+				$(function () {
+						$("#filterItem").text("");
+				});			
 			}
 			OrderByNameDESC = () => {
 				const {subCatId} = this.props.location.state;
@@ -83,7 +111,13 @@
 	
 				$(function () {
 						$("#spanOrder").text("Ad Z->A")
-				});				
+				});	
+				document.getElementById("clear").style.visibility = "hidden";
+				document.getElementById("filterItem").style.visibility = "hidden";
+				document.getElementById("filtrele").disabled = false;
+				$(function () {
+						$("#filterItem").text("");
+				});		
 			}
 			OrderByPriceASC = () => {
 				const {subCatId} = this.props.location.state;
@@ -99,7 +133,13 @@
 	
 				$(function () {
 						$("#spanOrder").text("Fiyat Artan")
-				});				
+				});
+				document.getElementById("clear").style.visibility = "hidden";
+				document.getElementById("filterItem").style.visibility = "hidden";
+				document.getElementById("filtrele").disabled = false;
+				$(function () {
+						$("#filterItem").text("");
+				});			
 			}
 			
 			OrderByPriceDESC = () => {
@@ -116,114 +156,85 @@
 	
 				$(function () {
 						$("#spanOrder").text("Fiyat Azalan")
-				});				
-			}
-
-			getFilterCB1 = () => {
-					var cb1 = document.getElementById("cb1").checked;
-					if(cb1 == true){
-							const {subCatId} = this.props.location.state;
-							if(subCatId!=null){
-							console.log(subCatId);
-							}else{
-								console.log("parametre hatalı");
-							}
-
-							fetch("http://localhost:50040/api/Urunler/GetFilterUnder500/"+subCatId).then(data=>data.json())
-							.then(result=>this.setState({Products:result}))
-							.catch(error=>console.log("error"));
-					}				
-			}
-			getFilterCB2 = () => {
-				var cb2 = document.getElementById("cb2").checked;
-				if(cb2 == true){
-						const {subCatId} = this.props.location.state;
-						if(subCatId!=null){
-							console.log(subCatId);
-						}else{
-							console.log("parametre hatalı");
-						}
-
-						fetch("http://localhost:50040/api/Urunler/GetFilterBetween500And1500/"+subCatId).then(data=>data.json())
-						.then(result=>this.setState({Products:result}))
-						.catch(error=>console.log("error"));
-				}				
-			}
-			getFilterCB3 = () => {
-				var cb3 = document.getElementById("cb3").checked;
-				if(cb3 == true){
-						const {subCatId} = this.props.location.state;
-						if(subCatId!=null){
-							console.log(subCatId);
-						}else{
-							console.log("parametre hatalı");
-						}
-
-						fetch("http://localhost:50040/api/Urunler/GetFilterBetween1500And2500/"+subCatId).then(data=>data.json())
-						.then(result=>this.setState({Products:result}))
-						.catch(error=>console.log("error"));
-				}				
-			}
-			getFilterCB4 = () => {
-				var cb4 = document.getElementById("cb4").checked;
-				if(cb4 == true){
-						const {subCatId} = this.props.location.state;
-						if(subCatId!=null){
-							console.log(subCatId);
-						}else{
-							console.log("parametre hatalı");
-						}
-
-						fetch("http://localhost:50040/api/Urunler/GetFilterBetween2500And4000/"+subCatId).then(data=>data.json())
-						.then(result=>this.setState({Products:result}))
-						.catch(error=>console.log("error"));
-				}				
-			}
-			getFilterCB5 = () => {
-					var cb5 = document.getElementById("cb5").checked;
-					if(cb5 == true){
-							const {subCatId} = this.props.location.state;
-							if(subCatId!=null){
-								console.log(subCatId);
-							}else{
-								console.log("parametre hatalı");
-							}
-
-							fetch("http://localhost:50040/api/Urunler/GetFilterOver4000/"+subCatId).then(data=>data.json())
-							.then(result=>this.setState({Products:result}))
-							.catch(error=>console.log("error"));
-					}				
-			}
-
-      render() {
-
-				
-				const {subCatId} = this.props.location.state;
-				$(function() {		
-					$(".btn").click(function(){
-						let markaAd = $(this).text();
-						if(subCatId!=null){
-							console.log(subCatId);
-						}else{
-							console.log("parametre hatalı");
-						}
-		
-						fetch("http://localhost:50040/api/Urunler/GetFilterByBrand?id="+subCatId+"&marka="+markaAd).then(data=>data.json())
-						.then(result=>this.setState({Products:result}))
-						.catch(error=>console.log("error"));
-						window.location.reload();
-					});					
+				});			
+				document.getElementById("clear").style.visibility = "hidden";
+				document.getElementById("filterItem").style.visibility = "hidden";
+				document.getElementById("filtrele").disabled = false;
+				$(function () {
+						$("#filterItem").text("");
 				});
+			}
+
+			getFilterByPrice = () => {
+				const {subCatId} = this.props.location.state;
+				var valMin = document.getElementById("min").value;
+				var valMax = document.getElementById("max").value;
+
+				fetch("http://localhost:50040/api/Urunler/GetFilterByPrice?id="+subCatId+"&min="+valMin+"&max="+valMax).then(data=>data.json())
+				.then(result=>this.setState({Products:result}))
+				.catch(error=>console.log("error"));
+
+				document.getElementById("clear").style.visibility = "visible";
+				document.getElementById("filterItem").style.visibility = "visible";
+				document.getElementById("filtrele").disabled = true;
+				$(function () {
+						let val = $("#filterItem").text();
+
+						if(val!="")
+							val+="/";
+						$("#filterItem").text(val+"Fiyat: "+valMin+"-"+valMax);
+				});
+			}
+
+			getFilterByBrand = (a) => {
+				const {subCatId} = this.props.location.state;
+				let markaAd = a;
+					
+				if(subCatId!=null){
+						console.log(subCatId);
+				}else{
+						console.log("parametre hatalı");
+				}
+			
+				fetch("http://localhost:50040/api/Urunler/GetFilterByBrand?id="+subCatId+"&marka="+markaAd).then(data=>data.json())
+				.then(result=>this.setState({Products:result}))
+				.catch(error=>console.log("error"));	
 				
+				document.getElementById("clear").style.visibility = "visible";
+				document.getElementById("filterItem").style.visibility = "visible";
+				$(function () {
+						let val = $("#filterItem").text();
+
+						val = "";
+
+						$("#filterItem").text(val+"Marka: "+markaAd);
+				});
+			}
+
+			filterClear = () => {
+				const {subCatId} = this.props.location.state;
+				if(subCatId != null){
+					console.log(subCatId);
+				}else{
+					console.log("parametre hatalı");
+				}
+				
+				fetch("http://localhost:50040/api/Urunler/GetProductsByCategory/"+subCatId).then(data=>data.json())
+    		.then(result=>this.setState({Products:result}))
+				.catch(error=>console.log("error"));
+
+				document.getElementById("clear").style.visibility = "hidden";
+				document.getElementById("filterItem").style.visibility = "hidden";
+				document.getElementById("filtrele").disabled = false;
+				$(function () {
+						$("#filterItem").text("");
+				});
+			}
+
+      render() {		
         
 					let Urunler = this.state.Products.map((urun,ind) => {
             return (
-
-								<div>				
-									
-									<div className="product_grid_border"></div>
-
-					
 									<div className="product_item is_new">
 										<div className="product_border"></div>
 										<div className="product_image d-flex flex-column align-items-center justify-content-center">
@@ -241,10 +252,6 @@
 											<li className="product_mark product_new">new</li>
 										</ul>
 									</div>
-
-
-								</div>
-
 						)
 					})
 
@@ -268,7 +275,7 @@
 					let uniqueBrands = [...new Set(Marka)];
 					let Markalar = uniqueBrands.map((marka,ind) => {						
 						return(
-								<li><button type="button" id={marka} className="btn btn-link">{marka}</button></li>
+								<li><button type="button" id={marka} onClick={this.getFilterByBrand.bind(this, marka)} className="btn btn-link">{marka}</button></li>
 							)
 					})		
 
@@ -299,15 +306,11 @@
 									<div className="sidebar_section">
 										
 										<div className="sidebar_subtitle">Price</div>
-										<form action="#">
-											<ul>
-												<li><input id="cb1" type="checkbox" onclick={this.getFilterCB1} value="<500" className="mr-sm-2" style={{width:25}}/>500 ₺ Altı</li>
-												<li><input id="cb2" type="checkbox" onclick={this.getFilterCB2} value="500 AND 1500" className="mr-sm-2" style={{width:25}}/>500 - 1500 ₺ Arası</li>
-												<li><input id="cb3" type="checkbox" onclick={this.getFilterCB3} value="1500 AND 2500" className="mr-sm-2" style={{width:25}}/>1500 - 2500 ₺ Arası</li>
-												<li><input id="cb4" type="checkbox" onclick={this.getFilterCB4} value="2500 AND 4000" className="mr-sm-2" style={{width:25}}/>2500 - 4000 ₺ Arası</li>
-												<li><input id="cb5" type="checkbox" onclick={this.getFilterCB5} value=">4000" className="mr-sm-2" style={{width:25}}/>4000 ₺ Üstü</li>
-											</ul>
-									</form>
+												<input id="min" className="form-control form-control-sm" style={{width:80, display:"inline", marginRight:10, marginTop:10}} type="number" min="1" max="999999" placeholder="min"/>
+												<label> - </label>
+												<input id="max" className="form-control form-control-sm" style={{width:80, display:"inline", marginLeft:10, marginTop:10}} type="number" min="1" max="999999" placeholder="max"/>
+												<label style={{marginLeft:10}}> ₺ </label>
+												<button id="filtrele" type="button" onClick={this.getFilterByPrice} style={{display:"block", marginTop:15}} className="btn btn-outline-info">Filtrele</button>
 									</div>
 								</div>
 
@@ -318,6 +321,11 @@
 								<div className="shop_content">
 									<div className="shop_bar clearfix">
 										<div className="shop_product_count"><span>{this.state.Products.length}</span> products found</div>
+										
+										
+												<span id="filterItem" style={styleSpan}></span>
+												<button id="clear" type="button" className="btn btn-link" onClick={this.filterClear} style={styleButton}>Filtreleri Temizle</button>
+
 										<div className="shop_sorting">
 											<span>Sort by:</span>
 											<ul>
@@ -335,6 +343,7 @@
 										</div>
 									</div>
 									<div className="product_grid">
+										<div className="product_grid_border"></div>
 											{Urunler}
 									</div>
 								</div>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import './ShopStyle/shop_styles.css';
 import './ShopStyle/shop_responsive.css';
@@ -5,7 +6,22 @@ import './ShopStyle/plugins/jquery-ui.css';
 import {Link,Redirect} from 'react-router-dom';
 import $ from 'jquery';	
 
-let Urunler = [];
+const styleSpan = {
+	fontSize: '14px',
+	fontWeight: 500,
+    textAlign: 'center',
+	visibility:'hidden',
+	color: '#0e8ce4',
+	marginLeft:180,
+};
+const styleButton = {
+    fontSize: '14px',
+    fontWeight: 500,
+    textAlign: 'center',
+    color: 'rgba(0,0,0,0.5)',
+    visibility:'hidden',	
+    marginLeft:10,
+};
 
 export class SearchProducts extends React.Component {
 
@@ -27,171 +43,272 @@ export class SearchProducts extends React.Component {
         }
             
         fetch("http://localhost:50040/api/Urunler/GetProductsBySearch?search="+searchText).then(data=>data.json())
-        .then(result=>this.setState({Products:result}))
-            .catch(error=>console.log("error"));			
+        .then(result=>this.setState({Products:result})) 
+        .catch(error=>console.log("error"));			
     }
 
     prod(id){
         this.setState({ProductDetail:id});
     }
 
-    OrderByNameASC = () => {
-        const {subCatId} = this.props.location.state;
-        if(subCatId!=null){
-            console.log(subCatId);
+    OrderByBestSeller = () => {
+        const {searchText} = this.props.location.state;
+        if(searchText!=null){
+            console.log(searchText);
         }else{
             console.log("parametre hatalı");
         }
 
-        fetch("http://localhost:50040/api/Urunler/GetProductsByNameASC/"+subCatId).then(data=>data.json())
-    .then(result=>this.setState({Products:result}))
+        fetch("http://localhost:50040/api/Urunler/GetProductsByBestSellersInSearch?search="+searchText).then(data=>data.json())
+        .then(result=>this.setState({Products:result}))
         .catch(error=>console.log("error"));
 
         $(function () {
-                $("#spanOrder").text("Ad A->Z")
+            $("#spanOrder").text("En Çok Satanlar")
+        });	
+        document.getElementById("clear").style.visibility = "hidden";
+        document.getElementById("filterItem").style.visibility = "hidden";
+        document.getElementById("filtrele").disabled = false;
+        $(function () {
+            $("#filterItem").text("");
+        });			
+    }
+
+    OrderByNameASC = () => {
+        const {searchText} = this.props.location.state;
+        if(searchText!=null){
+            console.log(searchText);
+        }else{
+            console.log("parametre hatalı");
+        }
+
+        fetch("http://localhost:50040/api/Urunler/GetProductsByNameASCInSearch?search="+searchText).then(data=>data.json())
+        .then(result=>this.setState({Products:result}))
+        .catch(error=>console.log("error"));
+
+        $(function () {
+            $("#spanOrder").text("Ad A->Z")
+        });
+        document.getElementById("clear").style.visibility = "hidden";
+        document.getElementById("filterItem").style.visibility = "hidden";
+        document.getElementById("filtrele").disabled = false;
+        $(function () {
+            $("#filterItem").text("");
         });				
     }
     OrderByNameDESC = () => {
-        const {subCatId} = this.props.location.state;
-        if(subCatId!=null){
-            console.log(subCatId);
+        const {searchText} = this.props.location.state;
+        if(searchText!=null){
+            console.log(searchText);
         }else{
             console.log("parametre hatalı");
         }
 
-        fetch("http://localhost:50040/api/Urunler/GetProductsByNameDESC/"+subCatId).then(data=>data.json())
+        fetch("http://localhost:50040/api/Urunler/GetProductsByNameDESCInSearch?search="+searchText).then(data=>data.json())
     .then(result=>this.setState({Products:result}))
         .catch(error=>console.log("error"));
 
         $(function () {
-                $("#spanOrder").text("Ad Z->A")
-        });				
+            $("#spanOrder").text("Ad Z->A")
+        });	
+        document.getElementById("clear").style.visibility = "hidden";
+        document.getElementById("filterItem").style.visibility = "hidden";
+        document.getElementById("filtrele").disabled = false;
+        $(function () {
+            $("#filterItem").text("");
+        });			
     }
     OrderByPriceASC = () => {
-        const {subCatId} = this.props.location.state;
-        if(subCatId!=null){
-            console.log(subCatId);
+        const {searchText} = this.props.location.state;
+        if(searchText!=null){
+            console.log(searchText);
         }else{
             console.log("parametre hatalı");
         }
 
-        fetch("http://localhost:50040/api/Urunler/GetProductsByPriceASC/"+subCatId).then(data=>data.json())
+        fetch("http://localhost:50040/api/Urunler/GetProductsByPriceASCInSearch?search="+searchText).then(data=>data.json())
     .then(result=>this.setState({Products:result}))
         .catch(error=>console.log("error"));
 
         $(function () {
-                $("#spanOrder").text("Fiyat Artan")
+            $("#spanOrder").text("Fiyat Artan")
+        });
+        document.getElementById("clear").style.visibility = "hidden";
+        document.getElementById("filterItem").style.visibility = "hidden";
+        document.getElementById("filtrele").disabled = false;
+        $(function () {
+            $("#filterItem").text("");
         });				
     }
     
     OrderByPriceDESC = () => {
-        const {subCatId} = this.props.location.state;
-        if(subCatId!=null){
-            console.log(subCatId);
+        const {searchText} = this.props.location.state;
+        if(searchText!=null){
+            console.log(searchText);
         }else{
             console.log("parametre hatalı");
         }
 
-        fetch("http://localhost:50040/api/Urunler/GetProductsByPriceDESC/"+subCatId).then(data=>data.json())
-    .then(result=>this.setState({Products:result}))
+        fetch("http://localhost:50040/api/Urunler/GetProductsByPriceDESCInSearch?search="+searchText).then(data=>data.json())
+        .then(result=>this.setState({Products:result}))
         .catch(error=>console.log("error"));
 
         $(function () {
-                $("#spanOrder").text("Fiyat Azalan")
-        });				
+            $("#spanOrder").text("Fiyat Azalan")
+        });			
+        document.getElementById("clear").style.visibility = "hidden";
+        document.getElementById("filterItem").style.visibility = "hidden";
+        document.getElementById("filtrele").disabled = false;
+        $(function () {
+            $("#filterItem").text("");
+        });
+    }
+
+    getFilterByPrice = () => {
+        const {searchText} = this.props.location.state;
+        var valMin = document.getElementById("min").value;
+        var valMax = document.getElementById("max").value;
+
+        fetch("http://localhost:50040/api/Urunler/GetFilterByPriceInSearch?search="+searchText+"&min="+valMin+"&max="+valMax).then(data=>data.json())
+        .then(result=>this.setState({Products:result}))
+        .catch(error=>console.log("error"));
+
+        document.getElementById("clear").style.visibility = "visible";
+        document.getElementById("filterItem").style.visibility = "visible";
+        document.getElementById("filtrele").disabled = true;
+        $(function () {
+            let val = $("#filterItem").text();
+
+            if(val!="")
+               val+="?search=";
+            $("#filterItem").text(val+"Fiyat: "+valMin+"-"+valMax);
+        });
+    }
+
+    getFilterByBrand = (a) => {
+        const {searchText} = this.props.location.state;
+        let markaAd = a;
+            
+        if(searchText!=null){
+            console.log(searchText);
+        }else{
+            console.log("parametre hatalı");
+        }
+    
+        fetch("http://localhost:50040/api/Urunler/GetFilterByBrandInSearch?search="+searchText+"&marka="+markaAd).then(data=>data.json())
+        .then(result=>this.setState({Products:result}))
+        .catch(error=>console.log("error"));	
+        
+        document.getElementById("clear").style.visibility = "visible";
+        document.getElementById("filterItem").style.visibility = "visible";
+        $(function () {
+            let val = $("#filterItem").text();
+
+            val = "";
+
+            $("#filterItem").text(val+"Marka: "+markaAd);
+        });
+    }
+
+    filterClear = () => {
+        const {searchText} = this.props.location.state;
+        if(searchText != null){
+            console.log(searchText);
+        }else{
+            console.log("parametre hatalı");
+        }
+        
+        fetch("http://localhost:50040/api/Urunler/GetProductsBySearch?search="+searchText).then(data=>data.json())
+        .then(result=>this.setState({Products:result}))
+        .catch(error=>console.log("error"));
+
+        document.getElementById("clear").style.visibility = "hidden";
+        document.getElementById("filterItem").style.visibility = "hidden";
+        document.getElementById("filtrele").disabled = false;
+        $(function () {
+            $("#filterItem").text("");
+        });
     }
 
     render() {
-        Urunler = this.state.Products.map((urun,ind) => {
-            return (
-				<div>				
-					<div className="product_grid_border"></div>
-					<div className="product_item is_new">
-						<div className="product_border"></div>
-						<div className="product_image d-flex flex-column align-items-center justify-content-center">
-							<Link to={{pathname:"/ProductDetail",state:{productId:urun.urunID}}}>
-								<img src="https://via.placeholder.com/150" alt="" />
-							</Link>
-						</div>
-						<div className="product_content">
-							<div className="product_price">{urun.fiyat} ₺</div>
-							<div className="product_name"><div><a href="#" tabindex="0">{urun.ad}</a></div></div>
-						</div>
-						<div className="product_fav"><i className="fas fa-heart"></i></div>
-						<ul className="product_marks">
-						    <li className="product_mark product_discount">-25%</li>
-						    <li className="product_mark product_new">new</li>
-						</ul>
-					</div>
-				</div>
+        let Urunler = this.state.Products.map((urun,ind) => {
+            return (					
+                <div className="product_item is_new">
+                    <div className="product_border"></div>
+                    <div className="product_image d-flex flex-column align-items-center justify-content-center">
+                        <Link to={{pathname:"/ProductDetail",state:{productId:urun.urunID}}}>
+                            <img src="https://via.placeholder.com/150" alt="" />
+                        </Link>
+                    </div>
+                    <div className="product_content">
+                        <div className="product_price">{urun.fiyat} ₺</div>
+                        <div className="product_name"><div><a href="#" tabindex="0">{urun.ad}</a></div></div>
+                    </div>
+                    <div className="product_fav"><i className="fas fa-heart"></i></div>
+                    <ul className="product_marks">
+                        <li className="product_mark product_discount">-25%</li>
+                        <li className="product_mark product_new">new</li>
+                    </ul>
+                </div>
 			)
         })
-        
-        return (
+
+        let Marka = this.state.Products.map((urun,ind) => {
+            return(
+                urun.marka
+            )
+        })
+        let uniqueBrands = [...new Set(Marka)];
+        let Markalar = uniqueBrands.map((marka,ind) => {						
+            return(
+                <li><button type="button" id={marka} onClick={this.getFilterByBrand.bind(this, marka)} className="btn btn-link">{marka}</button></li>
+            )
+        })		
+
+        const {searchText} = this.props.location.state;
+        return(
             <div>
                 <div className="home">
                     <div className="home_overlay"></div>
                     <div className="home_content d-flex flex-column align-items-center justify-content-center">
-                        <h2 className="home_title">{this.state.altKategori}</h2>
+                        <h2 className="home_title">"{searchText}" Arama Sonuçları</h2>
                     </div>
                 </div>
+
                 <div className="container">
                     <div className="shop">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-3">
                                     <div className="shop_sidebar">
-                                        <div className="sidebar_section">
-                                            <div className="sidebar_title">Categories</div>
-                                            <ul className="sidebar_categories">
-                                                <li><a href="#">NoteBook</a></li>
-                                                <li><a href="#">Laptop</a></li>
-                                                <li><a href="#">Masa Üstü</a></li>
-                                                <li><a href="#">Gamebook</a></li>
-                                                <li><a href="#">2 si 1 Arada</a></li>
-                                            </ul>
-                                        </div>
                                         <div className="sidebar_section filter_by_section">
-                                            <div className="sidebar_title">Filter By</div>
+                                                <div className="sidebar_title">Filter By</div>
+                                                <div className="sidebar_subtitle brands_subtitle">Brands</div>
+                                                <ul className="brands_list">
+                                                    {Markalar}
+                                                </ul>
+                                        </div>
+                                        <div className="sidebar_section">
+                        
                                             <div className="sidebar_subtitle">Price</div>
-                                            <div className="filter_price">
-                                                <div id="slider-range" className="slider_range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
-                                                    <div className="ui-slider-range ui-corner-all ui-widget-header" style={{left:"0%", width:"100%"}}></div>
-                                                    <span tabindex="0" className="ui-slider-handle ui-corner-all ui-state-default" style={{left:"0%"}}></span>
-                                                    <span tabindex="0" className="ui-slider-handle ui-corner-all ui-state-default" style={{left:"100%"}}></span>
-                                                </div>
-                                                <p>Range: </p>
-                                                <p><input type="text" id="amount" className="amount" readonly style={{border:0, fontWeight:"bold"}} /></p>
-                                            </div>
-                                        </div>
-                                        <div className="sidebar_section">
-                                            <div className="sidebar_subtitle color_subtitle">Color</div>
-                                            <ul className="colors_list">
-                                                <li className="color"><a href="#" style={{background: "#b19c83"}}></a></li>
-                                                <li className="color"><a href="#" style={{background: "#000000"}}></a></li>
-                                                <li className="color"><a href="#" style={{background: "#999999"}}></a></li>
-                                                <li className="color"><a href="#" style={{background: "#0e8ce4"}}></a></li>
-                                                <li className="color"><a href="#" style={{background: "#df3b3b"}}></a></li>
-                                                <li className="color"><a href="#" style={{background: "#ffffff", border: "solid 1px #e1e1e1"}}></a></li>
-                                            </ul>
-                                        </div>
-                                        <div className="sidebar_section">
-                                            <div className="sidebar_subtitle brands_subtitle">Brands</div>
-                                            <ul className="brands_list">
-                                                    <li className="brand"><a href="#">ASUS</a></li>
-                                                    <li className="brand"><a href="#">MSI</a></li>
-                                                    <li className="brand"><a href="#">TOSHIBA</a></li>
-                                                    <li className="brand"><a href="#">HP</a></li>
-                                                    <li className="brand"><a href="#">LENOVO</a></li>
-                                                    <li className="brand"><a href="#">APPLE</a></li>                                              
-                                            </ul>
+                                            <input id="min" className="form-control form-control-sm" style={{width:80, display:"inline", marginRight:10, marginTop:10}} type="number" min="1" max="999999" placeholder="min"/>
+                                            <label> - </label>
+                                            <input id="max" className="form-control form-control-sm" style={{width:80, display:"inline", marginLeft:10, marginTop:10}} type="number" min="1" max="999999" placeholder="max"/>
+                                            <label style={{marginLeft:10}}> ₺ </label>
+                                            <button id="filtrele" type="button" onClick={this.getFilterByPrice} style={{display:"block", marginTop:15}} className="btn btn-outline-info">Filtrele</button>
                                         </div>
                                     </div>
+
                                 </div>
+
                                 <div className="col-lg-9">
                                     <div className="shop_content">
                                         <div className="shop_bar clearfix">
-                                            <div className="shop_product_count"><span>{this.state.Products.length}</span> products found</div>
+                                            <div className="shop_product_count"><span>{this.state.Products.length}</span> products found</div>                                                                                
+                                            
+                                            <span id="filterItem" style={styleSpan}></span>
+                                            <button id="clear" type="button" className="btn btn-link" onClick={this.filterClear} style={styleButton}>Filtreleri Temizle</button>
+
                                             <div className="shop_sorting">
                                                 <span>Sort by:</span>
                                                 <ul>
@@ -199,16 +316,17 @@ export class SearchProducts extends React.Component {
                                                         <span id="spanOrder" className="sorting_text">---<i className="fas fa-chevron-down"></i></span>
                                                         <ul>
                                                             <li className="shop_sorting_button" data-isotope-option='{ "sortBy": "original-order" }' onClick={this.OrderByBestSeller}>En Çok Satanlar</li>
-															<li className="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }' onClick={this.OrderByNameASC}>Ad A->Z</li>
-															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByNameDESC}>Ad Z->A</li>
-															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByPriceASC}>Fiyat Artan </li>
-															<li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByPriceDESC}>Fiyat Azalan</li>
+                                                            <li className="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }' onClick={this.OrderByNameASC}>Ad A->Z</li>
+                                                            <li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByNameDESC}>Ad Z->A</li>
+                                                            <li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByPriceASC}>Fiyat Artan </li>
+                                                            <li className="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }' onClick={this.OrderByPriceDESC}>Fiyat Azalan</li>
                                                         </ul>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div className="product_grid">
+                                            <div className="product_grid_border"></div>
                                                 {Urunler}
                                         </div>
                                     </div>
@@ -218,7 +336,7 @@ export class SearchProducts extends React.Component {
                     </div>
                 </div>
             </div>
-        )
+    )
     }
 }
 export default SearchProducts;

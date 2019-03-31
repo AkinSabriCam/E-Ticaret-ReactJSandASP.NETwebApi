@@ -47,6 +47,7 @@
         <AssociationConnector Association="Model.FK_SepettekiUrunler_Urun" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_SiparisDetay_Siparis" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Urun_Stok" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.EnCokSatanUrunler" Width="1.5" PointX="14.375" PointY="14.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

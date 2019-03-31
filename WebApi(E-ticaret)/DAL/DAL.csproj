@@ -60,6 +60,9 @@
     <Compile Include="Models\Duyuru.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EnCokSatanUrunler.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entites.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -79,6 +82,9 @@
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FN_OrderByBestSallers1_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByBestSallers2_Result.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FN_OrderByBestSallers_Result.cs">

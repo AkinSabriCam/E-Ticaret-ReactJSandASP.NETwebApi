@@ -50,6 +50,7 @@ namespace WebApi_E_ticaret_.Controllers
 
         }
 
+        //ProductsByCategory
         [HttpGet]
         public IHttpActionResult GetProductsByCategory(int id)
         {
@@ -72,22 +73,7 @@ namespace WebApi_E_ticaret_.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetProductsBySearch(string search)
-        {
-            if (search != "")
-            {
-                var model = urunDal.GetProductsBySearch(search);
-                if (model.Count > 0)
-                    return Ok(model);
-                else
-                    return NotFound();
-            }
-            else
-                return BadRequest();
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetProductsByBestSellers(int id)
+        public IHttpActionResult GetProductsOrderByBestSellers(int id)
         {
             if (id > 0)
             {
@@ -147,59 +133,11 @@ namespace WebApi_E_ticaret_.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetFilterUnder500(int id)
+        public IHttpActionResult GetFilterByPrice(int id, int min, int max)
         {
             if (id > 0)
             {
-                var model = urunDal.GetFilterUnder500(id);
-                if (model.Count > 0) return Ok(model);
-                else return NotFound();
-            }
-            else return BadRequest();
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetFilterBetween500And1500(int id)
-        {
-            if (id > 0)
-            {
-                var model = urunDal.GetFilterBetween500And1500(id);
-                if (model.Count > 0) return Ok(model);
-                else return NotFound();
-            }
-            else return BadRequest();
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetFilterBetween1500And2500(int id)
-        {
-            if (id > 0)
-            {
-                var model = urunDal.GetFilterBetween1500And2500(id);
-                if (model.Count > 0) return Ok(model);
-                else return NotFound();
-            }
-            else return BadRequest();
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetFilterBetween2500And4000(int id)
-        {
-            if (id > 0)
-            {
-                var model = urunDal.GetFilterBetween2500And4000(id);
-                if (model.Count > 0) return Ok(model);
-                else return NotFound();
-            }
-            else return BadRequest();
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetFilterOver4000(int id)
-        {
-            if (id > 0)
-            {
-                var model = urunDal.GetFilterOver4000(id);
+                var model = urunDal.GetFilterByPrice(id, min, max);
                 if (model.Count > 0) return Ok(model);
                 else return NotFound();
             }
@@ -216,7 +154,108 @@ namespace WebApi_E_ticaret_.Controllers
                 else return NotFound();
             }
             else return BadRequest();
+        }//endOfProductsByCategory
+
+        //Search
+        [HttpGet]
+        public IHttpActionResult GetProductsBySearch(string search)
+        {
+            if (search != "")
+            {
+                var model = urunDal.GetProductsBySearch(search);
+                if (model.Count > 0)
+                    return Ok(model);
+                else
+                    return NotFound();
+            }
+            else
+                return BadRequest();
         }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByBestSellersInSearch(string search)
+        {
+            if (search != null)
+            {
+                var model = urunDal.GetProductsOrderByBestSellersInSearch(search);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByNameASCInSearch(string search)
+        {
+            if (search != null)
+            {
+                var model = urunDal.GetProductsOrderByNameASCInSearch(search);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByNameDESCInSearch(string search)
+        {
+            if (search != null)
+            {
+                var model = urunDal.GetProductsOrderByNameDESCInSearch(search);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByPriceASCInSearch(string search)
+        {
+            if (search != null)
+            {
+                var model = urunDal.GetProductsOrderByPriceASCInSearch(search);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductsByPriceDESCInSearch(string search)
+        {
+            if (search != null)
+            {
+                var model = urunDal.GetProductsOrderByPriceDESCInSearch(search);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetFilterByPriceInSearch(string search, int min, int max)
+        {
+            if (search != null)
+            {
+                var model = urunDal.GetFilterByPriceInSearch(search, min, max);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetFilterByBrandInSearch(string search, string marka)
+        {
+            if (search != null)
+            {
+                var model = urunDal.GetFilterByBrandInSearch(search, marka);
+                if (model.Count > 0) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }//endOfSearch
+
 
         [HttpPost]
         public IHttpActionResult PostProductAlreadyExist(DAL.ViewModels.ProductStokViewModel model)
