@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import './js/Custom.js';
+import {Cookies} from 'js-cookie';
 import { CookiesProvider } from 'react-cookie';
 import {Route,BrowserRouter as Router} from 'react-router-dom';
 import {HomePage} from './HomePage';
@@ -10,8 +11,12 @@ import Login from './Login';
 import {Register} from './Register';
 import {User} from './User';
 import {Siparis} from './Siparis';
-
+import {AdminNavbar} from './AdminNavbar';
+import {AdminPanel} from './AdminPanel';
+import {AdminDashboard} from './AdminDashboard';
 import {Favourite} from './Favourite';
+
+
 import {KullaniciGuncelle} from './KullaniciGuncelle';
 import {Siparislerim} from './Siparislerim';
 
@@ -26,13 +31,20 @@ import Footer from './Footer';
 
 
 class App extends Component {
+   constructor(props){
+      super(props);
+      this.state={
+        Admin:false
+      }
+   }
+  
   render() {
-    
     return (
       <CookiesProvider>
         <Router>
           <div>
                 <NavbarPage></NavbarPage>
+                <AdminPanel></AdminPanel> 
 
                 <Route exact path="/" component={HomePage}/>
                 <Route exact path="/ProductDetail/" component={ProductDetail}/>
@@ -53,6 +65,7 @@ class App extends Component {
                 <Route path="/Contact" component={Contact}/>
 
                 <Footer></Footer>
+            
           </div>
         </Router>
       </CookiesProvider>
