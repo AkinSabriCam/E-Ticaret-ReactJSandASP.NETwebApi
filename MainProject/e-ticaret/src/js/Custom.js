@@ -73,8 +73,7 @@ $(function($){
                 $(".ilcelist").empty()
                 $.each(data,function(index){
                     $(".ilcelist").append(
-                        '<option value='+data[index].IlceID+'>'+data[index].Ilce+'</option>'
-                    
+                        '<option value='+data[index].IlceID+'>'+data[index].Ilce+'</option>'                  
                     )
                 })
             },

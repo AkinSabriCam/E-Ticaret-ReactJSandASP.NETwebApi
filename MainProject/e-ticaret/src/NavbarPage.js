@@ -8,6 +8,7 @@ import {Modal,Button} from 'react-bootstrap';
 import {Redirect,Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
 import $ from 'jquery';
+import logo from './img/logo.png';
 
 
 export class NavbarPage extends Component {
@@ -87,19 +88,21 @@ render(){
   return (
       <div className='menu'>
       <MDBNavbar right>
+        <Link id="logo" to="/">
+          <img src={logo}></img>
+        </Link>
       <MDBNavbarNav right className="searchbar">
       <MDBNavItem>
               <MDBFormInline waves >
                 <div className="md-form my-0">
                   <input id="searchInput" onInput={this.getText} className="form-control mr-sm-2" type="text"  style={{width:500}} placeholder="Bu sitede ara..." aria-label="Search" />
                 </div>
-                
                <Link to={{pathname:"/SearchProducts", state:{searchText: this.state.text}}}> 
                     <button className="btn btn-warning">Search</button>   
                </Link>
 
               </MDBFormInline>
-            </MDBNavItem>
+      </MDBNavItem>
           </MDBNavbarNav>
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
@@ -129,9 +132,7 @@ render(){
            </MDBNavbar>
 
       <MDBNavbar color="indigo" dark expand="md">
-      <MDBNavbarBrand>
-          <Link to="/"><strong className="white-text btnAnasayfa">ANASAYFA</strong></Link>
-        </MDBNavbarBrand>
+         
         <MDBNavbarBrand>
           <strong className="white-text">KATEGORİLER</strong>
         </MDBNavbarBrand>
