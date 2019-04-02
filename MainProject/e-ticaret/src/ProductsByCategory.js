@@ -36,6 +36,14 @@
 			}
 
 	   	componentDidMount(){
+					this.fetchInvoice();		
+			}
+
+			componentWillUnmount() {
+    		this.ignoreLastFetch = true;
+ 		 	}
+
+			fetchInvoice = () => {
 				const {subCatId} = this.props.location.state;
 				if(subCatId != null){
 					console.log(subCatId);
@@ -44,8 +52,15 @@
 				}
 				
 				fetch("http://localhost:50040/api/Urunler/GetProductsByCategory/"+subCatId).then(data=>data.json())
-    		.then(result=>this.setState({Products:result}))
-				.catch(error=>console.log("error"));			
+				.then(result=>this.setState({Products:result}))
+				.catch(error=>console.log("error"));
+			}
+			
+			componentDidUpdate (prevProps) {
+				let oldId = prevProps.location.state;
+				let newId = this.props.location.state;
+				if (newId !== oldId)
+					this.fetchInvoice();
 			}
 
 			prod(id){

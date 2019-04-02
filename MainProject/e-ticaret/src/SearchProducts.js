@@ -33,8 +33,16 @@ export class SearchProducts extends React.Component {
         }
      this.prod=this.prod.bind(this);
     }
-
+    
     componentDidMount(){
+        this.fetchInvoice();		
+    }
+
+    componentWillUnmount() {
+        this.ignoreLastFetch = true;
+    }
+
+    fetchInvoice = () => {
         const {searchText} = this.props.location.state;
         if(searchText != null){
             console.log(searchText);
@@ -44,7 +52,14 @@ export class SearchProducts extends React.Component {
             
         fetch("http://localhost:50040/api/Urunler/GetProductsBySearch?search="+searchText).then(data=>data.json())
         .then(result=>this.setState({Products:result})) 
-        .catch(error=>console.log("error"));			
+        .catch(error=>console.log("error"));
+    }
+
+    componentDidUpdate (prevProps) {
+        let oldId = prevProps.location.state;
+        let newId = this.props.location.state;
+        if (newId !== oldId)
+            this.fetchInvoice();
     }
 
     prod(id){
