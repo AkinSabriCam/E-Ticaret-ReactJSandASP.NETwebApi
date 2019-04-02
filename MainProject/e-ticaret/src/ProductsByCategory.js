@@ -1,10 +1,10 @@
-
-    import React from 'react';
+		import React from 'react';
     import './ShopStyle/shop_styles.css';
 		import './ShopStyle/shop_responsive.css';
 		import './ShopStyle/plugins/jquery-ui.css';
 		import {Link,Redirect} from 'react-router-dom';
 		import $ from 'jquery';	
+		import Cookies from 'js-cookie';
 
 		const styleSpan = {
 			fontSize: '14px',
@@ -230,6 +230,37 @@
 						$("#filterItem").text("");
 				});
 			}
+			FavoriEkle=(urun)=>{
+        let NewFavourite={
+            kullaniciID:1007/*Cookies.get("kullaniciID")*/,
+            urunID:urun.urunID,
+            ad:urun.ad,
+            fiyat:urun.fiyat
+        }
+        /*if(Cookies.get("Login")==null && Cookies.get("token")==null){
+           return (window.location="/Login")
+        }*/
+       /*else{*/
+            fetch("http://localhost:50040/api/Favori/PostProductIntoFavouriteForUser", {
+            method: 'POST',
+            body: JSON.stringify(NewFavourite),
+            headers: {
+                Authorization:"bearer "+Cookies.get("token"),
+                Accept:"application/json",
+                'Content-Type': 'application/json'
+              }
+            })
+            .then((result)=>{
+                if(result.ok){
+                    console.log("Favoriye eklendi"+result.status)
+                 }
+                 else{
+                     console.log("kullanici girişi yapmalısınız..");
+                 }
+            })
+            .catch((err)=>{console.log("error:"+ err)}); 
+        /*}*/
+    }
 
       render() {		
         
@@ -246,7 +277,7 @@
 											<div className="product_price">{urun.fiyat} ₺</div>
 											<div className="product_name"><div><a href="#" tabindex="0">{urun.ad}</a></div></div>
 										</div>
-										<div className="product_fav"><i className="fas fa-heart"></i></div>
+										<div onClick={this.FavoriEkle.bind(this,urun)}  className="product_fav"><i className="fas fa-heart"></i></div>
 										<ul className="product_marks">
 											<li className="product_mark product_discount">-25%</li>
 											<li className="product_mark product_new">new</li>

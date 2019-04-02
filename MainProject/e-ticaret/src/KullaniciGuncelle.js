@@ -11,25 +11,25 @@ export  class KullaniciGuncelle  extends React.Component{
       }
       this.Guncelle=this.Guncelle.bind(this);
     }
-
     componentDidMount(){
-        fetch("http://localhost:50040/api/Users/GetUserById/1")
+        fetch("http://localhost:50040/api/Users/GetUserById/1007")
         .then(data=>data.json())
         .then(result=>{
             this.setState({User:result});
-            
         })
+        
         .catch(err=>{console.log(err)});
 
         // Il ve ilceleri almak için bir fetch daha kullanıyorum
-        fetch("http://localhost:50040/api/Iletisim/GetAllProvince")
+        fetch("http://localhost:50040/api/Iletisim/GetAllCity")
         .then(data=>data.json())
         .then(result=>{
             this.setState({Iller:result.Iller});
             this.setState({Ilceler:result.Ilceler});
-        })
-        .catch(err=>{console.log(err)});
 
+        })
+        
+        .catch(err=>{console.log(err)});
     }
     Guncelle(){
         let ad=document.getElementById("ad").value;
@@ -39,21 +39,30 @@ export  class KullaniciGuncelle  extends React.Component{
         let sifre=document.getElementById("sifre").value;
         let cinsiyet=document.getElementById("cinsiyet").value;
         let ilid=document.getElementById("il").value;
+        let il=document.getElementById("il").options[document.getElementById("il").selectedIndex].text;
         let ilceid=document.getElementById("ilce").value;
+        let ilce=document.getElementById("ilce").options[document.getElementById("ilce").selectedIndex].text;
         let adres=document.getElementById("adres").value;
         let kullaniciId=this.state.User.kullaniciID;
-        
+        let rolID=this.state.User.rolID;
+        let kayitTarihi=this.state.User.kayitTarihi;    
+
         let User={
             kullaniciID:kullaniciId,
             ad:ad,
             soyad:soyad,
             cinsiyet:cinsiyet,
             ilID:ilid,
+            ilAdi:il,
             ilceID:ilceid,
-            Detay:adres,
+            ilceAdi:ilce,
+            acikAdres:adres,
             kullaniciAdi:username,
             sifre:sifre,
-            email:email
+            email:email,
+            rolID:rolID,
+            kayitTarihi:kayitTarihi,
+
         }
 
         fetch("http://localhost:50040/api/Users/PutUser",{
@@ -68,20 +77,39 @@ export  class KullaniciGuncelle  extends React.Component{
         .catch(err=>console.log(err));
     
     }
+    
     render(){
         let iller=this.state.Iller.map((il,indeks)=>{
-            return(
-                <option value={il.ilID}>{il.il1}</option>
+            console.log(this.state.Iller);
+            return(  
+                <option key={indeks} value={il.ilID}>{il.il1}</option>
             )
          })
-                return(
-          <div className="container">
-          <form onSubmit={this.Guncelle}>
+             return(
+        <div>
+                  <div class="home" style={{height:50}}>
+		          <div class="home_overlay"></div>
+		          <div class="home_content d-flex flex-column align-items-center justify-content-center">
+			      <h4 class="home_title">Bilgilerimi Düzenle</h4></div>
+	              </div>
+                    
+            <div class="cart_section" style={{marginTop:-100}}>
+              <div class="row">
+              <div class="col-lg-10 offset-lg-1">
+                  <div class="cart_container">
+                      <div class="cart_items">
+                          <ul class="cart_list">
+                              <li class="cart_item clearfix">
+                                  <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+                                  <div class="home" ></div>
+                            <div class="container" style={{marginRight:150}}>
+            <div className="container">
+            <form class="form-horizontal" role="form" onSubmit={this.Guncelle}>
             <div className="form-group">
-           <label><b>Kullanıcı Adı</b></label>
-           <input type="text" className="form-control" id="kullaniciad" value={this.state.User.kullaniciAdi}
+            <label><b>Kullanıcı Adı</b></label>
+            <input type="text" className="form-control" id="kullaniciad" value={this.state.User.kullaniciAdi}
             onChange={(e) => {let user=this.state.User; user.kullaniciAdi=e.target.value;this.setState({User: user})}}  />
-           </div>
+            </div>
            
             <div className="form-group">
             <label><b>Şifre</b></label>
@@ -120,22 +148,29 @@ export  class KullaniciGuncelle  extends React.Component{
            <div className="form-group">
            <label><b>İlçe</b></label>
            <select id="ilce" className="form-control ilcelist">
-          </select>
+           </select>
            </div>
            <div className="form-group">
            <label><b>Adres</b></label>
-           <input type="textarea" id="adres" className="form-control" value={this.state.User.Detay}
-           onChange={(e) => {let user=this.state.User; user.Detay=e.target.value;this.setState({User: user})}}/>
+           <input type="textarea" id="adres" className="form-control" value={this.state.User.acikAdres}
+           onChange={(e) => {let user=this.state.User; user.acikAdres=e.target.value;this.setState({User: user})}}/>
            </div>
            
            <div className="form-group">
-                <button  type="button" className="btn btn-dark" onClick={this.Guncelle}>Güncelle</button>
+                <button  type="button" className="btn btn-primary" onClick={this.Guncelle}>Güncelle</button>
            </div>
            </form>
-            
-
-        </div>
-        
+           </div>
+                    </div>
+                    </div>
+                    </li>
+                    </ul>
+                    </div>
+                    </div>
+                    </div>
+                  </div>
+                  </div>
+    </div>
         )
     }
 }

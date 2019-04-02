@@ -18,7 +18,7 @@ export class Siparis extends React.Component{
 
     componentDidMount(){
             if(Cookies.get("Login")=="true"){
-                console.log("loginnnnnn")  
+                console.log("login")  
                 // kullanıcı login olmuştur
                 fetch('http://localhost:50040/api/Sepet/GetAllProductsinSepetforUser/'+Cookies.get("kullaniciID"))
                 .then(data=>data.json())
@@ -36,8 +36,7 @@ export class Siparis extends React.Component{
                     .catch(err=>console.log(err))
                 }
                 else{
-                    console.log("SEPET BOŞŞ");
-                    
+                    console.log("SEPET BOŞŞ"); 
                 }
                 
 
@@ -59,10 +58,7 @@ export class Siparis extends React.Component{
                }else{
                 Cookies.remove("sepetid")
                 //window.location = '/';
-               }
-               
-               
-               
+               }  
         })
         .catch(err=>console.log(err));            
     }
@@ -109,10 +105,6 @@ export class Siparis extends React.Component{
                                 <div class="cart_item_name cart_info_col">
                                     <div class="cart_item_title">Ürün</div>
                                     <div class="cart_item_text">{sepet.ad}</div>
-                                </div>
-                                <div class="cart_item_color cart_info_col">
-                                    <div class="cart_item_title">Renk</div>
-                                    <div class="cart_item_text"><span style={{backgroundColor:999999}}></span>Silver</div>
                                 </div>
                                 <div class="cart_item_quantity cart_info_col">
                                     <div class="cart_item_title">Adet</div>

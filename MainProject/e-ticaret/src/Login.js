@@ -21,10 +21,8 @@ export  class Login extends Component {
   }
 
 componentDidMount(){
-  
   // kullanıcı giriş yaptığında bu bilgiye dair bir session tutulmaktadır.
 }
-
   LoginClose() {
     this.setState({show: false });
   }

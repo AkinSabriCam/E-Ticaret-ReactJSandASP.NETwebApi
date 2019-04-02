@@ -8,11 +8,9 @@ namespace DAL.ViewModels
 {
     public class ililceViewModel
     {
+        public string ilAdi { get; set; }
+        public int ilID { get; set; }
         public string IlceAdi { get; set; }
-        public List<ViewModels.ilceViewModel> Ilceler;
-        public ililceViewModel()
-        {
-            this.Ilceler = new List<ilceViewModel>();
-        }
+        public int ilceID { get; set; }
     }
 }

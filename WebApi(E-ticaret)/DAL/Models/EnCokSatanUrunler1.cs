@@ -12,7 +12,7 @@ namespace DAL.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EnCokSatanUrunler
+    public partial class EnCokSatanUrunler1
     {
         public int urunID { get; set; }
         public string ad { get; set; }

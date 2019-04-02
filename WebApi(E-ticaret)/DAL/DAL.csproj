@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="favoriDAL.cs" />
     <Compile Include="iletisimDAL.cs" />
     <Compile Include="kategoriDAL.cs" />
     <Compile Include="kullaniciDAL.cs" />
@@ -60,7 +61,7 @@
     <Compile Include="Models\Duyuru.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EnCokSatanUrunler.cs">
+    <Compile Include="Models\EnCokSatanUrunler1.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entites.Context.cs">
@@ -85,6 +86,9 @@
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FN_OrderByBestSallers2_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FN_OrderByBestSallers3_Result.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FN_OrderByBestSallers_Result.cs">
@@ -187,11 +191,13 @@
     <Compile Include="UrunDAL.cs" />
     <Compile Include="ViewModels\AltKategoriModelView.cs" />
     <Compile Include="ViewModels\CityandDistrictViewModel.cs" />
+    <Compile Include="ViewModels\FavoriUrunViewModel.cs" />
     <Compile Include="ViewModels\ilceViewModel.cs" />
     <Compile Include="ViewModels\ililceViewModel.cs" />
     <Compile Include="ViewModels\KategoriAltKategoriViewModel.cs" />
     <Compile Include="ViewModels\ProductStokViewModel.cs" />
     <Compile Include="ViewModels\SepettekiUrunViewModel.cs" />
+    <Compile Include="ViewModels\UserFavoridekiUrunViewModel.cs" />
     <Compile Include="ViewModels\UserSepettekiUrunlerViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ziyaretcilogDAL.cs" />

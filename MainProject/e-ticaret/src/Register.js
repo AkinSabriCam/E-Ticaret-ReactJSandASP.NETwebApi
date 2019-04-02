@@ -8,24 +8,22 @@ export class Register extends Component {
   constructor(props, context) {
     super(props, context);
     this.state={
-      City:[],
-      Loc:[],
       show: true,
-      selectedOption:false,
+      Iller:[],
+      Ilceler:[],
     }
     this.RegisterClose = this.RegisterClose.bind(this);
     this.KayitEkle=this.KayitEkle.bind(this);
-    this.radioChangeGirl = this.radioChangeGirl.bind(this);
-    this.radioChangeBoy = this.radioChangeBoy.bind(this);  
   }
   componentDidMount(){
-    fetch("http://localhost:50040/api/Iletisim/GetAllCity").then(data=>data.json())
-      .then(result=>{this.setState({City:result})})
-      .catch(error=>console.log("error"));
-      
-      fetch("http://localhost:50040/api/Iletisim/GetAllLocation").then(data=>data.json())
-      .then(result=>{this.setState({Loc:result})})
-      .catch(error=>console.log("error"));
+        // Il ve ilceleri almak için bir fetch daha kullanıyorum
+        fetch("http://localhost:50040/api/Iletisim/GetAllCity")
+        .then(data=>data.json())
+        .then(result=>{
+            this.setState({Iller:result.Iller});
+            this.setState({Ilceler:result.Ilceler});
+        })
+        .catch(err=>{console.log(err)});
   }
   
   KayitEkle(){
@@ -34,33 +32,37 @@ export class Register extends Component {
       let email=document.getElementById("email").value;
       let username=document.getElementById("username").value;
       let password=document.getElementById("password").value;
-      let il=document.getElementById("il").value;
-      let ilce=document.getElementById("ilce").value;
+      let cinsiyet=document.getElementById("cinsiyet").value;
+      let ilid=document.getElementById("il").value;
+      let il=document.getElementById("il").options[document.getElementById("il").selectedIndex].text;
+      let ilceid=document.getElementById("ilce").value;
+      let ilce=document.getElementById("ilce").options[document.getElementById("ilce").selectedIndex].text;
       let acikAdres=document.getElementById("acikAdres").value;
       var tempDate = new Date();
       var date = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getDate() +' '+ tempDate.getHours()+':'+ tempDate.getMinutes()+':'+ tempDate.getSeconds();
       const currDate=date;      
-      let User={
+      let NewUser={
                 ad: name,
                 soyad: lastname,
                 email: email,
                 kullaniciAdi: username,
                 sifre: password,
-                il: il,
-                ilce: ilce,
+                cinsiyet:cinsiyet,
+                ilid: ilid,
+                ilAdi:il,
+                ilceid:ilceid,
+                ilceAdi: ilce,
                 acikAdres: acikAdres,
-                cinsiyet:this.state.selectedOption,
                 rolId: 2,
                 kayitTarihi: currDate
       }
-
     fetch("http://localhost:50040/api/Users/PostUser", {
             method: 'POST',
+            body: JSON.stringify(NewUser),
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              },
-            body: JSON.stringify(User)
+              }
           }).then(data=>data.json)
           .then(result=>{console.log("ok")})
           .catch(err=>console.log("err"))
@@ -71,44 +73,13 @@ export class Register extends Component {
           toggleCollapse = () => {
           this.setState({ isOpen: !this.state.isOpen });
           }
-          radioChangeGirl() {
-          this.setState({selectedOption:false});
-          }
-          radioChangeBoy() {
-           this.setState({selectedOption:true});
-          }
           
   render(){
-    //daha sonra düzenlenecek
-  /* let sehirler=this.state.City.map((seh,ind)=>{
-       return(
-        <option>{seh.il1}</option>
-        
-       )
-       <div class="col-lg-15">
-                        <div class="ui-select">
-                          <select id="il" class="form-control">
-                            {sehirler}
-                          </select>
-                        </div>
-                  </div>
-     })
-
-     let ilceler=this.state.Loc.map((ilc,ind)=>{
-       console.log(ilc.ilce1);
-       return(
-        <option>{ilc.ilce1}</option>
-       )
-       <div class="col-lg-15">
-                        <div class="ui-select">
-                          <select id="ilce" class="form-control">
-                            {ilceler}
-                          </select>
-                        </div>
-                  </div>
-       
-     })*/
-
+    let iller=this.state.Iller.map((il,indeks)=>{
+      return(  
+          <option value={il.ilID}>{il.il1}</option>
+      )
+    })
          return (
         <div className='menu'>
         <form onSubmit={this.KayitEkle}>
@@ -159,22 +130,24 @@ export class Register extends Component {
                 className="form-control"
                 placeholder="************"/>
 
-                <label htmlFor="formGroupExampleInput">İl</label>
-                <input 
-                type="il"
-                name="il"
-                id="il"
-                className="form-control"
-                placeholder="Manisa"/>
+                <label htmlFor="formGroupExampleInput">Cinsiyet</label>
+                <select id="cinsiyet" className="form-control">
+                  <option value="true">Erkek</option>
+                  <option value="false">Kız</option>
+                </select>
 
+                <div className="form-group">
+                <label htmlFor="formGroupExampleInput">İl</label>
+                <select id="il" className="form-control illist">
+                      {iller}
+                </select>
+
+                </div>
+                <div className="form-group">
                 <label htmlFor="formGroupExampleInput">İlçe</label>
-                <input 
-                type="ilce"
-                name="ilce"
-                id="ilce"
-                className="form-control"
-                placeholder="Turgutlu"/>
-                
+                <select id="ilce" className="form-control ilcelist">
+                </select>
+                </div>
 
                 <label htmlFor="formGroupExampleInput">Açık Adres</label>
                 <input 
@@ -183,27 +156,12 @@ export class Register extends Component {
                 id="acikAdres"
                 className="form-control"
                 placeholder="İstiklal Mahallesi Piyaleoğlu Caddesi No:147"/>
-
-                <label htmlFor="formGroupExampleInput">Cinsiyet</label>
-                <br></br>
-                  <input type="radio"
-                  value="0"
-                  checked={this.state.selectedOption === false}
-                  onChange={this.radioChangeGirl} />Kız
-
-                  <input type="radio" 
-                  value="1"
-                  checked={this.state.selectedOption === true}
-                  onChange={this.radioChangeBoy}/>Erkek
         
             </div>
             </Modal.Body>
             <Modal.Footer>
-              
               <Button variant="secondary" onClick={this.RegisterClose}> Close </Button>
-              <Redirect to="/">
               <input type="submit" onClick={this.KayitEkle} className="btn btn-lg btn-success"/>
-              </Redirect>
             </Modal.Footer>
           </Modal>
           </form>

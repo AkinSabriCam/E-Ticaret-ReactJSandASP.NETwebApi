@@ -15,13 +15,14 @@ export class User extends Component{
                       <div class="cat_menu_container">
                         <div class="cat_menu_title d-flex flex-row align-items-center justify-content-start ">
                           <div class="cat_burger"><span></span><span></span><span></span></div>
-                          <div class="cat_menu_text">Özgür Çakıcı</div>
+                          <div class="cat_menu_text">HESABIM</div>
                         </div>
 
                         <ul class="cat_menu">
                         
                           <li><a href="#" > <Link to={{pathname:"/User/Siparislerim"}}> Siparişlerim </Link>  <i class="fas fa-chevron-right ml-auto"></i></a></li>
                           <li><a href="#">  <Link to={{pathname:"/User/PersonalDetail"}}> Üyelik Bilgilerim </Link><i class="fas fa-chevron-right"></i></a></li>
+                          <li><a href="#">  <Link to={{pathname:"/User/KullaniciGuncelle"}}> Bilgilerimi Düzenle </Link><i class="fas fa-chevron-right"></i></a></li>
                           <li><a href="#">  <Link to={{pathname:"/User/Favourite"}}> Favorilerim </Link><i class="fas fa-chevron-right"></i></a></li>
                         </ul>
 
