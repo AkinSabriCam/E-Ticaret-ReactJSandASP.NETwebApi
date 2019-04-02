@@ -40,16 +40,14 @@ class App extends Component {
         <Router>
           <div>
                 <NavbarPage></NavbarPage>
-                <AdminPanel></AdminPanel> 
-
                 <Route exact path="/" component={HomePage}/>
-                <Route exact path="/ProductDetail/" component={ProductDetail}/>
+                <Route path="/ProductDetail/" component={ProductDetail}/>
                 <Route path="/Login" component={Login}/>
                 <Route path="/Register" component={Register}/>
                 <Route path="/User" component={User}/>
-                
+                <Route path="/User/Homepage" component={HomePage}/>
                 <Route path="/Siparis" component={Siparis}/>
-                <Route path="/KullaniciGuncelle" component={KullaniciGuncelle}/>
+                <Route path="/User/KullaniciGuncelle" component={KullaniciGuncelle}/>
 
                 <Route path="/User/Favourite" component={Favourite}/>
                 <Route path="/User/Siparislerim" component={Siparislerim}/>

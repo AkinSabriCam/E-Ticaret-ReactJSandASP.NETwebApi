@@ -11,7 +11,7 @@ export class Favourite extends React.Component{
         super(props);
         this.state={
             UserFavourites:[]
-        }
+                }
     }
     componentDidMount(){
         /*if(Cookies.get("Login")=="true"){
@@ -36,8 +36,9 @@ export class Favourite extends React.Component{
     }
     render(){
         let Favoriler=this.state.UserFavourites.map((favori,ind)=>{
-            if(favori.ad.length>19){
-                favori.ad = favori.ad.substring(0, 16) + "...";
+            let kisaad=favori.ad;
+            if(kisaad.length>19){
+                kisaad=kisaad.substring(0, 16) + "...";
             }
         return(
              <div class="cart_container">
@@ -48,7 +49,7 @@ export class Favourite extends React.Component{
                             <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                 <div class="cart_item_name cart_item_name">
                                     <div class="cart_item_title">Ürün</div>
-                                    <div class="cart_item_text"><Link to={{pathname:"/ProductDetail",state:{productId:favori.urunID}}}>{favori.ad}</Link></div>
+                                    <div class="cart_item_text" title={favori.ad}><Link to={{pathname:"/ProductDetail",state:{productId:favori.urunID}}}>{kisaad}</Link></div>
                                 </div>
                                 <div class="cart_item_quantity cart_item">
                                     <div class="cart_item_title">Marka</div>
@@ -62,7 +63,9 @@ export class Favourite extends React.Component{
                         </li>
                     </ul>
                 </div>
-                <a style={{marginLeft:750}}className="btn btn-primary" onClick={()=>this.FavoriKaldir(favori.favoriID)}>Favorilerimden Çıkar</a>
+                <div class="cart_buttons">
+                <a className="btn btn-primary" onClick={()=>this.FavoriKaldir(favori.favoriID)}>Favorilerimden Çıkar</a>
+                </div>
             </div>
         )
     })

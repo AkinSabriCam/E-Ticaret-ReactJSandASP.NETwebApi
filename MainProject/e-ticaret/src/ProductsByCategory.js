@@ -276,10 +276,13 @@
             .catch((err)=>{console.log("error:"+ err)}); 
         /*}*/
     }
-
-      render() {		
-        
+      render() {	
+						
 					let Urunler = this.state.Products.map((urun,ind) => {
+					let kisaad=urun.ad;
+						if(kisaad.length>25){
+							 kisaad= kisaad.substring(0, 15) + "...";
+					}
             return (
 									<div className="product_item is_new">
 										<div className="product_border"></div>
@@ -290,7 +293,7 @@
 										</div>
 										<div className="product_content">
 											<div className="product_price">{urun.fiyat} ₺</div>
-											<div className="product_name"><div><a href="#" tabindex="0">{urun.ad}</a></div></div>
+											<div className="product_name"><div><a title={urun.ad} tabindex="0">{kisaad}</a></div></div>
 										</div>
 										<div onClick={this.FavoriEkle.bind(this,urun)}  className="product_fav"><i className="fas fa-heart"></i></div>
 										<ul className="product_marks">

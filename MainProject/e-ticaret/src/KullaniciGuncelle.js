@@ -95,72 +95,72 @@ export  class KullaniciGuncelle  extends React.Component{
                     
             <div class="cart_section" style={{marginTop:-100}}>
               <div class="row">
-              <div class="col-lg-10 offset-lg-1">
+              <div class="col-lg-8 offset-lg-2">
                   <div class="cart_container">
                       <div class="cart_items">
                           <ul class="cart_list">
                               <li class="cart_item clearfix">
                                   <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                   <div class="home" ></div>
-                            <div class="container" style={{marginRight:150}}>
-            <div className="container">
-            <form class="form-horizontal" role="form" onSubmit={this.Guncelle}>
-            <div className="form-group">
-            <label><b>Kullanıcı Adı</b></label>
-            <input type="text" className="form-control" id="kullaniciad" value={this.state.User.kullaniciAdi}
-            onChange={(e) => {let user=this.state.User; user.kullaniciAdi=e.target.value;this.setState({User: user})}}  />
-            </div>
-           
-            <div className="form-group">
-            <label><b>Şifre</b></label>
-            <input type="text" className="form-control" id="sifre" value={this.state.User.sifre}
-            onChange={(e) => {let user=this.state.User; user.sifre=e.target.value;this.setState({User: user})}}/>
-            </div>
-            
-            <div className="form-group">
-            <label><b>E-mail</b></label>
-            <input type="text" className="form-control" id="e-mail" value={this.state.User.email}
-            onChange={(e) => {let user=this.state.User; user.email=e.target.value;this.setState({User: user})}}/>
-            </div>
-           <div className="form-group">
-            <label><b>Ad </b></label>
-            <input type="text" id="ad" className="form-control" value={this.state.User.ad}
-            onChange={(e) => {let user=this.state.User; user.ad=e.target.value;this.setState({User: user})}}/>
-           </div>
-           <div className="form-group">
-            <label><b>Soyad </b></label>
-            <input type="text" id="soyad" className="form-control" value={this.state.User.soyad}
-            onChange={(e) => {let user=this.state.User; user.soyad=e.target.value;this.setState({User: user})}}/>
-           </div>
-           <div className="form-group">
-           <label><b>Cinsiyet</b></label>
-           <select id="cinsiyet" className="form-control">
-               <option value="true">Erkek</option>
-               <option value="false">Kız</option>
-           </select>
-           </div>
-           <div className="form-group">
-           <label><b>İl</b></label>
-           <select id="il" className="form-control illist">
-                {iller}
-           </select>
-           </div>
-           <div className="form-group">
-           <label><b>İlçe</b></label>
-           <select id="ilce" className="form-control ilcelist">
-           </select>
-           </div>
-           <div className="form-group">
-           <label><b>Adres</b></label>
-           <input type="textarea" id="adres" className="form-control" value={this.state.User.acikAdres}
-           onChange={(e) => {let user=this.state.User; user.acikAdres=e.target.value;this.setState({User: user})}}/>
-           </div>
-           
-           <div className="form-group">
-                <button  type="button" className="btn btn-primary" onClick={this.Guncelle}>Güncelle</button>
-           </div>
-           </form>
-           </div>
+                                    <div class="container" style={{marginRight:150}}>
+                                <div className="container">
+                                <form class="form-horizontal" role="form" onSubmit={this.Guncelle}>
+                                <div className="form-group">
+                                <label><b>Kullanıcı Adı</b></label>
+                                <input type="text" className="form-control" id="kullaniciad" value={this.state.User.kullaniciAdi}
+                                onChange={(e) => {let user=this.state.User; user.kullaniciAdi=e.target.value;this.setState({User: user})}}  />
+                                </div>
+                            
+                                <div className="form-group">
+                                <label><b>Şifre</b></label>
+                                <input type="text" className="form-control" id="sifre" value={this.state.User.sifre}
+                                onChange={(e) => {let user=this.state.User; user.sifre=e.target.value;this.setState({User: user})}}/>
+                                </div>
+                                
+                                <div className="form-group">
+                                <label><b>E-mail</b></label>
+                                <input type="text" className="form-control" id="e-mail" value={this.state.User.email}
+                                onChange={(e) => {let user=this.state.User; user.email=e.target.value;this.setState({User: user})}}/>
+                                </div>
+                            <div className="form-group">
+                                <label><b>Ad </b></label>
+                                <input type="text" id="ad" className="form-control" value={this.state.User.ad}
+                                onChange={(e) => {let user=this.state.User; user.ad=e.target.value;this.setState({User: user})}}/>
+                            </div>
+                            <div className="form-group">
+                                <label><b>Soyad </b></label>
+                                <input type="text" id="soyad" className="form-control" value={this.state.User.soyad}
+                                onChange={(e) => {let user=this.state.User; user.soyad=e.target.value;this.setState({User: user})}}/>
+                            </div>
+                            <div className="form-group">
+                            <label><b>Cinsiyet</b></label>
+                            <select id="cinsiyet" className="form-control">
+                                <option value="true">Erkek</option>
+                                <option value="false">Kız</option>
+                            </select>
+                            </div>
+                            <div className="form-group">
+                            <label><b>İl</b></label>
+                            <select id="il" className="form-control illist">
+                                    {iller}
+                            </select>
+                            </div>
+                            <div className="form-group">
+                            <label><b>İlçe</b></label>
+                            <select id="ilce" className="form-control ilcelist">
+                            </select>
+                            </div>
+                            <div className="form-group">
+                            <label><b>Adres</b></label>
+                            <input type="textarea" id="adres" className="form-control" value={this.state.User.acikAdres}
+                            onChange={(e) => {let user=this.state.User; user.acikAdres=e.target.value;this.setState({User: user})}}/>
+                            </div>
+                            
+                            <div className="form-group">
+                                    <button  type="button" className="btn btn-primary" onClick={this.Guncelle}>Güncelle</button>
+                            </div>
+                            </form>
+                            </div>
                     </div>
                     </div>
                     </li>

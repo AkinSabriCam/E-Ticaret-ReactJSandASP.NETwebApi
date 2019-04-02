@@ -26,8 +26,9 @@ export class Siparislerim extends React.Component{
         let ToplamSiparisTutari=0
         let Siparisler=this.state.SiparisProducts.map((siparislerim,ind)=>{
             {ToplamSiparisTutari+=siparislerim.toplamFiyat}
-            if(siparislerim.ad.length>25){
-                siparislerim.ad = siparislerim.ad.substring(0, 16) + "...";
+            let kisaad=siparislerim.ad;
+            if(kisaad.length>25){
+                kisaad = kisaad.substring(0, 16) + "...";
             }
         return(
              <div class="cart_container">
@@ -38,7 +39,7 @@ export class Siparislerim extends React.Component{
                             <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                 <div class="cart_item_name cart_info_col">
                                     <div class="cart_item_title">Ürün</div>
-                                    <div class="cart_item_text" ><Link to={{pathname:"/ProductDetail",state:{productId:siparislerim.urunID}}}>{siparislerim.ad}</Link></div>
+                                    <div class="cart_item_text" title={siparislerim.ad} ><Link to={{pathname:"/ProductDetail",state:{productId:siparislerim.urunID}}}>{kisaad}</Link></div>
                                 </div>
                                 <div class="cart_item_prices cart_info_col">
                                     <div class="cart_item_title">Ürün Adedi</div>
