@@ -16,7 +16,38 @@ export class ProductDetail extends React.Component{
         }
         this.SepeteEkle=this.SepeteEkle.bind(this);
     }
-        
+    FavoriEkle=()=>{
+        const {productId} = this.props.location.state;
+        let NewFavourite={
+            kullaniciID:1007/*Cookies.get("kullaniciID")*/,
+            urunID:productId,
+            ad:this.state.Product.ad,
+            fiyat:this.state.Product.fiyat
+        }
+        /*if(Cookies.get("Login")==null && Cookies.get("token")==null){
+           return (window.location="/Login")
+        }*/
+        /*else{*/
+            fetch("http://localhost:50040/api/Favori/PostProductIntoFavouriteForUser", {
+            method: 'POST',
+            body: JSON.stringify(NewFavourite),
+            headers: {
+                Authorization:"bearer "+Cookies.get("token"),
+                Accept:"application/json",
+                'Content-Type': 'application/json'
+              }
+            })
+            .then((result)=>{
+                if(result.ok){
+                    console.log("Favoriye eklendi"+result.status)
+                 }
+                 else{
+                     console.log("kullanici girişi yapmalısınız..");
+                 }
+            })
+            .catch((err)=>{console.log("error:"+ err)}); 
+   /* }*/
+    }
         
     componentDidMount(){
      
@@ -117,7 +148,7 @@ export class ProductDetail extends React.Component{
                 <div class="container">
                     <div class="card">
                         <div class="container-fliud">
-                            <div class="wrapper row">
+                            <div class="row">
                                 <div class="preview col-md-6">
                                     <div class="preview-pic tab-content">
                                         <div class="tab-pane active" id="pic-1"><img class="card-img-top"  src="http://placehold.it/1200x800" alt="" /></div>
@@ -147,7 +178,7 @@ export class ProductDetail extends React.Component{
                                     <h4 class="price">Güncel Fiyat: <span>{this.state.Product.fiyat}₺</span></h4>
                                     <div class="action">
                                         <button class="add-to-cart btn btn-outline-danger" type="button" onClick={()=>{this.SepeteEkle(this.state.Product.urunID)}}>sepete ekle</button>
-                                        <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+                                        <button class="like btn btn-default" onClick={this.FavoriEkle} type="button"><span class="fa fa-heart"></span></button>
                                     </div>
                                 </div>
                             </div>

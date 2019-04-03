@@ -73,6 +73,43 @@ namespace DAL
                 return null;
             }
         }
+        public List<ViewModels.SepettekiUrunViewModel> GetAllCompletedSepetforUser(int kullaniciId)
+        {   // kullanıcının sipariş durumu true olan siparişlerini getirir
+            var sepet = db.Sepet.Where(x => x.kullaniciID == kullaniciId && x.siparisVerildiMi == true).ToList();
+            if (sepet.Count>0)
+            {
+                var ProductList = new List<ViewModels.SepettekiUrunViewModel>();
+                foreach (var items in sepet)
+                {
+                    var Products = db.SepettekiUrunler.Where(x => x.sepetID == items.sepetID).ToList();
+                    if (Products.Count != 0)
+                    {
+                        foreach (var sepettekiUrun in Products)
+                        {
+                            var prod = new ViewModels.SepettekiUrunViewModel();
+                            prod.ad = sepettekiUrun.Urun.ad;
+                            prod.adet = sepettekiUrun.adet;
+                            prod.fiyat = (decimal)sepettekiUrun.Urun.fiyat;
+                            prod.toplamFiyat = sepettekiUrun.toplamFiyat;
+                            prod.urunID = sepettekiUrun.urunID;
+                            prod.sepetID = sepettekiUrun.sepetID;
+                            prod.sepettekiUrunID = sepettekiUrun.sepettekiUrunID;
+                            ProductList.Add(prod);
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                return ProductList;
+
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public int PostProductintoSepetforVisitor(Models.SepettekiUrunler model)
         {

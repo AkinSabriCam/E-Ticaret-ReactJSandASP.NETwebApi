@@ -1280,8 +1280,9 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
           <FunctionImport Name="FN_SearchProduct1" IsComposable="true" ReturnType="Collection(Model.FN_SearchProduct1_Result)">
           <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="EnCokSatanUrunler" EntityType="Model.EnCokSatanUrunler" />
           <FunctionImport Name="FN_OrderByBestSallers2" IsComposable="true" ReturnType="Collection(Model.FN_OrderByBestSallers2_Result)" />
+          <EntitySet Name="EnCokSatanUrunler1Set" EntityType="Model.EnCokSatanUrunler1" />
+          <FunctionImport Name="FN_OrderByBestSallers3" IsComposable="true" ReturnType="Collection(Model.FN_OrderByBestSallers3_Result)" />
         </EntityContainer>
         <ComplexType Name="FN_OrderByBestSallers_Result">
           <Property Type="Int32" Name="urunID" Nullable="false" />
@@ -1433,7 +1434,21 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
           <Property Type="Boolean" Name="satinAlinmaDurumu" Nullable="true" />
           <Property Type="String" Name="imagePath" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="EnCokSatanUrunler">
+        <ComplexType Name="FN_OrderByBestSallers2_Result">
+          <Property Type="Int32" Name="urunID" Nullable="false" />
+          <Property Type="String" Name="ad" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="markaID" Nullable="true" />
+          <Property Type="String" Name="marka" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="altKategoriID" Nullable="true" />
+          <Property Type="String" Name="altKategori" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="fiyat" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="eklenmeTarihi" Nullable="true" Precision="10" />
+          <Property Type="Int32" Name="stokID" Nullable="true" />
+          <Property Type="Int32" Name="adet" Nullable="true" />
+          <Property Type="Boolean" Name="satinAlinmaDurumu" Nullable="true" />
+          <Property Type="String" Name="imagePath" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="EnCokSatanUrunler1">
           <Key>
             <PropertyRef Name="urunID" />
           </Key>
@@ -1450,7 +1465,7 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
           <Property Name="satinAlinmaDurumu" Type="Boolean" />
           <Property Name="imagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <ComplexType Name="FN_OrderByBestSallers2_Result">
+        <ComplexType Name="FN_OrderByBestSallers3_Result">
           <Property Type="Int32" Name="urunID" Nullable="false" />
           <Property Type="String" Name="ad" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="markaID" Nullable="true" />
@@ -1785,8 +1800,8 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="EnCokSatanUrunler">
-            <EntityTypeMapping TypeName="Model.EnCokSatanUrunler">
+          <EntitySetMapping Name="EnCokSatanUrunler1Set">
+            <EntityTypeMapping TypeName="Model.EnCokSatanUrunler1">
               <MappingFragment StoreEntitySet="EnCokSatanUrunler">
                 <ScalarProperty Name="imagePath" ColumnName="imagePath" />
                 <ScalarProperty Name="satinAlinmaDurumu" ColumnName="satinAlinmaDurumu" />
@@ -1803,9 +1818,9 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="FN_OrderByBestSallers2" FunctionName="Model.Store.FN_OrderByBestSallers">
+          <FunctionImportMapping FunctionImportName="FN_OrderByBestSallers3" FunctionName="Model.Store.FN_OrderByBestSallers">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Model.FN_OrderByBestSallers2_Result">
+              <ComplexTypeMapping TypeName="Model.FN_OrderByBestSallers3_Result">
                 <ScalarProperty Name="urunID" ColumnName="urunID" />
                 <ScalarProperty Name="ad" ColumnName="ad" />
                 <ScalarProperty Name="markaID" ColumnName="markaID" />

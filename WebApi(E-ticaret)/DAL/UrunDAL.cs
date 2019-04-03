@@ -91,7 +91,7 @@ namespace DAL
 
         public List<ViewModels.ProductStokViewModel> GetProductsOrderByBestSellers(int id)
         {
-            var bestSellers = db.FN_OrderByBestSallers2().Where(x => x.altKategoriID == id).ToList();
+            var bestSellers = db.FN_OrderByBestSallers3().Where(x => x.altKategoriID == id).ToList();
             var Products = new List<ViewModels.ProductStokViewModel>();
             if (bestSellers.Count > 0)
             {

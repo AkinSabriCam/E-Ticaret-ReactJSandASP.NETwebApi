@@ -2,7 +2,7 @@ import React from 'react'
 import './css/site.css'
 import $ from 'jquery';
 import urun from './img/product01.jpg';
-import asus from './img/asus.jpg';
+import asus from './img/laptop.jpg';
 import {Link,Redirect} from 'react-router-dom'
 import {ProductDetail} from './ProductDetail'
 import Cookies from 'js-cookie';
@@ -75,13 +75,12 @@ export class HomePage extends React.Component{
 
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">{urun.ad}</a>
+                  <a><Link to={{pathname:"/ProductDetail",state:{productId:urun.urunID}}}>{urun.ad}</Link></a>
                 </h4>
                 <h5>{urun.fiyat} ₺</h5>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
 
               </div>
-             
             </div>
           </div>
           

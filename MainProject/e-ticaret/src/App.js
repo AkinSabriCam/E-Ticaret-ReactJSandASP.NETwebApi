@@ -16,14 +16,10 @@ import {AdminPanel} from './AdminPanel';
 import {AdminDashboard} from './AdminDashboard';
 import {Favourite} from './Favourite';
 
-
 import {KullaniciGuncelle} from './KullaniciGuncelle';
 import {Siparislerim} from './Siparislerim';
-
 import {ProductsByCategory} from './ProductsByCategory';
-
 import {SearchProducts} from './SearchProducts';
-
 import { PersonalDetail } from './PersonalDetail';
 import Contact from './Contact';
 import Footer from './Footer';
@@ -44,15 +40,14 @@ class App extends Component {
         <Router>
           <div>
                 <NavbarPage></NavbarPage>
-
                 <Route exact path="/" component={HomePage}/>
-                <Route exact path="/ProductDetail/" component={ProductDetail}/>
+                <Route path="/ProductDetail/" component={ProductDetail}/>
                 <Route path="/Login" component={Login}/>
                 <Route path="/Register" component={Register}/>
                 <Route path="/User" component={User}/>
-                
+                <Route path="/User/Homepage" component={HomePage}/>
                 <Route path="/Siparis" component={Siparis}/>
-                <Route path="/KullaniciGuncelle" component={KullaniciGuncelle}/>
+                <Route path="/User/KullaniciGuncelle" component={KullaniciGuncelle}/>
 
                 <Route path="/User/Favourite" component={Favourite}/>
                 <Route path="/User/Siparislerim" component={Siparislerim}/>
