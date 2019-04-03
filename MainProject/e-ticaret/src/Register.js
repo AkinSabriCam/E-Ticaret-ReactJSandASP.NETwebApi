@@ -54,7 +54,7 @@ export class Register extends Component {
                 kayitTarihi: currDate
       }
 
-    fetch("http://localhost:50040/api/Users/PostUser", {
+      fetch("http://localhost:50040/api/Users/PostUser", {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -64,19 +64,20 @@ export class Register extends Component {
           }).then(data=>data.json)
           .then(result=>{console.log("ok")})
           .catch(err=>console.log("err"))
-          }
-          RegisterClose() {
-            this.setState({ show: false });
-          }
-          toggleCollapse = () => {
-          this.setState({ isOpen: !this.state.isOpen });
-          }
-          radioChangeGirl() {
-          this.setState({selectedOption:false});
-          }
-          radioChangeBoy() {
-           this.setState({selectedOption:true});
-          }
+    }
+
+    RegisterClose() {
+      this.setState({ show: false });
+    }
+    toggleCollapse = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+    }
+    radioChangeGirl() {
+    this.setState({selectedOption:false});
+    }
+    radioChangeBoy() {
+      this.setState({selectedOption:true});
+    }
           
   render(){
     //daha sonra düzenlenecek

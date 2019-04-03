@@ -173,6 +173,7 @@
     <Compile Include="Controllers\IletisimController.cs" />
     <Compile Include="Controllers\KategorilerController.cs" />
     <Compile Include="Controllers\KullaniciLogController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\SepetController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\UrunlerController.cs" />

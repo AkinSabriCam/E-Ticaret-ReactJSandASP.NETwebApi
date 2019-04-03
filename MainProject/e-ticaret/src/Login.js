@@ -33,6 +33,7 @@ componentDidMount(){
   Login(){
     let UserName=document.getElementById("username").value;
     let Password=document.getElementById("password").value;
+    Cookies.set("kullaniciAdi", {UserName});
     
     fetch("http://localhost:50040/token",{
        method:"post",

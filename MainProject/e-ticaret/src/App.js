@@ -44,7 +44,6 @@ class App extends Component {
         <Router>
           <div>
                 <NavbarPage></NavbarPage>
-                <AdminPanel></AdminPanel> 
 
                 <Route exact path="/" component={HomePage}/>
                 <Route exact path="/ProductDetail/" component={ProductDetail}/>

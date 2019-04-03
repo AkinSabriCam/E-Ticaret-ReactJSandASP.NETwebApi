@@ -54,6 +54,7 @@
     <Compile Include="kategoriDAL.cs" />
     <Compile Include="kullaniciDAL.cs" />
     <Compile Include="kullaniciLogDAL.cs" />
+    <Compile Include="MailDAL.cs" />
     <Compile Include="Models\AltKategori.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
@@ -190,8 +191,10 @@
     <Compile Include="ViewModels\ilceViewModel.cs" />
     <Compile Include="ViewModels\ililceViewModel.cs" />
     <Compile Include="ViewModels\KategoriAltKategoriViewModel.cs" />
+    <Compile Include="ViewModels\MailViewModel.cs" />
     <Compile Include="ViewModels\ProductStokViewModel.cs" />
     <Compile Include="ViewModels\SepettekiUrunViewModel.cs" />
+    <Compile Include="ViewModels\UserMailViewModel.cs" />
     <Compile Include="ViewModels\UserSepettekiUrunlerViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ziyaretcilogDAL.cs" />
