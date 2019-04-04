@@ -151,7 +151,7 @@ export class ProductDetail extends React.Component{
                             <div class="row">
                                 <div class="preview col-md-6">
                                     <div class="preview-pic tab-content">
-                                        <div class="tab-pane active" id="pic-1"><img class="card-img-top"  src="http://placehold.it/1200x800" alt="" /></div>
+                                        <div class="tab-pane active" id="pic-1"><img class="card-img-top"  src={this.state.Product.imagePath} alt="" /></div>
                                     </div>
                                 </div>
                                 <div class="details col-md-6">

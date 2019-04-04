@@ -18,10 +18,12 @@ namespace DAL
                 foreach (var favori in favoriler)
                 {
                     var prod = new ViewModels.FavoriUrunViewModel();
+                    var urun = db.Urun.FirstOrDefault(x => x.urunID == favori.urunID);
                     prod.favoriID = favori.favoriID;
                     prod.ad = favori.Urun.ad;
                     prod.fiyat = (decimal)favori.Urun.fiyat;
                     prod.marka = favori.Urun.Marka.marka1;
+                    prod.imagePath = urun.imagePath;
                     prod.urunID = favori.urunID;
                     ProductList.Add(prod);
                 }

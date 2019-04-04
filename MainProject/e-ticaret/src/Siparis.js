@@ -4,15 +4,14 @@ import "./styles/cart_responsive.css";
 import "./styles/cart_styles.css";
 import Cookies from 'js-cookie';
 import { Router } from "react-router";
-import {Link,Redirect} from 'react-router-dom'
-
+import {Link,Redirect} from 'react-router-dom';
 
 export class Siparis extends React.Component{
     constructor(props){
         super(props);
         this.state={
             SiparisProducts:[]
-        }
+        }                                                       
         this.UrunKaldir=this.UrunKaldir.bind(this);
         this.SiparisTamamla=this.SiparisTamamla.bind(this);
     }
@@ -105,7 +104,7 @@ export class Siparis extends React.Component{
                 <div class="cart_items">
                     <ul class="cart_list">
                         <li class="cart_item clearfix">
-                            <div class="cart_item_image" title="Ürünü ayrıntılı incelemek için tıklayınız.."><Link to={{pathname:"/ProductDetail",state:{productId:sepet.urunID}}}><img src={cartt} alt=""/></Link></div>
+                            <div class="cart_item_image" title="Ürünü ayrıntılı incelemek için tıklayınız.."><Link to={{pathname:"/ProductDetail",state:{productId:sepet.urunID}}}><img src={sepet.imagePath} alt=""/></Link></div>
                             <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                 <div class="cart_item_name cart_info_col">
                                     <div class="cart_item_title">Ürün</div>

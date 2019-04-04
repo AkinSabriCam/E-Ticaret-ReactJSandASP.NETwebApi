@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import './js/Custom.js';
-import {Cookies} from 'js-cookie';
+import Cookies from 'js-cookie';
 import { CookiesProvider } from 'react-cookie';
 import {Route,BrowserRouter as Router} from 'react-router-dom';
 import {HomePage} from './HomePage';
@@ -36,26 +36,31 @@ class App extends Component {
    }
   
   render() {
+    let usercomponent;
+    if(Cookies.get("Login")=="true"){
+      usercomponent=<User></User>
+    }
     return (
       <CookiesProvider>
         <Router>
           <div>
                 <NavbarPage></NavbarPage>
+                {usercomponent}
+                
                 <Route exact path="/" component={HomePage}/>
                 <Route path="/ProductDetail/" component={ProductDetail}/>
                 <Route path="/Login" component={Login}/>
                 <Route path="/Register" component={Register}/>
-                <Route path="/User" component={User}/>
-                <Route path="/User/Homepage" component={HomePage}/>
+               
                 <Route path="/Siparis" component={Siparis}/>
-                <Route path="/User/KullaniciGuncelle" component={KullaniciGuncelle}/>
+                <Route path="/KullaniciGuncelle" component={KullaniciGuncelle}/>
 
-                <Route path="/User/Favourite" component={Favourite}/>
-                <Route path="/User/Siparislerim" component={Siparislerim}/>
+                <Route path="/Favourite" component={Favourite}/>
+                <Route path="/Siparislerim" component={Siparislerim}/>
               
                 
                 <Route path="/ProductsByCategory" component={ProductsByCategory}/>
-                <Route path="/User/PersonalDetail" component={PersonalDetail}/>
+                <Route path="/PersonalDetail" component={PersonalDetail}/>
                 <Route path="/SearchProducts" component={SearchProducts}/> 
                 <Route path="/Contact" component={Contact}/>
                 <Route path="/SuggestProductModal" component={SuggestProductModal}/>

@@ -13,5 +13,6 @@ namespace DAL.ViewModels
         public string ad { get; set; }
         public decimal fiyat { get; set; }
         public string marka { get; set; }
+        public string imagePath { get; set; }
     }
 }
