@@ -288,7 +288,7 @@
 										<div className="product_border"></div>
 										<div className="product_image d-flex flex-column align-items-center justify-content-center">
 											<Link to={{pathname:"/ProductDetail",state:{productId:urun.urunID}}}>
-													<img src="https://via.placeholder.com/150" alt="" />
+													<img src={urun.imagePath} alt="" />
 											</Link>
 										</div>
 										<div className="product_content">

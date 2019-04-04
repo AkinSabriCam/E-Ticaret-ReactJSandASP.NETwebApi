@@ -1,12 +1,13 @@
 import React from 'react'
 import './css/site.css'
 import $ from 'jquery';
-import urun from './img/product01.jpg';
-import asus from './img/laptop.jpg';
-import {Link,Redirect} from 'react-router-dom'
-import {ProductDetail} from './ProductDetail'
+import {Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
 
+/*function importAll(r) {
+  return r.keys().map(r);
+}
+importAll(require.context('./images', true, /.*\.png$/));*/
 
 export class HomePage extends React.Component{
     
@@ -15,9 +16,9 @@ export class HomePage extends React.Component{
         this.state={
           Products:[],
           Detay:false,
-          ProductDetail:0
-          
-        }
+          ProductDetail:0,
+          imageUrl:{}
+      }
    }
   
   componentDidMount(){
@@ -29,7 +30,8 @@ export class HomePage extends React.Component{
 
     fetch("http://localhost:50040/api/Urunler/GetAllProducts").then(data=>data.json())
     .then(result=>{this.setState({Products:result})
-    console.log(result); 
+    this.setState({imageUrl:this.state.Products.imagePath})
+    console.log(result);
     if(Cookies.get("Oturum")==null){
           $.ajax({
           type:"PUT",
@@ -53,7 +55,6 @@ export class HomePage extends React.Component{
       else{
         console.log("cookie dolu");
         console.log(Cookies.get("Oturum"));
-      
       }
      })
     .catch(error=>console.log("error"));
@@ -62,18 +63,15 @@ export class HomePage extends React.Component{
   }
   Detay(id){
     this.setState({Detay:true,ProductDetail:id});
-  
+    
   }
   render(){
         let Cards=this.state.Products.map((urun,ind)=>{
-
           return(
-            <div class="col-lg-3 col-md-6 mb-4">
-              
+            <div class="col-lg-3 col-md-6 mb-4">                                
             <div class="card h-100">
-            <Link to={{pathname:"/ProductDetail",state:{productId:urun.urunID}}}><img class="card-img-top" src={asus} alt=""/></Link>
-
-              <div class="card-body">
+            <Link to={{pathname:"/ProductDetail",state:{productId:urun.urunID}}}><img width="auto" src={urun.imagePath}/></Link>
+              <div class="card-body ">                                                                    
                 <h4 class="card-title">
                   <a><Link to={{pathname:"/ProductDetail",state:{productId:urun.urunID}}}>{urun.ad}</Link></a>
                 </h4>
@@ -83,11 +81,8 @@ export class HomePage extends React.Component{
               </div>
             </div>
           </div>
-          
             )
-
         })    
-
           return(
             <div class="row">
             {Cards}
