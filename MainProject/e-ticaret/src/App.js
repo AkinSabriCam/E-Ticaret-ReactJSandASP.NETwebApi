@@ -15,7 +15,7 @@ import {AdminNavbar} from './AdminNavbar';
 import {AdminPanel} from './AdminPanel';
 import {AdminDashboard} from './AdminDashboard';
 import {Favourite} from './Favourite';
-
+import {Redirect} from 'react-router'
 import {KullaniciGuncelle} from './KullaniciGuncelle';
 import {Siparislerim} from './Siparislerim';
 import {ProductsByCategory} from './ProductsByCategory';
@@ -27,26 +27,27 @@ import SuggestProductModal from './SuggestProductModal';
 
 
 
-class App extends Component {
+export class App extends Component {
    constructor(props){
       super(props);
       this.state={
         Admin:false
       }
    }
-  
+ 
   render() {
+
     let usercomponent;
     if(Cookies.get("Login")=="true"){
       usercomponent=<User></User>
     }
+    
     return (
-      <CookiesProvider>
+     <CookiesProvider>
         <Router>
           <div>
                 <NavbarPage></NavbarPage>
                 {usercomponent}
-                
                 <Route exact path="/" component={HomePage}/>
                 <Route path="/ProductDetail/" component={ProductDetail}/>
                 <Route path="/Login" component={Login}/>
@@ -57,8 +58,7 @@ class App extends Component {
 
                 <Route path="/Favourite" component={Favourite}/>
                 <Route path="/Siparislerim" component={Siparislerim}/>
-              
-                
+                            
                 <Route path="/ProductsByCategory" component={ProductsByCategory}/>
                 <Route path="/PersonalDetail" component={PersonalDetail}/>
                 <Route path="/SearchProducts" component={SearchProducts}/> 
