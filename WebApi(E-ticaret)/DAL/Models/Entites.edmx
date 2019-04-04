@@ -226,6 +226,16 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
           <Property Name="satinAlinmaDurumu" Type="bit" />
           <Property Name="imagePath" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'E-Ticaret.dbo.GecmisSiparisler' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="GecmisSiparisler">
+          <Key>
+            <PropertyRef Name="sepetID" />
+          </Key>
+          <Property Name="sepetID" Type="int" Nullable="false" />
+          <Property Name="kullaniciID" Type="int" />
+          <Property Name="urunID" Type="int" />
+        </EntityType>
         <Association Name="FK_AltKategori_Kategori">
           <End Role="Kategori" Type="Self.Kategori" Multiplicity="0..1" />
           <End Role="AltKategori" Type="Self.AltKategori" Multiplicity="*" />
@@ -454,6 +464,18 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="EnCokEtkilesimAlanAltKategori" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="kullaniciId" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="altKategoriID" Type="int" Nullable="false" />
+                <Property Name="altKategori" Type="nvarchar" MaxLength="20" />
+                <Property Name="Adet" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FN_OrderByBestSallers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -614,6 +636,13 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
     [EnCokSatanUrunler].[satinAlinmaDurumu] AS [satinAlinmaDurumu], 
     [EnCokSatanUrunler].[imagePath] AS [imagePath]
     FROM [dbo].[EnCokSatanUrunler] AS [EnCokSatanUrunler]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="GecmisSiparisler" EntityType="Self.GecmisSiparisler" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [GecmisSiparisler].[sepetID] AS [sepetID], 
+    [GecmisSiparisler].[kullaniciID] AS [kullaniciID], 
+    [GecmisSiparisler].[urunID] AS [urunID]
+    FROM [dbo].[GecmisSiparisler] AS [GecmisSiparisler]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_AltKategori_Kategori" Association="Self.FK_AltKategori_Kategori">
             <End Role="Kategori" EntitySet="Kategori" />
@@ -1283,6 +1312,10 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
           <FunctionImport Name="FN_OrderByBestSallers2" IsComposable="true" ReturnType="Collection(Model.FN_OrderByBestSallers2_Result)" />
           <EntitySet Name="EnCokSatanUrunler1Set" EntityType="Model.EnCokSatanUrunler1" />
           <FunctionImport Name="FN_OrderByBestSallers3" IsComposable="true" ReturnType="Collection(Model.FN_OrderByBestSallers3_Result)" />
+          <EntitySet Name="GecmisSiparisler" EntityType="Model.GecmisSiparisler" />
+          <FunctionImport Name="EnCokEtkilesimAlanAltKategori" IsComposable="true" ReturnType="Collection(Model.EnCokEtkilesimAlanAltKategori_Result)">
+            <Parameter Name="kullaniciId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="FN_OrderByBestSallers_Result">
           <Property Type="Int32" Name="urunID" Nullable="false" />
@@ -1478,6 +1511,19 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
           <Property Type="Int32" Name="adet" Nullable="true" />
           <Property Type="Boolean" Name="satinAlinmaDurumu" Nullable="true" />
           <Property Type="String" Name="imagePath" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="GecmisSiparisler">
+          <Key>
+            <PropertyRef Name="sepetID" />
+          </Key>
+          <Property Name="sepetID" Type="Int32" Nullable="false" />
+          <Property Name="kullaniciID" Type="Int32" />
+          <Property Name="urunID" Type="Int32" />
+        </EntityType>
+        <ComplexType Name="EnCokEtkilesimAlanAltKategori_Result">
+          <Property Type="Int32" Name="altKategoriID" Nullable="false" />
+          <Property Type="String" Name="altKategori" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Adet" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1833,6 +1879,24 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
                 <ScalarProperty Name="adet" ColumnName="adet" />
                 <ScalarProperty Name="satinAlinmaDurumu" ColumnName="satinAlinmaDurumu" />
                 <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="GecmisSiparisler">
+            <EntityTypeMapping TypeName="Model.GecmisSiparisler">
+              <MappingFragment StoreEntitySet="GecmisSiparisler">
+                <ScalarProperty Name="urunID" ColumnName="urunID" />
+                <ScalarProperty Name="kullaniciID" ColumnName="kullaniciID" />
+                <ScalarProperty Name="sepetID" ColumnName="sepetID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="EnCokEtkilesimAlanAltKategori" FunctionName="Model.Store.EnCokEtkilesimAlanAltKategori">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.EnCokEtkilesimAlanAltKategori_Result">
+                <ScalarProperty Name="altKategoriID" ColumnName="altKategoriID" />
+                <ScalarProperty Name="altKategori" ColumnName="altKategori" />
+                <ScalarProperty Name="Adet" ColumnName="Adet" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

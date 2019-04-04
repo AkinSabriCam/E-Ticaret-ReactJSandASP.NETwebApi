@@ -257,6 +257,19 @@ namespace WebApi_E_ticaret_.Controllers
         }//endOfSearch
 
 
+        //Ürün Öner
+        [HttpGet]
+        public IHttpActionResult SuggestProductToUser(int id)
+        {
+            if (id > 0)
+            {
+                var model = urunDal.SuggestProductToUser(id);
+                if (model != null) return Ok(model);
+                else return NotFound();
+            }
+            else return BadRequest();
+        }
+
         [HttpPost]
         public IHttpActionResult PostProductAlreadyExist(DAL.ViewModels.ProductStokViewModel model)
         {

@@ -51,6 +51,7 @@ namespace DAL.Models
         public virtual DbSet<Urun> Urun { get; set; }
         public virtual DbSet<ZiyaretciMesaj> ZiyaretciMesaj { get; set; }
         public virtual DbSet<EnCokSatanUrunler1> EnCokSatanUrunler1Set { get; set; }
+        public virtual DbSet<GecmisSiparisler> GecmisSiparisler { get; set; }
     
         [DbFunction("Entities", "FN_OrderByBestSallers")]
         public virtual IQueryable<FN_OrderByBestSallers_Result> FN_OrderByBestSallers()
@@ -142,6 +143,16 @@ namespace DAL.Models
         public virtual IQueryable<FN_OrderByBestSallers3_Result> FN_OrderByBestSallers3()
         {
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FN_OrderByBestSallers3_Result>("[Entities].[FN_OrderByBestSallers3]()");
+        }
+    
+        [DbFunction("Entities", "EnCokEtkilesimAlanAltKategori")]
+        public virtual IQueryable<EnCokEtkilesimAlanAltKategori_Result> EnCokEtkilesimAlanAltKategori(Nullable<int> kullaniciId)
+        {
+            var kullaniciIdParameter = kullaniciId.HasValue ?
+                new ObjectParameter("kullaniciId", kullaniciId) :
+                new ObjectParameter("kullaniciId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EnCokEtkilesimAlanAltKategori_Result>("[Entities].[EnCokEtkilesimAlanAltKategori](@kullaniciId)", kullaniciIdParameter);
         }
     }
 }

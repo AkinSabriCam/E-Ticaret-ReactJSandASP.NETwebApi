@@ -62,6 +62,9 @@
     <Compile Include="Models\Duyuru.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EnCokEtkilesimAlanAltKategori_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EnCokSatanUrunler1.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
@@ -123,6 +126,9 @@
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FN_SearchProduct_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GecmisSiparisler.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Il.cs">
