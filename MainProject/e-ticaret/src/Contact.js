@@ -5,8 +5,9 @@ import './ContactStyle/contact_responsive.css';
 import phone from './img/contact_1.png';
 import email from './img/contact_2.png';
 import address from './img/contact_3.png';
-import $ from 'jquery';
 import { Alert } from 'reactstrap';
+import $ from 'jquery';
+
 
 export class Contact extends Component {
 	constructor(){
@@ -17,7 +18,6 @@ export class Contact extends Component {
 				isOpen:false
 		}
 	}
-
 	SendMail = (e) => {
 		e.preventDefault();
 		let name = document.getElementById("contact_form_name").value;
@@ -73,17 +73,15 @@ export class Contact extends Component {
 			document.getElementById("contact_form_message").value = "";
 			this.ShowAlert();
 		}
-
 		onDismiss = () => {
 			this.setState({isOpen: false });
 		}
-		
 		ShowAlert = () => {
 			if(this.state.response == true){
 				setTimeout(function () {
 					this.setState({isOpen:true});
 					this.setState({alert:"Mesajınız başarılı bir şekilde gönderilmiştir!"});
-				}.bind(this),2000)
+				}.bind(this),1000)
 			}
 			else {
 				setTimeout(function () {			
@@ -91,16 +89,20 @@ export class Contact extends Component {
 					this.setState({alert:"Mesajınız gönderilirken bir hata oluştu! Lütfen tekrar gönderiniz!"});
 				}.bind(this),2000)
 			}
+			window.setTimeout(function() {
+				$(".alert").fadeTo(500, 0).slideUp(500, function(){
+						$(this).remove(); 
+				});
+		}, 4000);
 		}
 
   render() {
     return (
         <div>
-					<Alert id="alert" color="success" isOpen={this.state.isOpen} toggle={this.onDismiss}>
-        			{this.state.alert}
-      		</Alert>
-
-            <div className="contact_info">
+					<Alert className="alert" color="success" isOpen={this.state.isOpen} toggle={this.onDismiss}>
+							{this.state.alert}
+      	 </Alert>
+				   <div className="contact_info">
 		        <div className="container">
 			        <div className="row">
 				        <div className="col-lg-10 offset-lg-1">

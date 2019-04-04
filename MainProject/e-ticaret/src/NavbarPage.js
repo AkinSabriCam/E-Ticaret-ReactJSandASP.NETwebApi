@@ -1,13 +1,9 @@
-import React, { Component } from "react";
+import React, { Component,Results } from "react";
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBFormInline,
 MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem,MDBBtn,MDBInput} from "mdbreact";
-import {Route,BrowserRouter as Router} from 'react-router-dom';
 import './css/site.css';
-import {Login} from './Login'
-import {Modal,Button} from 'react-bootstrap';
-import {Redirect,Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
-import $ from 'jquery';
 import logo from './img/logo.png';
 
 
@@ -20,10 +16,10 @@ export class NavbarPage extends Component {
       show: false,
       UrunCount:0,
       login:false,
-      text: ''
-
+      text: '',
+      signin:true
     }
-    this.LoginPage=this.LoginPage.bind(this);
+    /*this.LoginPage=this.LoginPage.bind(this);*/
     this. getText=this.getText.bind(this);
   }
   componentDidMount(){
@@ -36,23 +32,23 @@ export class NavbarPage extends Component {
     .then(data=>data.json())
     .then(result=>{this.setState({Category:result},function(err){if(!err){console.log(this.state.Category)}});})
       .catch(error=>console.log("error"));
-      
-    
-      console.log(sessionStorage.getItem("SepettekiUrun"));    
+      console.log(sessionStorage.getItem("SepettekiUrun"));   
+      if(Cookies.get("Login")==true)
+      {
+      this.setState({signin:false});
+      }
+      else
+      {
+        this.setState({signin:true});
+      }
     }
   toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
   } 
-
-  LoginPage(){
-   this.setState({login:true});
-  }
-  
   getText = () => {
     var val = document.getElementById("searchInput").value;
     this.setState({text:val});
   }
-
 
 render(){
   
@@ -88,7 +84,7 @@ render(){
   return (
       <div className='menu'>
       <MDBNavbar right>
-        <Link id="logo" to="/">
+        <Link id="logo" onClick={window.location.reload} to="/">
           <img src={logo}></img>
         </Link>
       <MDBNavbarNav right className="searchbar">
@@ -111,12 +107,14 @@ render(){
           <MDBNavbar></MDBNavbar> 
           <MDBNavbar></MDBNavbar> 
 
-          <MDBNavbar>           
-           <Link to="/Login"><MDBBtn rounded outline color="warning" onClick={this.LoginPage}> Sign In </MDBBtn></Link>
-          
+          <MDBNavbar>      
+            
+           <Link to="/Login">{this.state.signin?
+           <MDBBtn rounded outline color="warning"> Sign In </MDBBtn>:null}
+           </Link>
            <MDBNavbar></MDBNavbar> 
-           <Link to="/Register" >
-           <MDBBtn rounded outline color="warning"> Sign Up </MDBBtn>
+           <Link to="/Register">{this.state.signin?
+           <MDBBtn rounded outline color="warning"> Sign Up </MDBBtn>:null}
            </Link>
            </MDBNavbar>
            </MDBNavbar>

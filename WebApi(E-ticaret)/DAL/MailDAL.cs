@@ -16,7 +16,7 @@ namespace DAL
         public bool SendMailAsVisitor(ViewModels.MailViewModel model)
         {
             try {
-                using (MailMessage mm = new MailMessage(model.email, "ibrahim.dogruer.97@gmail.com"))
+                using (MailMessage mm = new MailMessage(model.email,"ibrahim-1997@hotmail.com"))
                 {
                     System.Globalization.CultureInfo cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
                     System.Globalization.TextInfo textInfo = cultureInfo.TextInfo;
@@ -30,12 +30,12 @@ namespace DAL
 
                     mm.IsBodyHtml = false;
                     SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.gmail.com";
+                    smtp.Host = "smtp.hotmail.com";
                     smtp.EnableSsl = true;
-                    NetworkCredential NetworkCred = new NetworkCredential("groupbyazilim@gmail.com", "159654357456");
+                    NetworkCredential NetworkCred = new NetworkCredential("ozgurc.09@hotmail.com", "Sarrafvalues1907.fbb");
                     smtp.UseDefaultCredentials = true;
                     smtp.Credentials = NetworkCred;
-                    smtp.Port = 587;
+                    smtp.Port = 465;
                     smtp.Send(mm);
                     return true;
                 }

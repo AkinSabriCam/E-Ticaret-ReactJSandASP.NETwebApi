@@ -17,10 +17,9 @@ export class HomePage extends React.Component{
           Products:[],
           Detay:false,
           ProductDetail:0,
-          imageUrl:{}
       }
    }
-  
+ 
   componentDidMount(){
    /* Cookies.remove("kullaniciID");
     Cookies.remove("ProductCount");
@@ -66,6 +65,7 @@ export class HomePage extends React.Component{
     
   }
   render(){
+   //Cookies.remove("Login");
         let Cards=this.state.Products.map((urun,ind)=>{
           return(
             <div class="col-lg-3 col-md-6 mb-4">                                
