@@ -36,9 +36,10 @@ export class Footer extends Component {
                     </div>
                     <div class="col-sm-3">
                         <div class="social-networks">
-                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                            <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                            <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                         <form action="/Contact">
                             <button type="submit" class="btn btn-default">Contact us</button>

@@ -56,7 +56,8 @@ export class Register extends Component {
                 rolId: 2,
                 kayitTarihi: currDate
       }
-    fetch("http://localhost:50040/api/Users/PostUser", {
+
+      fetch("http://localhost:50040/api/Users/PostUser", {
             method: 'POST',
             body: JSON.stringify(NewUser),
             headers: {
@@ -67,12 +68,12 @@ export class Register extends Component {
           .then(result=>{console.log("ok")})
           .catch(err=>console.log("err"))
           }
-          RegisterClose() {
-            this.setState({ show: false });
-          }
-          toggleCollapse = () => {
-          this.setState({ isOpen: !this.state.isOpen });
-          }
+      RegisterClose() {
+        this.setState({ show: false });
+      }
+      toggleCollapse = () => {
+        this.setState({ isOpen: !this.state.isOpen });
+      }
           
   render(){
     let iller=this.state.Iller.map((il,indeks)=>{
