@@ -8,7 +8,7 @@ export class SuggestProductModal extends Component {
 		super();
 		this.state={
             Product:{},
-            isOpen:false
+            show:false
         }
         setInterval(function (){ 
             this.setState({isOpen:true});  
@@ -16,7 +16,7 @@ export class SuggestProductModal extends Component {
     }
  
     modal = () => {
-        this.setState({isOpen:false});
+        this.setState({show:false});
     }
     
     ShowModal = () => {            

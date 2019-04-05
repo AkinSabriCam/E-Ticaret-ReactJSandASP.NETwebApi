@@ -13,68 +13,81 @@ namespace DAL
 {
     public class MailDAL
     {
+        Models.Entities db = new Models.Entities();
         public bool SendMailAsVisitor(ViewModels.MailViewModel model)
         {
-            try {
-                using (MailMessage mm = new MailMessage(model.email,"ibrahim-1997@hotmail.com"))
-                {
-                    System.Globalization.CultureInfo cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
-                    System.Globalization.TextInfo textInfo = cultureInfo.TextInfo;
-                    string ad = textInfo.ToTitleCase(model.ad);
-                    string soyad = textInfo.ToTitleCase(model.soyad);
-                    mm.Subject = "Ziyaretçi Mesajı";
-                    mm.Body = ad + " " + soyad + "[" + model.email + "]" + " ziyaretçisinden mesaj;"
-                              + Environment.NewLine
-                              + Environment.NewLine
-                              + model.mesaj;
+            System.Globalization.CultureInfo cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
+            System.Globalization.TextInfo textInfo = cultureInfo.TextInfo;
+            string ad = textInfo.ToTitleCase(model.ad);
+            string soyad = textInfo.ToTitleCase(model.soyad);
+            MailMessage ePosta = new MailMessage();
+            ePosta.From = new MailAddress("groupbyazilim@gmail.com");
+            //
+            ePosta.To.Add("cakicozgur@gmail.com");
+            //
 
-                    mm.IsBodyHtml = false;
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.hotmail.com";
-                    smtp.EnableSsl = true;
-                    NetworkCredential NetworkCred = new NetworkCredential("ozgurc.09@hotmail.com", "Sarrafvalues1907.fbb");
-                    smtp.UseDefaultCredentials = true;
-                    smtp.Credentials = NetworkCred;
-                    smtp.Port = 465;
-                    smtp.Send(mm);
-                    return true;
-                }
-            }
-            catch(Exception e)
+            //
+            ePosta.Subject = "Ziyaretçi Mesajı";
+            //
+            ePosta.Body = ad + " " + soyad + "[" + model.email + "]" + " ziyaretçisinden mesaj;"
+                          + Environment.NewLine
+                          + Environment.NewLine
+                          + model.mesaj;
+            //
+            SmtpClient smtp = new SmtpClient();
+            //
+            smtp.Credentials = new System.Net.NetworkCredential("groupbyazilim@gmail.com", "159654357456");
+            smtp.Port = 587;
+            smtp.Host = "smtp.gmail.com";
+            smtp.EnableSsl = true;
+            object userState = ePosta;
+            try
             {
-                throw new Exception(e.ToString());
-
+                smtp.SendAsync(ePosta, (object)ePosta);
+                return true;
             }
+            catch (SmtpException ex)
+            {
+                throw new SmtpException(ex.ToString());
+            }
+
         }
 
         public bool SendMailAsUser(ViewModels.UserMailViewModel model)
         {
-            try
+            var kullanici = db.Kullanici.FirstOrDefault(x => x.kullaniciID == model.kullaniciID);
+            if (model != null)
             {
-                using (MailMessage mm = new MailMessage(model.email, "ibrahim.dogruer.97@gmail.com"))
-                {
-                    mm.Subject = "Kullanıcı Mesajı";
-                    mm.Body = model.kullaniciAdi + "[" + model.email + "]" + " kullanıcısından mesaj;"
+                MailMessage ePosta = new MailMessage();
+                ePosta.From = new MailAddress("groupbyazilim@gmail.com");
+                ePosta.To.Add("cakicozgur@gmail.com");
+
+                ePosta.Subject = "Kullanıcı Mesajı";
+                ePosta.Body = kullanici.kullaniciAdi + "[" + kullanici.email + "]" + " kullanıcısından mesaj;"
                               + Environment.NewLine
                               + Environment.NewLine
                               + model.mesaj;
-
-                    mm.IsBodyHtml = false;
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.EnableSsl = true;
-                    NetworkCredential NetworkCred = new NetworkCredential("groupbyazilim@gmail.com", "159654357456");
-                    smtp.UseDefaultCredentials = true;
-                    smtp.Credentials = NetworkCred;
-                    smtp.Port = 587;
-                    smtp.Send(mm);
+                SmtpClient smtp = new SmtpClient();
+                smtp.Credentials = new System.Net.NetworkCredential("groupbyazilim@gmail.com", "159654357456");
+                smtp.Port = 587;
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+                object userState = ePosta;
+                try
+                {
+                    smtp.SendAsync(ePosta, (object)ePosta);
                     return true;
                 }
+                catch (SmtpException ex)
+                {
+                    throw new SmtpException(ex.ToString());
+                }
             }
-            catch
+            else
             {
                 return false;
             }
+
         }
     }
 }

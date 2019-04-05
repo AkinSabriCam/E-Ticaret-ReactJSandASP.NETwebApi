@@ -8,9 +8,7 @@ namespace DAL.ViewModels
 {
     public class UserMailViewModel
     {
-        public string kullaniciAdi { get; set; }
-        public string ad { get; set; }
-        public string soyad { get; set; }
+        public int kullaniciID { get; set; }
         public string email { get; set; }
         public string mesaj { get; set; }
     }

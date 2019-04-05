@@ -15,7 +15,6 @@ export class NavbarPage extends Component {
       Category:[],
       show: false,
       UrunCount:0,
-      login:false,
       text: '',
       signin:true
     }
@@ -33,14 +32,14 @@ export class NavbarPage extends Component {
     .then(result=>{this.setState({Category:result},function(err){if(!err){console.log(this.state.Category)}});})
       .catch(error=>console.log("error"));
       console.log(sessionStorage.getItem("SepettekiUrun"));   
-      if(Cookies.get("Login")==true)
+      if(Cookies.get("Login")=="true")
       {
       this.setState({signin:false});
       }
-      else
+     /* else
       {
         this.setState({signin:true});
-      }
+      }*/
     }
   toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });

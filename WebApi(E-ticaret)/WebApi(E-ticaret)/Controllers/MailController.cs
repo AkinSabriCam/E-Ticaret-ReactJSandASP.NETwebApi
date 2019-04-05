@@ -17,8 +17,8 @@ namespace WebApi_E_ticaret_.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool response = mailDal.SendMailAsVisitor(model);
-                return Json(response);
+                mailDal.SendMailAsVisitor(model);
+                return Ok();
             }
             else return BadRequest();            
         }
@@ -28,8 +28,8 @@ namespace WebApi_E_ticaret_.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool response = mailDal.SendMailAsUser(model);
-                return Json(response);
+                mailDal.SendMailAsUser(model);
+                return Ok();
             }
             else return BadRequest();
         }

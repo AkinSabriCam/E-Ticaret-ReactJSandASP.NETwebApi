@@ -28,7 +28,7 @@ componentDidMount(){
   Login(){
     let UserName=document.getElementById("username").value;
     let Password=document.getElementById("password").value;
-    Cookies.set("kullaniciAdi", {UserName});
+    //Cookies.set("kullaniciAdi", {UserName});
     
     fetch("http://localhost:50040/token",{
        method:"post",
@@ -69,12 +69,11 @@ componentDidMount(){
       }
     })
     .catch(err=>console.log(err));
-    
   }
   render(){
-    if(this.state.redirect){
+  if(this.state.redirect){
       return <Redirect to="/"/>
-    }  
+    }
     return (
         <div className='menu'>
           <Modal show={this.state.show} onHide={this.LoginClose}>
@@ -90,7 +89,7 @@ componentDidMount(){
             id="username"/>
             <label htmlFor="formGroupExampleInput" placeholder="******">Password</label>
             <input
-            type="text"
+            type="password"
             className="form-control"
             id="password"/>
             </div>
@@ -104,5 +103,6 @@ componentDidMount(){
       )
       
     }
+    
   }
   export default Login;

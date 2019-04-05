@@ -15,7 +15,7 @@ export class Contact extends Component {
 		this.state={
 				response:true,
 				alert:"",
-				isOpen:false
+				isOpen:false,
 		}
 	}
 	SendMail = (e) => {
@@ -25,22 +25,20 @@ export class Contact extends Component {
 		let eMail = document.getElementById("contact_form_email").value;
 		let message = document.getElementById("contact_form_message").value;
 
-		if(/*Cookies.get("Login")*/"false"=="true"){
+		if(Cookies.get("Login")=="true"){
 			//kullanici login olmuştur.
-			let username = Cookies.get("kullaniciAdi");
+			let userId = Cookies.get("kullaniciID");
 			let userMail = {
-				kullaniciAdi: username,
-				ad: name,
-				soyad: lastname,
-				email: eMail,
-				mesaj: message
+				kullaniciId: userId,
+				mesaj:message,
+				email:eMail
 			}
 
 			fetch("http://localhost:50040/api/Mail/SendMailAsUser", {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json'
               },
             body: JSON.stringify(userMail)
           }).then(data=>data.json)
@@ -59,7 +57,7 @@ export class Contact extends Component {
 					method: 'POST',
 					headers: {
 						'Accept': 'application/json',
-						'Content-Type': 'application/json',
+						'Content-Type': 'application/json'
 						},
 					body: JSON.stringify(visitorMail)
 				}).then(data=>data.json)
@@ -145,7 +143,7 @@ export class Contact extends Component {
 						        <div className="contact_form_title">Get in Touch</div>
 
 						        <form action="#" id="contact_form"> 
-							        <div className="contact_form_inputs d-flex flex-md-row flex-column justify-content-between align-items-between">
+							        <div id="idgizle" enabled className="contact_form_inputs d-flex flex-md-row flex-column justify-content-between align-items-between">
 																<input type="text" id="contact_form_name" className="contact_form_name input_field" placeholder="Your name" required="required" data-error="Name is required."/>
 																<input type="text" id="contact_form_lastname" className="contact_form_lastname input_field" placeholder="Your lastname" required="required" data-error="Lastname is required."/>
 																<input type="text" id="contact_form_email" className="contact_form_email input_field" placeholder="Your email" required="required" data-error="Email is required."/>

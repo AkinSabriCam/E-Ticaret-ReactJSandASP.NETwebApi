@@ -56,13 +56,10 @@ export class HomePage extends React.Component{
         console.log(Cookies.get("Oturum"));
       }
      })
-    .catch(error=>console.log("error"));
-    
-      
+    .catch(error=>console.log("error"));    
   }
   Detay(id){
     this.setState({Detay:true,ProductDetail:id});
-    
   }
   render(){
    //Cookies.remove("Login");
