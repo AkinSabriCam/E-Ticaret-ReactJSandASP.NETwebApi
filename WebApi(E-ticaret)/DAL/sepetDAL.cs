@@ -10,20 +10,21 @@ namespace DAL
     {
         Models.Entities db = new Models.Entities();
         public List<ViewModels.SepettekiUrunViewModel> GetAllSepetforVisitor(int sepetId)
-        {
+        {   
             var Products = db.SepettekiUrunler.Where(x => x.sepetID == sepetId).ToList();
-
             var SepettekiUrunler = new List<ViewModels.SepettekiUrunViewModel>();
             if (Products.Count != 0)
             {
                 foreach (var sepUrun in Products)
                 {
                     var sepettekiUrun = new ViewModels.SepettekiUrunViewModel();
+                    var urun = db.Urun.FirstOrDefault(x => x.urunID == sepUrun.urunID);
                     sepettekiUrun.ad = sepUrun.Urun.ad;
                     sepettekiUrun.adet = sepUrun.adet;
                     sepettekiUrun.fiyat = (decimal)sepUrun.Urun.fiyat;
                     sepettekiUrun.toplamFiyat = sepUrun.toplamFiyat;
                     sepettekiUrun.sepetID = sepUrun.sepetID;
+                    sepettekiUrun.imagePath = urun.imagePath;
                     sepettekiUrun.sepettekiUrunID = sepUrun.sepettekiUrunID;
                     sepettekiUrun.urunID = sepUrun.urunID;
                     SepettekiUrunler.Add(sepettekiUrun);
@@ -51,10 +52,12 @@ namespace DAL
                     foreach(var sepettekiUrun in Products)
                     {
                         var prod = new ViewModels.SepettekiUrunViewModel();
+                        var urun = db.Urun.FirstOrDefault(x => x.urunID == prod.urunID);
                         prod.ad = sepettekiUrun.Urun.ad;
                         prod.adet = sepettekiUrun.adet;
                         prod.fiyat = (decimal)sepettekiUrun.Urun.fiyat;
                         prod.toplamFiyat = sepettekiUrun.toplamFiyat;
+                        prod.imagePath = urun.imagePath;
                         prod.urunID = sepettekiUrun.urunID;
                         prod.sepetID = sepettekiUrun.sepetID;
                         prod.sepettekiUrunID = sepettekiUrun.sepettekiUrunID;
@@ -67,6 +70,45 @@ namespace DAL
                 {
                     return null;
                 }
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public List<ViewModels.SepettekiUrunViewModel> GetAllCompletedSepetforUser(int kullaniciId)
+        {   // kullanıcının sipariş durumu true olan siparişlerini getirir
+            var sepet = db.Sepet.Where(x => x.kullaniciID == kullaniciId && x.siparisVerildiMi == true).ToList();
+            if (sepet.Count>0)
+            {
+                var ProductList = new List<ViewModels.SepettekiUrunViewModel>();
+                foreach (var items in sepet)
+                {
+                    var Products = db.SepettekiUrunler.Where(x => x.sepetID == items.sepetID).ToList();
+                    if (Products.Count != 0)
+                    {
+                        foreach (var sepettekiUrun in Products)
+                        {
+                            var prod = new ViewModels.SepettekiUrunViewModel();
+                            var urun = db.Urun.FirstOrDefault(x => x.urunID == sepettekiUrun.urunID);
+                            prod.ad = sepettekiUrun.Urun.ad;
+                            prod.adet = sepettekiUrun.adet;
+                            prod.fiyat = (decimal)sepettekiUrun.Urun.fiyat;
+                            prod.toplamFiyat = sepettekiUrun.toplamFiyat;
+                            prod.urunID = sepettekiUrun.urunID;
+                            prod.sepetID = sepettekiUrun.sepetID;
+                            prod.imagePath = urun.imagePath;
+                            prod.sepettekiUrunID = sepettekiUrun.sepettekiUrunID;
+                            ProductList.Add(prod);
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                return ProductList;
+
             }
             else
             {

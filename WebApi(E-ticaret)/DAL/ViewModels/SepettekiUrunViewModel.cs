@@ -15,6 +15,7 @@ namespace DAL.ViewModels
 
         public string ad { get; set; }
         public decimal fiyat { get; set; }
+        public string imagePath { get; set; }
         public Nullable<int> adet { get; set; }
         public Nullable<decimal> toplamFiyat { get; set; }
     }

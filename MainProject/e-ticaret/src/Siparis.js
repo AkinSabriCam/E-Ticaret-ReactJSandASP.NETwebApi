@@ -4,21 +4,21 @@ import "./styles/cart_responsive.css";
 import "./styles/cart_styles.css";
 import Cookies from 'js-cookie';
 import { Router } from "react-router";
-import{Redirect} from 'react-router';
+import {Link,Redirect} from 'react-router-dom';
 
 export class Siparis extends React.Component{
     constructor(props){
         super(props);
         this.state={
             SiparisProducts:[]
-        }
+        }                                                       
         this.UrunKaldir=this.UrunKaldir.bind(this);
         this.SiparisTamamla=this.SiparisTamamla.bind(this);
     }
 
     componentDidMount(){
             if(Cookies.get("Login")=="true"){
-                console.log("loginnnnnn")  
+                console.log("login")  
                 // kullanıcı login olmuştur
                 fetch('http://localhost:50040/api/Sepet/GetAllProductsinSepetforUser/'+Cookies.get("kullaniciID"))
                 .then(data=>data.json())
@@ -36,8 +36,7 @@ export class Siparis extends React.Component{
                     .catch(err=>console.log(err))
                 }
                 else{
-                    console.log("SEPET BOŞŞ");
-                    
+                    console.log("SEPET BOŞŞ"); 
                 }
                 
 
@@ -54,15 +53,12 @@ export class Siparis extends React.Component{
                count=count-1;
                Cookies.set("ProductCount",count);  
                console.log(count);
-               if(count!=0){
+               if(count>=0){
                 window.location = '/Siparis';
                }else{
                 Cookies.remove("sepetid")
                 //window.location = '/';
-               }
-               
-               
-               
+               }  
         })
         .catch(err=>console.log(err));            
     }
@@ -98,38 +94,38 @@ export class Siparis extends React.Component{
         let ToplamSiparisTutari=0
         let Urunler=this.state.SiparisProducts.map((sepet,ind)=>{
             {ToplamSiparisTutari+=sepet.toplamFiyat}
+            let kisaad=sepet.ad;
+            if(kisaad.length>25){
+                kisaad = kisaad.substring(0, 16) + "...";
+            }
             return( 
             <div>
              <div class="cart_container">
                 <div class="cart_items">
                     <ul class="cart_list">
                         <li class="cart_item clearfix">
-                            <div class="cart_item_image"><img src={cartt} alt=""/></div>
+                            <div class="cart_item_image" title="Ürünü ayrıntılı incelemek için tıklayınız.."><Link to={{pathname:"/ProductDetail",state:{productId:sepet.urunID}}}><img src={sepet.imagePath} alt=""/></Link></div>
                             <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                 <div class="cart_item_name cart_info_col">
                                     <div class="cart_item_title">Ürün</div>
-                                    <div class="cart_item_text">{sepet.ad}</div>
+                                    <div class="cart_item_text" title={sepet.ad}><Link to={{pathname:"/ProductDetail",state:{productId:sepet.urunID}}}>{kisaad}</Link></div>
                                 </div>
-                                <div class="cart_item_color cart_info_col">
-                                    <div class="cart_item_title">Renk</div>
-                                    <div class="cart_item_text"><span style={{backgroundColor:999999}}></span>Silver</div>
-                                </div>
-                                <div class="cart_item_quantity cart_info_col">
-                                    <div class="cart_item_title">Adet</div>
+                                <div class="cart_item_prices cart_info_col">
+                                    <div class="cart_item_titles">Ürün Adedi</div>
                                     <div class="cart_item_text">{sepet.adet}</div>
                                 </div>
-                                <div class="cart_item_price cart_info_col">
-                                    <div class="cart_item_title">Birim Fiyatı</div>
+                                <div class="cart_item_prices cart_info_col">
+                                    <div class="cart_item_titles">Birim Fiyatı</div>
                                     <div class="cart_item_text">{sepet.fiyat}</div>
                                 </div>
-                                <div class="cart_item_total cart_info_col">
-                                    <div class="cart_item_title">Toplam Fiyatı</div>
+                                <div class="cart_item_totals cart_info_col">
+                                    <div class="cart_item_titles">Toplam Fiyatı</div>
                                     <div class="cart_item_text">{sepet.toplamFiyat}</div>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                    < a className="btn btn-danger" onClick={()=>this.UrunKaldir(sepet.sepetID,sepet.sepettekiUrunID)}>Ürünü Kaldır</a>
+                    <a style={{marginLeft:800}} className="btn btn-danger" onClick={()=>this.UrunKaldir(sepet.sepetID,sepet.sepettekiUrunID)}>Ürünü Kaldır</a>
                 </div>
             </div>
 

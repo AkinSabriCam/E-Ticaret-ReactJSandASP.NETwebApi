@@ -46,10 +46,24 @@ namespace WebApi_E_ticaret_.Controllers
 
         }
         [HttpGet]
+        public IHttpActionResult GetAllCompletedProductsinSepetforUser(int id)
+        {   // kullanıcının tamamlamış olduğu siparişleri getirir.
+            // buraya gönderilen Id kullanıcının id sidir.  
+            var model = sepetDal.GetAllCompletedSepetforUser(id);
+            if (model != null)
+            {
+                return Ok(model);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+        [HttpGet]
         public IHttpActionResult GetProductCountinSepet(int id)
         {
             // buraya gönderilen Id kullanıcının id sidir.  
-           
             int  count = sepetDal.GetProductCountinSepet(id);
             if (count> 0)
             {

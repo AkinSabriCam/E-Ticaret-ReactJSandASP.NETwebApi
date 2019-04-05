@@ -34,18 +34,36 @@ namespace DAL
             }
         }
 
-        public Models.Kullanici GetusersByid(int id)
+        public ViewModels.UserViewModel GetusersByid(int id)
         {
             var model = db.Kullanici.FirstOrDefault(x=>x.kullaniciID==id);
             if (model != null)
             {
-                return model;
+                var user = new ViewModels.UserViewModel();
+                user.ad = model.KullaniciBilgileri.ad;
+                user.soyad = model.KullaniciBilgileri.soyad;
+                user.cinsiyet = model.KullaniciBilgileri.cinsiyet;
+                user.ilID = (int)model.KullaniciBilgileri.Iletisim.ilID;
+                user.ilAdi = model.KullaniciBilgileri.Iletisim.Il.il1;
+                user.ilceID = (int)model.KullaniciBilgileri.Iletisim.ilceID;
+                user.ilceAdi = model.KullaniciBilgileri.Iletisim.Ilce.ilce1;
+                user.acikAdres = model.KullaniciBilgileri.Iletisim.detay;
+
+                user.kullaniciID = model.kullaniciID;
+                user.rolID = model.rolID;
+                user.kayitTarihi = model.kayitTarihi;
+                user.kullaniciAdi = model.kullaniciAdi;
+                user.sifre = model.sifre;
+                user.email = model.email;
+
+                return user;
             }
             else
             {
                 return null;
             }
         }
+
         public Models.Kullanici GetuserId(string username,string password)
         {
             var model = db.Kullanici.FirstOrDefault(x => x.kullaniciAdi == username &&x.sifre==password);
@@ -66,27 +84,28 @@ namespace DAL
             User.sifre = model.sifre;
             User.kayitTarihi = model.kayitTarihi;
             User.email = model.email;
-
+            
             db.Kullanici.Add(User);
             db.SaveChanges();
 
             
 
             var UserContact = new Models.Iletisim();
-            UserContact.detay = model.Detay;
+            UserContact.detay = model.acikAdres;
             UserContact.ilID = model.ilID;
             UserContact.ilceID = model.ilceID;
 
             db.Iletisim.Add(UserContact);
             db.SaveChanges();
 
-            //var iletisim = db.Iletisim.FirstOrDefault(x => x.ilceID == model.ilceID && x.ilID == model.ilID);
+            var iletisim = db.Iletisim.FirstOrDefault(x => x.ilceID == model.ilceID && x.ilID == model.ilID);
             var UserInformation = new Models.KullaniciBilgileri();
             UserInformation.ad = model.ad;
-            UserInformation.iletisimID = UserContact.iletisimID;
+            UserInformation.iletisimID = iletisim.iletisimID;
             UserInformation.kullaniciID = User.kullaniciID;
             UserInformation.soyad = model.soyad;
             UserInformation.cinsiyet = model.cinsiyet;
+
             db.KullaniciBilgileri.Add(UserInformation);
             db.SaveChanges();
             return true;
@@ -111,8 +130,8 @@ namespace DAL
                 userInformation.soyad = model.soyad;
                 testUser.KullaniciBilgileri.Iletisim.ilID = model.ilID;
                 testUser.KullaniciBilgileri.Iletisim.ilceID = model.ilceID;
-                testUser.KullaniciBilgileri.Iletisim.detay = model.Detay;
-
+                testUser.KullaniciBilgileri.Iletisim.detay = model.acikAdres;
+                
 
                 db.SaveChanges();
                 return true;

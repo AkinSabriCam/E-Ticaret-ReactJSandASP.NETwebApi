@@ -1,154 +1,92 @@
 import React, { Component } from "react";
 import cartt from './img/shopping_cart.jpg';
 import './css/site.css';
+import Cookies from 'js-cookie';
+import {Link,Redirect} from 'react-router-dom'
+import './css/cart_styles.css'
+
 export class Favourite extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.state={
+            UserFavourites:[]
+                }
+    }
+    componentDidMount(){
+        /*if(Cookies.get("Login")=="true"){
+            console.log("login")  
+            // kullanıcı login olmuştur*/
+            fetch('http://localhost:50040/api/Favori/GetAllFavouritesForUser/1007'/*+Cookies.get("kullaniciID")*/)
+            .then(data=>data.json())
+            .then(result=>{this.setState({UserFavourites:result})
+            console.log(this.state.UserFavourites)})
+            .catch(err=>console.log(err))
+        /*}*/
+    }
+    FavoriKaldir(favoriID){
+        console.log(favoriID);
+        fetch(`http://localhost:50040/api/Favori/DeleteProductInFavori?id=${favoriID}`,{
+            method:"DELETE"
+        })
+        .then(function(){
+                window.location = '/User/Favourite';
+        })
+        .catch(err=>console.log(err));            
+    }
     render(){
+        let Favoriler=this.state.UserFavourites.map((favori,ind)=>{
+            let kisaad=favori.ad;
+            if(kisaad.length>19){
+                kisaad=kisaad.substring(0, 16) + "...";
+            }
         return(
-            <div>
-            <div class="home" style={{height:50}}>
-		    
-		    <div class="home_overlay"></div>
-		    <div class="home_content d-flex flex-column align-items-center justify-content-center">
-			<h4 class="home_title">Favorilerim</h4>
-		    </div>
-	        </div>
-            <div class="cart_section" style={{marginTop:-100}} >
-                <div class="container">
-                    <div class="row">
-                    <div class="col-lg-10 offset-lg-1">
-                        <div class="cart_container">
-                            <div class="cart_title"></div>
-                            <div class="cart_items">
-                                <ul class="cart_list">
-                                    <li class="cart_item clearfix">
-                                        <div class="cart_item_image"><img src={cartt} alt=""/></div>
-                                        <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-                                            <div class="cart_item_name cart_info_col">
-                                                <div class="cart_item_title">Name</div>
-                                                <div class="cart_item_text">MacBook Air 13</div>
-                                            </div>
-                                            <div class="cart_item_color cart_info_col">
-                                                <div class="cart_item_title">Color</div>
-                                                <div class="cart_item_text"><span style={{backgroundColor:999999}}></span>Silver</div>
-                                            </div>
-                                            <div class="cart_item_quantity cart_info_col">
-                                                <div class="cart_item_title">Quantity</div>
-                                                <div class="cart_item_text">1</div>
-                                            </div>
-                                            <div class="cart_item_price cart_info_col">
-                                                <div class="cart_item_title">Price</div>
-                                                <div class="cart_item_text">$2000</div>
-                                            </div>
-                                            <div class="cart_item_total cart_info_col">
-                                                <div class="cart_item_title">Total</div>
-                                                <div class="cart_item_text">$2000</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+             <div class="cart_container">
+                <div class="cart_items">
+                    <ul class="cart_list">
+                        <li class="cart_item clearfix">
+                            <div class="cart_item_image" title="Ürünü ayrıntılı incelemek için tıklayınız.."><Link to={{pathname:"/ProductDetail",state:{productId:favori.urunID}}}><img src={favori.imagePath} alt=""/></Link></div>
+                            <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+                                <div class="cart_item_name cart_item_name">
+                                    <div class="cart_item_title">Ürün</div>
+                                    <div class="cart_item_text" title={favori.ad}><Link to={{pathname:"/ProductDetail",state:{productId:favori.urunID}}}>{kisaad}</Link></div>
+                                </div>
+                                <div class="cart_item_quantity cart_item">
+                                    <div class="cart_item_title">Marka</div>
+                                    <div class="cart_item_text">{favori.marka}</div>
+                                </div>
+                                <div class="cart_item_price cart_item">
+                                    <div class="cart_item_title">Birim Fiyatı</div>
+                                    <div class="cart_item_text">{favori.fiyat}</div>
+                                </div>
                             </div>
-                            <div class="order_total">
-							<div class="order_total_content text-md-right">
-								<div class="order_total_title">Order Total:</div>
-								<div class="order_total_amount">$2000</div>
-							</div>
-						    </div>
-
-						    <div class="cart_buttons">
-                            <button type="button" class="button cart_button_checkout">Remove</button>						    
-                            </div>
-            
-                        </div>
-                        <div class="cart_container">
-                            <div class="cart_title"></div>
-                            <div class="cart_items">
-                                <ul class="cart_list">
-                                    <li class="cart_item clearfix">
-                                        <div class="cart_item_image"><img src={cartt} alt=""/></div>
-                                        <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-                                            <div class="cart_item_name cart_info_col">
-                                                <div class="cart_item_title">Name</div>
-                                                <div class="cart_item_text">MacBook Air 13</div>
-                                            </div>
-                                            <div class="cart_item_color cart_info_col">
-                                                <div class="cart_item_title">Color</div>
-                                                <div class="cart_item_text"><span style={{backgroundColor:999999}}></span>Silver</div>
-                                            </div>
-                                            <div class="cart_item_quantity cart_info_col">
-                                                <div class="cart_item_title">Quantity</div>
-                                                <div class="cart_item_text">1</div>
-                                            </div>
-                                            <div class="cart_item_price cart_info_col">
-                                                <div class="cart_item_title">Price</div>
-                                                <div class="cart_item_text">$2000</div>
-                                            </div>
-                                            <div class="cart_item_total cart_info_col">
-                                                <div class="cart_item_title">Total</div>
-                                                <div class="cart_item_text">$2000</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="order_total">
-							<div class="order_total_content text-md-right">
-								<div class="order_total_title">Order Total:</div>
-								<div class="order_total_amount">$2000</div>
-							</div>
-						    </div>
-
-						    <div class="cart_buttons">
-                            <button type="button" class="button cart_button_checkout">Remove</button>						    
-                            </div>
-                        </div>
-                        <div class="cart_container">
-                            <div class="cart_title"></div>
-                            <div class="cart_items">
-                                <ul class="cart_list">
-                                    <li class="cart_item clearfix">
-                                        <div class="cart_item_image"><img src={cartt} alt=""/></div>
-                                        <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-                                            <div class="cart_item_name cart_info_col">
-                                                <div class="cart_item_title">Name</div>
-                                                <div class="cart_item_text">MacBook Air 13</div>
-                                            </div>
-                                            <div class="cart_item_color cart_info_col">
-                                                <div class="cart_item_title">Color</div>
-                                                <div class="cart_item_text"><span style={{backgroundColor:999999}}></span>Silver</div>
-                                            </div>
-                                            <div class="cart_item_quantity cart_info_col">
-                                                <div class="cart_item_title">Quantity</div>
-                                                <div class="cart_item_text">1</div>
-                                            </div>
-                                            <div class="cart_item_price cart_info_col">
-                                                <div class="cart_item_title">Price</div>
-                                                <div class="cart_item_text">$2000</div>
-                                            </div>
-                                            <div class="cart_item_total cart_info_col">
-                                                <div class="cart_item_title">Total</div>
-                                                <div class="cart_item_text">$2000</div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="order_total">
-							<div class="order_total_content text-md-right">
-								<div class="order_total_title">Order Total:</div>
-								<div class="order_total_amount">$2000</div>
-							</div>
-						    </div>
-						    <div class="cart_buttons">
-                            <button type="button" class="button cart_button_checkout">Remove</button>						    
-                            </div>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="cart_buttons">
+                <a className="btn btn-primary" onClick={()=>this.FavoriKaldir(favori.favoriID)}>Favorilerimden Çıkar</a>
                 </div>
             </div>
+        )
+    })
+    return(
+        <div>
+            <div class="home" style={{height:50}}>
+            <div class="home_overlay"></div>
+		        <div class="home_content d-flex flex-column align-items-center justify-content-center">
+			      <h4 class="home_title">Favorilerim</h4></div>
+	          </div>
+        <div class="cart_section">
+            <div class="container">
+                <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    {Favoriler}
+                </div>
             </div>
         </div>
-        )
+        </div>
+        </div>
+    )
     }
-
 }
 export default Favourite;

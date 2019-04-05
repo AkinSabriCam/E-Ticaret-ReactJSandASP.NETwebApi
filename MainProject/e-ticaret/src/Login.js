@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import './css/site.css';
 import {Modal,Button} from 'react-bootstrap';
 import Cookies from 'js-cookie';
-import {Redirect,Switch,Route}  from 'react-router';
-import { HomePage } from "./HomePage";
-
+import {Redirect}  from 'react-router';
 
 export  class Login extends Component {
 
@@ -21,18 +19,16 @@ export  class Login extends Component {
   }
 
 componentDidMount(){
-  
-  // kullanıcı giriş yaptığında bu bilgiye dair bir session tutulmaktadır.
-}
 
+}
   LoginClose() {
     this.setState({show: false });
   }
 
-
   Login(){
     let UserName=document.getElementById("username").value;
     let Password=document.getElementById("password").value;
+    //Cookies.set("kullaniciAdi", {UserName});
     
     fetch("http://localhost:50040/token",{
        method:"post",
@@ -42,12 +38,10 @@ componentDidMount(){
       body:`UserName=${UserName}&Password=${Password}&grant_type=password`
     }).then(data=>data.json())
     .then(result=>{
-        
       Cookies.set("token",result.access_token);
       console.log(result.access_token);
       Cookies.set("Login","true");
       this.setState({redirect:true});
-      
     })
     .catch(err=>console.log(err));
 
@@ -75,12 +69,11 @@ componentDidMount(){
       }
     })
     .catch(err=>console.log(err));
-
   }
   render(){
-    if(this.state.redirect){
+  if(this.state.redirect){
       return <Redirect to="/"/>
-    }  
+    }
     return (
         <div className='menu'>
           <Modal show={this.state.show} onHide={this.LoginClose}>
@@ -96,7 +89,7 @@ componentDidMount(){
             id="username"/>
             <label htmlFor="formGroupExampleInput" placeholder="******">Password</label>
             <input
-            type="text"
+            type="password"
             className="form-control"
             id="password"/>
             </div>
@@ -110,5 +103,6 @@ componentDidMount(){
       )
       
     }
+    
   }
   export default Login;

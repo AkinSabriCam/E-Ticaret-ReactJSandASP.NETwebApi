@@ -12,12 +12,12 @@ namespace DAL
         public ViewModels.CityandDistrictViewModel GetAllCityandDistrict()
         {
 
-            var model = db.Il.ToList();
-            var modelIlce = db.Ilce.ToList();
-            if (model != null)
+            var modelIl = this.GetAllCity();
+            var modelIlce = this.GetAllLocation();
+            if (modelIl != null)
             {
                 var CityandDistrict = new ViewModels.CityandDistrictViewModel();
-                CityandDistrict.Iller = model;
+                CityandDistrict.Iller = modelIl;
                 CityandDistrict.Ilceler = modelIlce;
                 return CityandDistrict;
             }
@@ -29,7 +29,6 @@ namespace DAL
         }
         public List<Models.Il> GetAllCity()
         {
-
             var model = db.Il.ToList();
             if (model != null)
             {

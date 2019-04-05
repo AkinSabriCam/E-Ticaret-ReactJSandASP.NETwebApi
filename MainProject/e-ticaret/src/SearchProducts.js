@@ -33,8 +33,16 @@ export class SearchProducts extends React.Component {
         }
      this.prod=this.prod.bind(this);
     }
-
+    
     componentDidMount(){
+        this.fetchInvoice();		
+    }
+
+    componentWillUnmount() {
+        this.ignoreLastFetch = true;
+    }
+
+    fetchInvoice = () => {
         const {searchText} = this.props.location.state;
         if(searchText != null){
             console.log(searchText);
@@ -44,7 +52,14 @@ export class SearchProducts extends React.Component {
             
         fetch("http://localhost:50040/api/Urunler/GetProductsBySearch?search="+searchText).then(data=>data.json())
         .then(result=>this.setState({Products:result})) 
-        .catch(error=>console.log("error"));			
+        .catch(error=>console.log("error"));
+    }
+
+    componentDidUpdate (prevProps) {
+        let oldId = prevProps.location.state;
+        let newId = this.props.location.state;
+        if (newId !== oldId)
+            this.fetchInvoice();
     }
 
     prod(id){
@@ -232,17 +247,21 @@ export class SearchProducts extends React.Component {
 
     render() {
         let Urunler = this.state.Products.map((urun,ind) => {
+            let kisaad=urun.ad;
+            if(kisaad.length>20){
+                 kisaad= kisaad.substring(0, 15) + "...";
+        }
             return (					
                 <div className="product_item is_new">
                     <div className="product_border"></div>
                     <div className="product_image d-flex flex-column align-items-center justify-content-center">
                         <Link to={{pathname:"/ProductDetail",state:{productId:urun.urunID}}}>
-                            <img src="https://via.placeholder.com/150" alt="" />
+                            <img src={urun.imagePath} alt="" />
                         </Link>
                     </div>
                     <div className="product_content">
                         <div className="product_price">{urun.fiyat} ₺</div>
-                        <div className="product_name"><div><a href="#" tabindex="0">{urun.ad}</a></div></div>
+                        <div className="product_name"><div><a title={urun.ad} tabindex="0">{kisaad}</a></div></div>
                     </div>
                     <div className="product_fav"><i className="fas fa-heart"></i></div>
                     <ul className="product_marks">
