@@ -4,6 +4,7 @@ import $ from 'jquery';
 import {Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
 import {Redirect} from 'react-router';
+import {Modal,Button} from 'react-bootstrap';
 
 /*function importAll(r) {
   return r.keys().map(r);
@@ -22,19 +23,26 @@ export class HomePage extends React.Component{
           isOpen:false,
           home:false
       }
+      $("#modal").hide();
       setTimeout(() => {
-        this.setState({isOpen:true});  
+        /*$(function(){
+          $("#modal").show();  
+        })  */
+        this.setState({isOpen:true})
         const userId = Cookies.get("kullaniciID");           
         fetch("http://localhost:50040/api/Urunler/SuggestProductToUser/1"/*+userId*/).then(data=>data.json())
         .then(result=>this.setState({Product:result}))
         .catch(error=>console.log("error"));
         // this.setState({oneri:true});
-    },10000);
+    },60000);
    }
 
 
    CloseModal = () => {
     this.setState({isOpen:false,home:true});
+    $(function(){
+      $("#modal").hide();  
+    })
   }
 
   componentDidMount(){
@@ -103,64 +111,54 @@ export class HomePage extends React.Component{
             )
         })    
           return(
-            <div class="row">
-            {Cards}
+            <div>
+                <Modal show={this.state.isOpen} onHide={this.CloseModal}>
+                <Modal.Header closeButton>
+                  <p><strong>{this.state.Product.altkategori}</strong>  kategorisinde ilginizi çekebilecek bir ürün bulduk:</p> 
+                
+                </Modal.Header>
+              <Modal.Body>
 
+                  <div class="row">
+                      <div class="col-3">
+                      <p></p>
+                      <p class="text-center">
+                          <img src="https://via.placeholder.com/600" alt="" />
+                      </p>
+                      </div>
+
+                      <div class="col-9">
+                          
+                           <p>
+                              <h4><strong>{this.state.Product.ad} 
+                                </strong></h4>  
+                          </p>
+                          <p>
+                              {this.state.Product.marka}
+                          </p>
+                         
+                          <p>
+                              <h6><strong>{this.state.Product.fiyat} ₺</strong></h6>
+                          </p>
+
+                      </div>
+                  </div>
             
-                <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-danger" role="document">
+              </Modal.Body>
+                  <Modal.Footer>
+                  <Link to={{pathname:"/ProductDetail",state:{productId:this.state.Product.urunID}}}>
+                  <a style={{color:"white", textDecoration:"none"}} class="btn btn-danger">Ürüne Git
+                      <i class="far fa-gem ml-1 white-text"></i>
+                  </a>
+                 </Link>
+                  <a type="button" class="btn btn-outline-danger waves-effect" onClick={this.CloseModal}>Kapat</a>
+              </Modal.Footer>
+              </Modal>
 
-                    <div class="modal-content">
-
-                    <div class="modal-header">
-                    <p class="heading">Bu ürün ilginizi çekebilir:
-                        <strong>{this.state.Product.ad}</strong>
-                    </p>
-
-                    <button type="button" class="close" onClick={this.CloseModal}  aria-label="Close">
-                        <span aria-hidden="true" class="white-text">&times;</span>
-                    </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-3">
-                            <p></p>
-                            <p class="text-center">
-                                <img src="https://via.placeholder.com/600" alt="" />
-                            </p>
-                            </div>
-
-                            <div class="col-9">
-                                
-                                <p>
-                                    {this.state.Product.marka}
-                                </p>
-                                <p>
-                                    <strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Vestibulum lobortis diam non ultricies malesuada. 
-                                        Morbi lobortis hendrerit sem eu imperdiet. 
-                                        Cras consectetur velit non ornare ultrices. Cras facilisis quis sapien et porta. 
-                                       </strong>
-                                </p>
-                                <p>
-                                    <h4><strong>{this.state.Product.fiyat} ₺</strong></h4>
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer flex-center">
-                    <Link to={{pathname:"/ProductDetail",state:{productId:this.state.Product.urunID}}}>
-                        <a class="btn btn-danger">Ürüne Git
-                            <i class="far fa-gem ml-1 white-text"></i>
-                        </a>
-                    </Link>
-                    <a type="button" class="btn btn-outline-danger waves-effect" onClick={this.CloseModal}>Kapat</a>
-                    </div>
-                </div>
-
-                </div>
+         
+            <div class="row">
+                {Cards}
+          </div>
           </div>
           )
       }

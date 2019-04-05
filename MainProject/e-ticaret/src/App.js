@@ -23,8 +23,6 @@ import {SearchProducts} from './SearchProducts';
 import { PersonalDetail } from './PersonalDetail';
 import Contact from './Contact';
 import Footer from './Footer';
-import SuggestProductModal from './SuggestProductModal';
-
 
 
 export class App extends Component {
@@ -63,7 +61,6 @@ export class App extends Component {
                 <Route path="/PersonalDetail" component={PersonalDetail}/>
                 <Route path="/SearchProducts" component={SearchProducts}/> 
                 <Route path="/Contact" component={Contact}/>
-                <Route path="/SuggestProductModal" component={SuggestProductModal}/>
   
                 <Footer></Footer>
             
