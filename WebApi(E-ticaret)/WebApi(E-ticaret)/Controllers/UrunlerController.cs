@@ -107,7 +107,27 @@ namespace WebApi_E_ticaret_.Controllers
             }
             else return BadRequest();
         }
+        [HttpGet]
+        public IHttpActionResult AddCount(int id)
+        {
+            if (id > 0)
+            {
+                if (urunDal.AddCount(id))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
 
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
         [HttpGet]
         public IHttpActionResult GetProductsByPriceASC(int id)
         {
@@ -183,8 +203,48 @@ namespace WebApi_E_ticaret_.Controllers
             }
             else return BadRequest();
         }
+        [HttpGet]
+        public IHttpActionResult GetAllSellerProducts()
+        {
+            var model = urunDal.GetAllSellerProduts();
+            if (model != null)
+            {
+                return Ok(model);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        [HttpGet]
+        public IHttpActionResult GetSellerProductsByUserId(int id)
+        {
+            var model = urunDal.GetSellerProductsByUserId(id);
+            if (model != null)
+            {
+                return Ok(model);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
 
         [HttpGet]
+        public IHttpActionResult GetFiveBestSellerProduts()
+        {
+            var model = urunDal.GetFiveBestSellerProduts();
+            if (model != null)
+            {
+                return Ok(model);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+       [HttpGet]
         public IHttpActionResult GetProductsByNameASCInSearch(string search)
         {
             if (search != null)
@@ -319,6 +379,47 @@ namespace WebApi_E_ticaret_.Controllers
                     return NotFound();
                 }
 
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        
+        [HttpPut]
+        public IHttpActionResult DoPromosyon(DAL.ViewModels.PromosyonViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (urunDal.DoPromosyon(model))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPut]
+        public IHttpActionResult DoPromosyonForCategory(DAL.ViewModels.PromosyonViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (urunDal.DoPromosyonForCategory(model))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {

@@ -16,6 +16,7 @@ import {AdminPanel} from './AdminPanel';
 import {AdminDashboard} from './AdminDashboard';
 import {Favourite} from './Favourite';
 import {Redirect} from 'react-router'
+
 import {KullaniciGuncelle} from './KullaniciGuncelle';
 import {Siparislerim} from './Siparislerim';
 import {ProductsByCategory} from './ProductsByCategory';
@@ -23,6 +24,9 @@ import {SearchProducts} from './SearchProducts';
 import { PersonalDetail } from './PersonalDetail';
 import Contact from './Contact';
 import Footer from './Footer';
+import './css/site.css';
+
+
 
 
 export class App extends Component {
@@ -53,6 +57,7 @@ export class App extends Component {
                
                 <Route path="/Siparis" component={Siparis}/>
                 <Route path="/KullaniciGuncelle" component={KullaniciGuncelle}/>
+
 
                 <Route path="/Favourite" component={Favourite}/>
                 <Route path="/Siparislerim" component={Siparislerim}/>

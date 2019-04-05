@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace DAL.ViewModels
 {
-    public class AltKategoriModelView
+    public class PromosyonViewModel
     {
-        public int altkategoriId { get; set; }
-        [Required(ErrorMessage ="Lütfen alt kategori adı giriniz")]
-        public string altkategori { get; set; }
 
         public int kategoriID { get; set; }
+        public int urunID { get; set; }
+
+        [Required(ErrorMessage ="Lütfen Promosyon Oranını Giriniz")]
+        public int promosyonOrani { get; set; }
     }
 }

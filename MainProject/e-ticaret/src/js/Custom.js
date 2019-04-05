@@ -1,10 +1,9 @@
 import $ from 'jquery';
 import Cookies from 'js-cookie';
-import { func } from 'prop-types';
 
-$(function($){
- 
-   setInterval(function(){
+$(function(){
+     
+    setInterval(function(){
     var date = new Date();
      if(date.getHours()===2)
         {

@@ -10,12 +10,23 @@ namespace DAL
     {
         Models.Entities db = new Models.Entities();
 
-        public List<Models.Kullanici> GetAllusers()
+        public List<ViewModels.UserViewModel> GetAllusers()
         {
             var model = db.Kullanici.ToList();
-            if (model != null)
+            var KullaniciList = new List<ViewModels.UserViewModel>();
+            if (model.Count> 0)
             {
-                return model;
+                foreach(var user in model)
+                {
+                    var User = new ViewModels.UserViewModel();
+                    User.ad = user.KullaniciBilgileri.ad;
+                    User.soyad = user.KullaniciBilgileri.soyad;
+                    User.kullaniciAdi = user.kullaniciAdi;
+                    User.kayitTarihi = user.kayitTarihi;
+                    User.kullaniciID = user.kullaniciID;
+                    KullaniciList.Add(User);
+                }
+                return KullaniciList;
             }
             else
             {

@@ -8,13 +8,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE FUNCTION [dbo].[FN_OrderByBestSallers]()
+ALTER FUNCTION [dbo].[FN_OrderByBestSallers]()
 RETURNS TABLE
 AS
 RETURN
-	SELECT TOP 999999999 u.urunID, u.ad,s.markaID, s.marka, u.altKategoriID, s.altKategori, u.fiyat, u.eklenmeTarihi, u.stokID, s.adet, u.satinAlinmaDurumu, u.imagePath
+	SELECT TOP 999999999 u.urunID, u.ad,s.markaID, M.marka, u.altKategoriID, s.altKategori, u.fiyat, u.eklenmeTarihi, u.stokID, s.adet, u.satinAlinmaDurumu, u.imagePath
 	FROM EnCokSatanUrunler s RIGHT JOIN Urun u
 								   ON s.urunID = u.urunID
+							INNER JOIN Marka M 
+								   ON  u.markaID=M.markaID
 	ORDER BY s.adet DESC
 GO
 

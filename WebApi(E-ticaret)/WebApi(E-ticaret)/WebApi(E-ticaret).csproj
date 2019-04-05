@@ -188,6 +188,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DuyuruController.cs" />
     <Compile Include="Controllers\FavoriController.cs" />
     <Compile Include="Controllers\IletisimController.cs" />
     <Compile Include="Controllers\KategorilerController.cs" />

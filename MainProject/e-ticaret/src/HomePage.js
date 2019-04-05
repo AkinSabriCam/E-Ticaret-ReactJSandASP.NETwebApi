@@ -3,27 +3,35 @@ import './css/site.css'
 import $ from 'jquery';
 import {Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button } from 'reactstrap';
+import {Modal} from 'react-modal'
 import {Redirect} from 'react-router';
 import {Modal,Button} from 'react-bootstrap';
 
-/*function importAll(r) {
-  return r.keys().map(r);
-}
-importAll(require.context('./images', true, /.*\.png$/));*/
-
 export class HomePage extends React.Component{
-    
     constructor(props){
       super(props);
         this.state={
           Products:[],
           Detay:false,
           ProductDetail:0,
+          duyuru:false,
+          Duyuru:{},
           Product:{},
           isOpen:false,
           home:false
-      }
-      $("#modal").hide();
+        }
+   
+        /*setTimeout(()=>{
+          fetch("http://localhost:50040/api/Duyuru/Get")
+          .then(data=>data.json())
+          .then(result=>{
+             this.setState({duyuru:true,Duyuru:result})
+          })
+          .catch(err=>console.log(err));
+       },6000);*/
+  
       setTimeout(() => {
         /*$(function(){
           $("#modal").show();  
@@ -34,6 +42,7 @@ export class HomePage extends React.Component{
         .then(result=>this.setState({Product:result}))
         .catch(error=>console.log("error"));
     },60000);
+
    }
 
 
@@ -80,12 +89,37 @@ export class HomePage extends React.Component{
         console.log(Cookies.get("Oturum"));
       }
      })
-    .catch(error=>console.log("error"));    
+    .catch(error=>console.log("error"));
+     
+
   }
   Detay(id){
     this.setState({Detay:true,ProductDetail:id});
   }
   render(){
+      let Duyurular;
+        if(this.state.duyuru){
+            
+          if(this.state.Duyuru!=null){
+              return(
+                  <Modal isOpen={this.state.duyuru}>
+                    <Card style={{ width: '18rem' }}>
+                  <Card.Body>
+                 <Card.Title>Duyuru</Card.Title>
+                 <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
+                 <Card.Text>
+                  {this.state.Duyuru.icerik}
+                 </Card.Text>
+                <Card.Link href="#">Card Link</Card.Link>
+                <Card.Link href="#">Another Link</Card.Link>
+                </Card.Body>
+                </Card>;
+                  </Modal>
+                )  
+              
+            }
+        }
+
     if(this.state.home)
       return <HomePage></HomePage>
    //Cookies.remove("Login");
@@ -153,7 +187,9 @@ export class HomePage extends React.Component{
 
          
             <div class="row">
-                {Cards}
+            {Duyurular}
+            {Cards}
+                
           </div>
           </div>
           )

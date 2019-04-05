@@ -25,7 +25,33 @@ namespace WebApi_E_ticaret_.Controllers
 
 
         }
+        [HttpGet]
+        public IHttpActionResult GetAllSingleKategori()
+        {
+            var model = kategoriDal.GetAllSingleKategori();
+            if (model.Count > 0)
+            {
+                return Ok(model);
+            }
+            else
+            {
+                return NotFound();
+            }
 
+        }
+        [HttpGet]
+        public IHttpActionResult GetAltkategoriByKategoriId(int id)
+        {
+            if (id > 0)
+            {
+                return Ok(kategoriDal.GetAltkategoriByKategoriId(id));
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
         [HttpGet]
         public IHttpActionResult GetCategoryById(int id)
         {
@@ -60,6 +86,26 @@ namespace WebApi_E_ticaret_.Controllers
             else
             {
                  return BadRequest();
+            }
+
+        }
+        [HttpPost]
+        public IHttpActionResult PostAltKategori(DAL.ViewModels.AltKategoriModelView model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (kategoriDal.PostAltKategori(model))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
             }
 
         }

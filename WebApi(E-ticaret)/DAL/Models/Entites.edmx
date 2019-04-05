@@ -227,6 +227,24 @@ warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler' does not have a p
           <Property Name="imagePath" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'E-Ticaret.dbo.EnCokSatanUrunler4' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="EnCokSatanUrunler4">
+          <Key>
+            <PropertyRef Name="urunID" />
+          </Key>
+          <Property Name="urunID" Type="int" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="markaID" Type="int" />
+          <Property Name="marka" Type="nvarchar" MaxLength="20" />
+          <Property Name="altKategoriID" Type="int" />
+          <Property Name="altKategori" Type="nvarchar" MaxLength="20" />
+          <Property Name="fiyat" Type="money" />
+          <Property Name="eklenmeTarihi" Type="date" />
+          <Property Name="stokID" Type="int" />
+          <Property Name="adet" Type="int" />
+          <Property Name="satinAlinmaDurumu" Type="bit" />
+          <Property Name="imagePath" Type="nvarchar" MaxLength="50" />
+          <Property Name="kullaniciAdi" Type="nvarchar" MaxLength="50" />
 warning 6002: The table/view 'E-Ticaret.dbo.GecmisSiparisler' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="GecmisSiparisler">
           <Key>
@@ -492,6 +510,28 @@ warning 6002: The table/view 'E-Ticaret.dbo.GecmisSiparisler' does not have a pr
                 <Property Name="adet" Type="int" />
                 <Property Name="satinAlinmaDurumu" Type="bit" />
                 <Property Name="imagePath" Type="nvarchar" MaxLength="50" />
+                <Property Name="kullaniciAdi" Type="nvarchar" MaxLength="50" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FN_OrderByBestSallersNew" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="urunID" Type="int" Nullable="false" />
+                <Property Name="ad" Type="nvarchar" MaxLength="50" />
+                <Property Name="markaID" Type="int" />
+                <Property Name="marka" Type="nvarchar" MaxLength="20" />
+                <Property Name="altKategoriID" Type="int" />
+                <Property Name="altKategori" Type="nvarchar" MaxLength="20" />
+                <Property Name="fiyat" Type="money" />
+                <Property Name="eklenmeTarihi" Type="date" />
+                <Property Name="stokID" Type="int" />
+                <Property Name="adet" Type="int" />
+                <Property Name="satinAlinmaDurumu" Type="bit" />
+                <Property Name="imagePath" Type="nvarchar" MaxLength="50" />
+                <Property Name="kullaniciAdi" Type="nvarchar" MaxLength="50" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -637,6 +677,22 @@ warning 6002: The table/view 'E-Ticaret.dbo.GecmisSiparisler' does not have a pr
     [EnCokSatanUrunler].[imagePath] AS [imagePath]
     FROM [dbo].[EnCokSatanUrunler] AS [EnCokSatanUrunler]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="EnCokSatanUrunler4" EntityType="Self.EnCokSatanUrunler4" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EnCokSatanUrunler4].[urunID] AS [urunID], 
+    [EnCokSatanUrunler4].[ad] AS [ad], 
+    [EnCokSatanUrunler4].[markaID] AS [markaID], 
+    [EnCokSatanUrunler4].[marka] AS [marka], 
+    [EnCokSatanUrunler4].[altKategoriID] AS [altKategoriID], 
+    [EnCokSatanUrunler4].[altKategori] AS [altKategori], 
+    [EnCokSatanUrunler4].[fiyat] AS [fiyat], 
+    [EnCokSatanUrunler4].[eklenmeTarihi] AS [eklenmeTarihi], 
+    [EnCokSatanUrunler4].[stokID] AS [stokID], 
+    [EnCokSatanUrunler4].[adet] AS [adet], 
+    [EnCokSatanUrunler4].[satinAlinmaDurumu] AS [satinAlinmaDurumu], 
+    [EnCokSatanUrunler4].[imagePath] AS [imagePath], 
+    [EnCokSatanUrunler4].[kullaniciAdi] AS [kullaniciAdi]
+    FROM [dbo].[EnCokSatanUrunler4] AS [EnCokSatanUrunler4]</DefiningQuery>
           <EntitySet Name="GecmisSiparisler" EntityType="Self.GecmisSiparisler" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [GecmisSiparisler].[sepetID] AS [sepetID], 
@@ -1310,6 +1366,8 @@ warning 6002: The table/view 'E-Ticaret.dbo.GecmisSiparisler' does not have a pr
           <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="FN_OrderByBestSallers2" IsComposable="true" ReturnType="Collection(Model.FN_OrderByBestSallers2_Result)" />
+          <EntitySet Name="EnCokSatanUrunler4" EntityType="Model.EnCokSatanUrunler4" />
+          <FunctionImport Name="FN_OrderByBestSallersNew" IsComposable="true" ReturnType="Collection(Model.FN_OrderByBestSallersNew_Result)" />
           <EntitySet Name="EnCokSatanUrunler1Set" EntityType="Model.EnCokSatanUrunler1" />
           <FunctionImport Name="FN_OrderByBestSallers3" IsComposable="true" ReturnType="Collection(Model.FN_OrderByBestSallers3_Result)" />
           <FunctionImport Name="EnCokEtkilesimAlanAltKategori" IsComposable="true" ReturnType="Collection(Model.EnCokEtkilesimAlanAltKategori_Result)">
@@ -1520,6 +1578,38 @@ warning 6002: The table/view 'E-Ticaret.dbo.GecmisSiparisler' does not have a pr
           <Property Type="String" Name="altKategori" Nullable="true" MaxLength="20" />
           <Property Type="Int32" Name="Adet" Nullable="true" />
         </ComplexType>
+        <EntityType Name="EnCokSatanUrunler4">
+          <Key>
+            <PropertyRef Name="urunID" />
+          </Key>
+          <Property Name="urunID" Type="Int32" Nullable="false" />
+          <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="markaID" Type="Int32" />
+          <Property Name="marka" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="altKategoriID" Type="Int32" />
+          <Property Name="altKategori" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="fiyat" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="eklenmeTarihi" Type="DateTime" Precision="0" />
+          <Property Name="stokID" Type="Int32" />
+          <Property Name="adet" Type="Int32" />
+          <Property Name="satinAlinmaDurumu" Type="Boolean" />
+          <Property Name="imagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="FN_OrderByBestSallersNew_Result">
+          <Property Type="Int32" Name="urunID" Nullable="false" />
+          <Property Type="String" Name="ad" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="markaID" Nullable="true" />
+          <Property Type="String" Name="marka" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="altKategoriID" Nullable="true" />
+          <Property Type="String" Name="altKategori" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="fiyat" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="eklenmeTarihi" Nullable="true" Precision="10" />
+          <Property Type="Int32" Name="stokID" Nullable="true" />
+          <Property Type="Int32" Name="adet" Nullable="true" />
+          <Property Type="Boolean" Name="satinAlinmaDurumu" Nullable="true" />
+          <Property Type="String" Name="imagePath" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="kullaniciAdi" Nullable="true" MaxLength="50" />
         <EntityType Name="GecmisSiparisler">
           <Key>
             <PropertyRef Name="sepetID" />
@@ -1890,6 +1980,41 @@ warning 6002: The table/view 'E-Ticaret.dbo.GecmisSiparisler' does not have a pr
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="EnCokSatanUrunler4">
+            <EntityTypeMapping TypeName="Model.EnCokSatanUrunler4">
+              <MappingFragment StoreEntitySet="EnCokSatanUrunler4">
+                <ScalarProperty Name="kullaniciAdi" ColumnName="kullaniciAdi" />
+                <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+                <ScalarProperty Name="satinAlinmaDurumu" ColumnName="satinAlinmaDurumu" />
+                <ScalarProperty Name="adet" ColumnName="adet" />
+                <ScalarProperty Name="stokID" ColumnName="stokID" />
+                <ScalarProperty Name="eklenmeTarihi" ColumnName="eklenmeTarihi" />
+                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
+                <ScalarProperty Name="altKategori" ColumnName="altKategori" />
+                <ScalarProperty Name="altKategoriID" ColumnName="altKategoriID" />
+                <ScalarProperty Name="marka" ColumnName="marka" />
+                <ScalarProperty Name="markaID" ColumnName="markaID" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="urunID" ColumnName="urunID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FN_OrderByBestSallersNew" FunctionName="Model.Store.FN_OrderByBestSallersNew">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.FN_OrderByBestSallersNew_Result">
+                <ScalarProperty Name="urunID" ColumnName="urunID" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="markaID" ColumnName="markaID" />
+                <ScalarProperty Name="marka" ColumnName="marka" />
+                <ScalarProperty Name="altKategoriID" ColumnName="altKategoriID" />
+                <ScalarProperty Name="altKategori" ColumnName="altKategori" />
+                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
+                <ScalarProperty Name="eklenmeTarihi" ColumnName="eklenmeTarihi" />
+                <ScalarProperty Name="stokID" ColumnName="stokID" />
+                <ScalarProperty Name="adet" ColumnName="adet" />
+                <ScalarProperty Name="satinAlinmaDurumu" ColumnName="satinAlinmaDurumu" />
+                <ScalarProperty Name="imagePath" ColumnName="imagePath" />
+                <ScalarProperty Name="kullaniciAdi" ColumnName="kullaniciAdi" />
           <EntitySetMapping Name="GecmisSiparisler">
             <EntityTypeMapping TypeName="Model.GecmisSiparisler">
               <MappingFragment StoreEntitySet="GecmisSiparisler">

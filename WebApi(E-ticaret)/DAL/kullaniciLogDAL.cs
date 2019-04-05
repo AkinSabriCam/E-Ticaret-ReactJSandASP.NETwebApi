@@ -36,7 +36,7 @@ namespace DAL
         public bool PutLogDate()
         {
             var log = db.logKullanici.FirstOrDefault(x => x.logKullaniciID == 1);
-            if (log != null)
+            if (log != null && log.gunlukTarih!=null)
             {
                 if ((log.gunlukTarih.Value.DayOfYear / 7) != ((DateTime.Now.DayOfYear) / 7))
                 {

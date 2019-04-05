@@ -92,6 +92,9 @@
     <Compile Include="Models\EnCokSatanUrunler1.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EnCokSatanUrunler4.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entites.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -116,6 +119,7 @@
     <Compile Include="Models\FN_OrderByBestSallers2_Result.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FN_OrderByBestSallersNew_Result.cs">
     <Compile Include="Models\FN_OrderByBestSallers3_Result.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
@@ -219,6 +223,7 @@
     <Compile Include="SatinAlinanLogDAL.cs" />
     <Compile Include="sepetDAL.cs" />
     <Compile Include="SiparisSepetLogDAL.cs" />
+    <Compile Include="tblDuyuruDAL.cs" />
     <Compile Include="UrunDAL.cs" />
     <Compile Include="ViewModels\AltKategoriModelView.cs" />
     <Compile Include="ViewModels\CityandDistrictViewModel.cs" />
@@ -226,8 +231,10 @@
     <Compile Include="ViewModels\ilceViewModel.cs" />
     <Compile Include="ViewModels\ililceViewModel.cs" />
     <Compile Include="ViewModels\KategoriAltKategoriViewModel.cs" />
+    <Compile Include="ViewModels\KategoriViewModel.cs" />
     <Compile Include="ViewModels\MailViewModel.cs" />
     <Compile Include="ViewModels\ProductStokViewModel.cs" />
+    <Compile Include="ViewModels\PromosyonViewModel.cs" />
     <Compile Include="ViewModels\SepettekiUrunViewModel.cs" />
     <Compile Include="ViewModels\UserMailViewModel.cs" />
     <Compile Include="ViewModels\UserFavoridekiUrunViewModel.cs" />
