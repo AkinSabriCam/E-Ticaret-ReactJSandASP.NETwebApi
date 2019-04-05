@@ -1,4 +1,3 @@
-
 import $ from 'jquery';
 import Cookies from 'js-cookie';
 import { func } from 'prop-types';
@@ -83,10 +82,6 @@ $(function($){
 
        })
     })
-    
-
-
-
 
 })
 

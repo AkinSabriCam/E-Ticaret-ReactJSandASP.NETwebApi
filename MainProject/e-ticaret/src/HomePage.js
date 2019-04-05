@@ -3,6 +3,8 @@ import './css/site.css'
 import $ from 'jquery';
 import {Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
+import {Redirect} from 'react-router';
+import {Modal,Button} from 'react-bootstrap';
 
 /*function importAll(r) {
   return r.keys().map(r);
@@ -17,9 +19,32 @@ export class HomePage extends React.Component{
           Products:[],
           Detay:false,
           ProductDetail:0,
+          Product:{},
+          isOpen:false,
+          home:false
       }
+      $("#modal").hide();
+      setTimeout(() => {
+        /*$(function(){
+          $("#modal").show();  
+        })  */
+        this.setState({isOpen:true})
+        const userId = Cookies.get("kullaniciID");           
+        fetch("http://localhost:50040/api/Urunler/SuggestProductToUser/1"/*+userId*/).then(data=>data.json())
+        .then(result=>this.setState({Product:result}))
+        .catch(error=>console.log("error"));
+        // this.setState({oneri:true});
+    },60000);
    }
- 
+
+
+   CloseModal = () => {
+    this.setState({isOpen:false,home:true});
+    $(function(){
+      $("#modal").hide();  
+    })
+  }
+
   componentDidMount(){
    /* Cookies.remove("kullaniciID");
     Cookies.remove("ProductCount");
@@ -62,6 +87,8 @@ export class HomePage extends React.Component{
     this.setState({Detay:true,ProductDetail:id});
   }
   render(){
+    if(this.state.home)
+      return <HomePage></HomePage>
    //Cookies.remove("Login");
         let Cards=this.state.Products.map((urun,ind)=>{
           return(
@@ -81,8 +108,54 @@ export class HomePage extends React.Component{
             )
         })    
           return(
+            <div>
+                <Modal show={this.state.isOpen} onHide={this.CloseModal}>
+                <Modal.Header closeButton>
+                  <p><strong>{this.state.Product.altkategori}</strong>  kategorisinde ilginizi çekebilecek bir ürün bulduk:</p> 
+                
+                </Modal.Header>
+              <Modal.Body>
+
+                  <div class="row">
+                      <div class="col-3">
+                      <p></p>
+                      <p class="text-center">
+                          <img src="https://via.placeholder.com/600" alt="" />
+                      </p>
+                      </div>
+
+                      <div class="col-9">
+                          
+                           <p>
+                              <h4><strong>{this.state.Product.ad} 
+                                </strong></h4>  
+                          </p>
+                          <p>
+                              {this.state.Product.marka}
+                          </p>
+                         
+                          <p>
+                              <h6><strong>{this.state.Product.fiyat} ₺</strong></h6>
+                          </p>
+
+                      </div>
+                  </div>
+            
+              </Modal.Body>
+                  <Modal.Footer>
+                  <Link to={{pathname:"/ProductDetail",state:{productId:this.state.Product.urunID}}}>
+                  <a style={{color:"white", textDecoration:"none"}} class="btn btn-danger">Ürüne Git
+                      <i class="far fa-gem ml-1 white-text"></i>
+                  </a>
+                 </Link>
+                  <a type="button" class="btn btn-outline-danger waves-effect" onClick={this.CloseModal}>Kapat</a>
+              </Modal.Footer>
+              </Modal>
+
+         
             <div class="row">
-            {Cards}
+                {Cards}
+          </div>
           </div>
           )
       }
