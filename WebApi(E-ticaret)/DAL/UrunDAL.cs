@@ -17,21 +17,25 @@ namespace DAL
             {   
                 foreach(var urun in model)
                 {
-                    var product = new ViewModels.ProductStokViewModel();
-                    product.ad = urun.ad;
-                    product.adet = urun.Stok.adet;
-                    product.altKategoriID = urun.altKategoriID;
-                    product.altkategori = urun.AltKategori.altKategori1;
-                    product.kategori = urun.AltKategori.Kategori.kategori1;
-                    product.eklenmeTarihi = urun.eklenmeTarihi;
-                    product.fiyat = urun.fiyat;
-                    product.imagePath = urun.imagePath;
-                    product.markaID = urun.markaID;
-                    product.satinAlinmaDurumu = urun.satinAlinmaDurumu;
-                    product.stokID = urun.stokID;
-                    product.urunID = urun.urunID;
+                    if (urun.satinAlinmaDurumu != true)
+                    {
+                        var product = new ViewModels.ProductStokViewModel();
+                        product.ad = urun.ad;
+                        product.adet = urun.Stok.adet;
+                        product.altKategoriID = urun.altKategoriID;
+                        product.altkategori = urun.AltKategori.altKategori1;
+                        product.kategori = urun.AltKategori.Kategori.kategori1;
+                        product.eklenmeTarihi = urun.eklenmeTarihi;
+                        product.fiyat = urun.fiyat;
+                        product.imagePath = urun.imagePath;
+                        product.markaID = urun.markaID;
+                        product.satinAlinmaDurumu = urun.satinAlinmaDurumu;
+                        product.stokID = urun.stokID;
+                        product.urunID = urun.urunID;
 
-                    Products.Add(product);
+                        Products.Add(product);
+                    }
+                    
                 }
 
                 return Products;
@@ -42,12 +46,22 @@ namespace DAL
             }
         }
 
-        public Models.Urun GetProductById(int id)
+        public ViewModels.ProductStokViewModel GetProductById(int id)
         {       
             var model = db.Urun.FirstOrDefault(m => m.urunID == id);
             if (model != null)
             {
-                return model;
+                var urun = new ViewModels.ProductStokViewModel();
+                urun.ad = model.ad;
+                urun.adet = model.Stok.adet;
+                urun.fiyat = model.fiyat;
+                urun.altKategoriID = model.altKategoriID;
+                urun.marka = model.Marka.marka1;
+                urun.urunID = model.urunID;
+                urun.stokID = model.stokID;
+                urun.markaID = model.markaID;
+                 
+                return urun;
             }
             else
             {
@@ -87,6 +101,123 @@ namespace DAL
                 return null;
             }
 
+        }
+        public List<ViewModels.ProductStokViewModel> GetSellerProductsByUserId(int id)
+        {
+            var SellerProducts = db.Siparis.Where(x=>x.Sepet.kullaniciID==id).ToList();
+            var SellerProductsNew = new List<ViewModels.ProductStokViewModel>();
+
+            if (SellerProducts.Count > 0)
+            {
+                foreach (var models in SellerProducts)
+                {   
+                     
+                    foreach (var model in models.Sepet.SepettekiUrunler)
+                    { var kullanici = db.Kullanici.FirstOrDefault(x => x.kullaniciID == id);
+                        var product = new ViewModels.ProductStokViewModel();
+                        product.ad = model.Urun.ad;
+                        product.adet = model.adet;
+                        product.altKategoriID = model.Urun.altKategoriID;
+                        product.eklenmeTarihi = model.Urun.eklenmeTarihi;
+                        product.fiyat = model.Urun.fiyat;
+                        product.altkategori = model.Urun.AltKategori.altKategori1;
+                        product.imagePath = model.Urun.imagePath;
+                        product.markaID = model.Urun.markaID;
+                        product.marka = model.Urun.Marka.marka1;
+                        product.satinAlinmaDurumu = model.Urun.satinAlinmaDurumu;
+                        product.stokID = model.Urun.stokID;
+                        product.urunID = model.Urun.urunID;
+                        product.kullaniciAdi =kullanici.kullaniciAdi;
+                        SellerProductsNew.Add(product);
+
+                    }
+                }
+                return SellerProductsNew;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        public List<ViewModels.ProductStokViewModel> GetAllSellerProduts()
+        {
+            var SellerProducts = db.Siparis.ToList();
+            var SellerProductsNew = new List<ViewModels.ProductStokViewModel>();
+            
+            if (SellerProducts.Count > 0)
+            {
+                foreach (var models in SellerProducts)
+                {
+                    var kullanici = db.Kullanici.FirstOrDefault(x => x.kullaniciID == models.Sepet.kullaniciID);
+                    foreach (var model in models.Sepet.SepettekiUrunler)
+                    {
+                        var product = new ViewModels.ProductStokViewModel();
+                        product.ad = model.Urun.ad;
+                        product.adet = model.adet;
+                        product.altKategoriID = model.Urun.altKategoriID;
+                        product.eklenmeTarihi = model.Urun.eklenmeTarihi;
+                        product.fiyat = model.Urun.fiyat;
+                        product.altkategori = model.Urun.AltKategori.altKategori1;
+                        product.imagePath = model.Urun.imagePath;
+                        product.markaID = model.Urun.markaID;
+                        product.marka = model.Urun.Marka.marka1;
+                        product.satinAlinmaDurumu = model.Urun.satinAlinmaDurumu;
+                        product.stokID = model.Urun.stokID;
+                        product.urunID = model.Urun.urunID;
+                        product.kullaniciAdi = kullanici.kullaniciAdi;
+                        SellerProductsNew.Add(product);
+
+                    }
+                }
+                return SellerProductsNew;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public List<ViewModels.ProductStokViewModel> GetFiveBestSellerProduts()
+        {
+            var bestSellers = db.FN_OrderByBestSallersNew().ToList();
+            var BestSellerProducts = new List<ViewModels.ProductStokViewModel>();
+            int sayac = 0;
+            if (bestSellers.Count > 0)
+            {
+                foreach (var model in bestSellers)
+                {
+                    if (sayac < 5)
+                    {
+                        var product = new ViewModels.ProductStokViewModel();
+                        product.ad = model.ad;
+                        product.adet = model.adet;
+                        product.altKategoriID = model.altKategoriID;
+                        product.eklenmeTarihi = model.eklenmeTarihi;
+                        product.fiyat = model.fiyat;
+                        product.altkategori = model.altKategori;
+                        product.imagePath = model.imagePath;
+                        product.markaID = model.markaID;
+                        product.marka = model.marka;
+                        product.satinAlinmaDurumu = model.satinAlinmaDurumu;
+                        product.stokID = model.stokID;
+                        product.urunID = model.urunID;
+                        product.kullaniciAdi = model.kullaniciAdi;
+                        BestSellerProducts.Add(product);
+                        sayac++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                return BestSellerProducts;
+            }
+            else
+            {
+                return null;
+            }
+            
+            
         }
 
         public List<ViewModels.ProductStokViewModel> GetProductsOrderByBestSellers(int id)
@@ -596,11 +727,25 @@ namespace DAL
 
             var Product = new Models.Urun();
 
-            Product.markaID = model.markaID;
+            var marka = db.Marka.FirstOrDefault(x => x.marka1 == model.marka);
+            if (marka != null)
+            {
+                Product.markaID = marka.markaID;
+            }
+            else
+            {
+                var yenimarka = new Models.Marka();
+                yenimarka.marka1 = model.marka;
+                db.Marka.Add(yenimarka);
+                db.SaveChanges();
+                Product.markaID = yenimarka.markaID;
+
+            }
+
             Product.imagePath = model.imagePath;
             Product.ad = model.ad;
             Product.altKategoriID = model.altKategoriID;
-            Product.eklenmeTarihi = model.eklenmeTarihi;
+            Product.eklenmeTarihi = DateTime.Now;
             Product.fiyat = model.fiyat;
             Product.stokID = stok.stokID;
             Product.satinAlinmaDurumu = false;
@@ -616,12 +761,25 @@ namespace DAL
             var test = db.Urun.FirstOrDefault(m => m.urunID == model.urunID);
             if (test != null)
             {
+                var marka = db.Marka.FirstOrDefault(x => x.marka1 == model.marka);
+                if (marka != null)
+                {
+                    test.markaID = marka.markaID;
+                }
+                else
+                {
+                    var newmarka = new Models.Marka();
+                    newmarka.marka1 = model.marka;
+                    db.Marka.Add(newmarka);
+                    db.SaveChanges();
+                    test.markaID = newmarka.markaID;
+                }
+
                 test.ad = model.ad;
                 test.altKategoriID = model.altKategoriID;
                 test.fiyat = model.fiyat;
-                test.imagePath = model.imagePath;
-                test.markaID = model.markaID;
-                test.eklenmeTarihi = model.eklenmeTarihi;
+                test.imagePath = "-";
+                test.eklenmeTarihi = DateTime.Now;
                 test.Stok.adet = model.adet;
                 if (model.adet <= 0)
                 {
@@ -637,18 +795,74 @@ namespace DAL
             }
 
         }
+        public bool DoPromosyon(ViewModels.PromosyonViewModel model)
+        {
+            var urun = db.Urun.FirstOrDefault(x => x.urunID == model.urunID);
+            if (urun != null)
+            {   
+                urun.fiyat -= (urun.fiyat) * model.promosyonOrani / 100;
+                if (urun.fiyat < 0)
+                {
+                    urun.fiyat = 0;
+                }
+                
+                db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
+        }
+        public bool DoPromosyonForCategory(ViewModels.PromosyonViewModel model)
+        {
+            var kategori = db.Kategori.FirstOrDefault(x => x.kategoriID == model.kategoriID);
+            if (kategori!=null)
+            {   
+                foreach(var altkategori in kategori.AltKategori.ToList())
+                {
+                    foreach(var urun in altkategori.Urun.ToList())
+                    {
+                        urun.fiyat -= (urun.fiyat) * model.promosyonOrani / 100;
+                        if (urun.fiyat < 0)
+                        {
+                            urun.fiyat = 0;
+                        }
+                    }
+                }
+                db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public bool AddCount(int id)
+        {
+            var model = db.Urun.FirstOrDefault(x => x.urunID == id);
+            if (model != null)
+            {
+                model.Stok.adet++;
+                db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public bool Delete(int id)
         {
             var test = db.Urun.FirstOrDefault(m => m.urunID == id);
             if (test != null && test.satinAlinmaDurumu == false)
             {
-                test.Stok.adet--;
-                if (test.Stok.adet == 0)
-                {
-                    test.satinAlinmaDurumu = true;
-                }
+
+                test.Stok.adet = 0;
+                test.satinAlinmaDurumu = true;
                 db.SaveChanges();
                 return true;
             }

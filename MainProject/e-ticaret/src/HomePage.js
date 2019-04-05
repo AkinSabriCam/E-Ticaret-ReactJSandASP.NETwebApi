@@ -6,18 +6,31 @@ import asus from './img/asus.jpg';
 import {Link,Redirect} from 'react-router-dom'
 import {ProductDetail} from './ProductDetail'
 import Cookies from 'js-cookie';
+import { Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button } from 'reactstrap';
+import {Modal} from 'react-modal'
 
 
 export class HomePage extends React.Component{
-    
     constructor(props){
       super(props);
         this.state={
           Products:[],
           Detay:false,
-          ProductDetail:0
-          
+          ProductDetail:0,
+          duyuru:false,
+          Duyuru:{}
         }
+   
+        /*setTimeout(()=>{
+          fetch("http://localhost:50040/api/Duyuru/Get")
+          .then(data=>data.json())
+          .then(result=>{
+             this.setState({duyuru:true,Duyuru:result})
+          })
+          .catch(err=>console.log(err));
+       },6000);*/
+   
    }
   
   componentDidMount(){
@@ -57,14 +70,35 @@ export class HomePage extends React.Component{
       }
      })
     .catch(error=>console.log("error"));
-    
-      
+     
   }
   Detay(id){
     this.setState({Detay:true,ProductDetail:id});
-  
   }
   render(){
+      let Duyurular;
+        if(this.state.duyuru){
+            
+          if(this.state.Duyuru!=null){
+              return(
+                  <Modal isOpen={this.state.duyuru}>
+                    <Card style={{ width: '18rem' }}>
+                  <Card.Body>
+                 <Card.Title>Duyuru</Card.Title>
+                 <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
+                 <Card.Text>
+                  {this.state.Duyuru.icerik}
+                 </Card.Text>
+                <Card.Link href="#">Card Link</Card.Link>
+                <Card.Link href="#">Another Link</Card.Link>
+                </Card.Body>
+                </Card>;
+                  </Modal>
+                )  
+              
+            }
+        }
+
         let Cards=this.state.Products.map((urun,ind)=>{
 
           return(
@@ -91,6 +125,7 @@ export class HomePage extends React.Component{
 
           return(
             <div class="row">
+            {Duyurular}
             {Cards}
           </div>
           )

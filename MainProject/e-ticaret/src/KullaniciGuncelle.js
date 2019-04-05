@@ -22,7 +22,7 @@ export  class KullaniciGuncelle  extends React.Component{
         .catch(err=>{console.log(err)});
 
         // Il ve ilceleri almak için bir fetch daha kullanıyorum
-        fetch("http://localhost:50040/api/Iletisim/GetAllProvince")
+        fetch("http://localhost:50040/api/Iletisim/GetAllCity")
         .then(data=>data.json())
         .then(result=>{
             this.setState({Iller:result.Iller});

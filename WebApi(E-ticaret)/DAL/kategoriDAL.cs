@@ -39,6 +39,33 @@ namespace DAL
             }
 
         }
+        public List<ViewModels.KategoriViewModel> GetAllSingleKategori()
+        {
+            var model = db.Kategori.ToList();
+            var Kategoriler = new List<ViewModels.KategoriViewModel>();
+            foreach(var kat in model)
+            {
+                var kategori = new ViewModels.KategoriViewModel();
+                kategori.kategori = kat.kategori1;
+                kategori.kategoriID = kat.kategoriID;
+                Kategoriler.Add(kategori);
+            }
+            return Kategoriler;
+
+        }
+        public List<ViewModels.AltKategoriModelView>GetAltkategoriByKategoriId(int id)
+        {
+            var model = db.AltKategori.Where(x => x.kategoriID == id);
+            var Altkategoriler = new List<ViewModels.AltKategoriModelView>();
+            foreach(var kat in model)
+            {
+                var altkategori = new ViewModels.AltKategoriModelView();
+                altkategori.altkategoriId = kat.altKategoriID;
+                altkategori.altkategori = kat.altKategori1;
+                Altkategoriler.Add(altkategori);
+            }
+            return Altkategoriler;
+        }
         public Models.Kategori GetCategoryByid(int id)
         {
             var model = db.Kategori.FirstOrDefault(x => x.kategoriID == id);
@@ -59,6 +86,25 @@ namespace DAL
             db.SaveChanges();
             return true;
 
+        }
+        public bool PostAltKategori(ViewModels.AltKategoriModelView model)
+        {
+            var altkategori = new Models.AltKategori();
+            var kategori = db.Kategori.FirstOrDefault(x => x.kategoriID == model.kategoriID);
+            if (kategori != null)
+            {
+                altkategori.altKategori1 = model.altkategori;
+                altkategori.kategoriID = model.kategoriID;
+                db.AltKategori.Add(altkategori);
+                db.SaveChanges();
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+            
         }
         public bool PutCategory (Models.Kategori model)
         {

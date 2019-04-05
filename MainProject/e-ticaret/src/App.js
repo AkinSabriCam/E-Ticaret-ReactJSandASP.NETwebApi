@@ -15,18 +15,12 @@ import {AdminNavbar} from './AdminNavbar';
 import {AdminPanel} from './AdminPanel';
 import {AdminDashboard} from './AdminDashboard';
 import {Favourite} from './Favourite';
-
-
 import {KullaniciGuncelle} from './KullaniciGuncelle';
 import {Siparislerim} from './Siparislerim';
-
 import {ProductsByCategory} from './ProductsByCategory';
-
 import {SearchProducts} from './SearchProducts';
-
 import { PersonalDetail } from './PersonalDetail';
-
-
+import './css/site.css';
 
 class App extends Component {
    constructor(props){
@@ -41,9 +35,7 @@ class App extends Component {
       <CookiesProvider>
         <Router>
           <div>
-            <NavbarPage></NavbarPage>
-            <AdminPanel></AdminPanel>
-            
+           
      <Route exact path="/" component={HomePage}/>
      <Route exact path="/ProductDetail/" component={ProductDetail}/>
      <Route path="/Login" component={Login}/>
@@ -51,10 +43,9 @@ class App extends Component {
      <Route path="/User" component={User}/>
      <Route path="/Siparis" component={Siparis}/>
      <Route path="/KullaniciGuncelle" component={KullaniciGuncelle}/>
-
      <Route path="/User/Favourite" component={Favourite}/>
      <Route path="/User/Siparislerim" component={Siparislerim}/>
-   
+     <Route path="/Admin" component={AdminPanel}/>
      
      <Route path="/ProductsByCategory" component={ProductsByCategory}/>
      <Route path="/User/PersonalDetail" component={PersonalDetail}/>
