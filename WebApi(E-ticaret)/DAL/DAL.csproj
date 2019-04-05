@@ -83,6 +83,9 @@
     <Compile Include="Models\Duyuru.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EnCokEtkilesimAlanAltKategori1_Result.cs">
+      <DependentUpon>Entites.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EnCokEtkilesimAlanAltKategori_Result.cs">
       <DependentUpon>Entites.tt</DependentUpon>
     </Compile>

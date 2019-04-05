@@ -575,12 +575,12 @@ namespace DAL
         //Ürün Öner
         public ViewModels.ProductStokViewModel SuggestProductToUser(int id)
         {
-            var model = db.EnCokEtkilesimAlanAltKategori(id).FirstOrDefault();
+            var model = db.EnCokEtkilesimAlanAltKategori1(id).FirstOrDefault();
+            var product = new ViewModels.ProductStokViewModel();
             if (model != null)
             {
                 var urunler = db.Urun.Where(x => x.altKategoriID == model.altKategoriID).ToList();
                 var onerilecekUrun = urunler.OrderBy(x => Guid.NewGuid()).Take(1).ToList();
-                var product = new ViewModels.ProductStokViewModel();
                 foreach (var urun in onerilecekUrun)
                 {
                     product.ad = urun.ad;
@@ -595,11 +595,37 @@ namespace DAL
                     product.marka = urun.Marka.marka1;
                     product.satinAlinmaDurumu = urun.satinAlinmaDurumu;
                     product.stokID = urun.stokID;
-                    product.urunID = urun.urunID; 
+                    product.urunID = urun.urunID;
                 }
                 return product;
             }
-            else return null;
+            else {
+                var altkategori = db.AltKategori.OrderBy(x => Guid.NewGuid()).Take(1).ToList();
+               
+                foreach (var alt in altkategori)
+                {
+                    var urunler = db.Urun.Where(x => x.altKategoriID == alt.altKategoriID).ToList();
+                    var onerilecekUrun = urunler.OrderBy(x => Guid.NewGuid()).Take(1).ToList();
+                    foreach (var urun in onerilecekUrun)
+                    {
+                        product.ad = urun.ad;
+                        product.adet = urun.Stok.adet;
+                        product.altKategoriID = urun.altKategoriID;
+                        product.altkategori = urun.AltKategori.altKategori1;
+                        product.kategori = urun.AltKategori.Kategori.kategori1;
+                        product.eklenmeTarihi = urun.eklenmeTarihi;
+                        product.fiyat = urun.fiyat;
+                        product.imagePath = urun.imagePath;
+                        product.markaID = urun.markaID;
+                        product.marka = urun.Marka.marka1;
+                        product.satinAlinmaDurumu = urun.satinAlinmaDurumu;
+                        product.stokID = urun.stokID;
+                        product.urunID = urun.urunID;
+                    }
+                }
+                return product;
+            }
+            
         }
 
         public bool PostProductAlreadyExist(ViewModels.ProductStokViewModel model)

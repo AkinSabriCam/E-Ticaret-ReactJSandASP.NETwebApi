@@ -30,10 +30,9 @@ export class HomePage extends React.Component{
         })  */
         this.setState({isOpen:true})
         const userId = Cookies.get("kullaniciID");           
-        fetch("http://localhost:50040/api/Urunler/SuggestProductToUser/1"/*+userId*/).then(data=>data.json())
+        fetch("http://localhost:50040/api/Urunler/SuggestProductToUser/"+userId).then(data=>data.json())
         .then(result=>this.setState({Product:result}))
         .catch(error=>console.log("error"));
-        // this.setState({oneri:true});
     },60000);
    }
 
@@ -120,7 +119,7 @@ export class HomePage extends React.Component{
                       <div class="col-3">
                       <p></p>
                       <p class="text-center">
-                          <img src="https://via.placeholder.com/600" alt="" />
+                          <img src={this.state.Product.imagePath} alt="" />
                       </p>
                       </div>
 

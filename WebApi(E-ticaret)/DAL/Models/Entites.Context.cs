@@ -154,5 +154,15 @@ namespace DAL.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EnCokEtkilesimAlanAltKategori_Result>("[Entities].[EnCokEtkilesimAlanAltKategori](@kullaniciId)", kullaniciIdParameter);
         }
+    
+        [DbFunction("Entities", "EnCokEtkilesimAlanAltKategori1")]
+        public virtual IQueryable<EnCokEtkilesimAlanAltKategori1_Result> EnCokEtkilesimAlanAltKategori1(Nullable<int> kullaniciId)
+        {
+            var kullaniciIdParameter = kullaniciId.HasValue ?
+                new ObjectParameter("kullaniciId", kullaniciId) :
+                new ObjectParameter("kullaniciId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EnCokEtkilesimAlanAltKategori1_Result>("[Entities].[EnCokEtkilesimAlanAltKategori1](@kullaniciId)", kullaniciIdParameter);
+        }
     }
 }
